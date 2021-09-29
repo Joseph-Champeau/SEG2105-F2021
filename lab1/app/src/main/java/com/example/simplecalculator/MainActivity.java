@@ -13,11 +13,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     TextView displayScreen ;
-
-    private final char DIVI = '/';
-    private final char MULTI = '*';
-    private final char SUB= '-';
-    private final char ADD = '+';
+    TextView computationTextView;
+    private final char DIV = '/';
+    private final char MUL = '*';
+    private final char MINUS= '-';
+    private final char PLU = '+';
+    private char OPERATION;
     private double val1= Double.NaN;
     private double val2;
 
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         btnDec = (Button)findViewById(R.id.btnDec);
         btnClr = (Button)findViewById(R.id.btnClr);
         displayScreen= (TextView) findViewById(R.id.displayScreen);
+        computationTextView= (TextView) findViewById(R.id.computationTextView);
+
 
         // Copy paste code below for each number.
         btn1.setOnClickListener(new View.OnClickListener() {
@@ -63,14 +66,14 @@ public class MainActivity extends AppCompatActivity {
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayScreen.setText(displayScreen.getText().toString() + "3");
+                displayScreen.setText(displayScreen.getText() + "3");
             }
 
         });
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayScreen.setText(displayScreen.getText().toString() + "4");
+                displayScreen.setText(displayScreen.getText() + "4");
             }
 
         });
@@ -78,35 +81,35 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println(displayScreen);
-                displayScreen.setText(displayScreen.getText().toString() + "5");
+                displayScreen.setText(displayScreen.getText() + "5");
             }
 
         });
         btn6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayScreen.setText(displayScreen.getText().toString() + "6");
+                displayScreen.setText(displayScreen.getText() + "6");
             }
 
         });
         btn7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayScreen.setText(displayScreen.getText().toString() + "7");
+                displayScreen.setText(displayScreen.getText() + "7");
             }
 
         });
         btn8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayScreen.setText(displayScreen.getText().toString() + "8");
+                displayScreen.setText(displayScreen.getText() + "8");
             }
 
         });
         btn9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayScreen.setText(displayScreen.getText().toString() + "9");
+                displayScreen.setText(displayScreen.getText() + "9");
             }
 
         });
@@ -173,9 +176,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         // +, -, *, / need a similar but different approach.
-    }
-
-    private void calculate(){
-
     }
 }
