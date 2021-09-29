@@ -45,6 +45,62 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayScreen.setText(displayScreen.getText() + "2");
+            }
+
+        });
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayScreen.setText(displayScreen.getText() + "3");
+            }
+
+        });
+        btn4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayScreen.setText(displayScreen.getText() + "4");
+            }
+
+        });
+        btn5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayScreen.setText(displayScreen.getText() + "5");
+            }
+
+        });
+        btn6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayScreen.setText(displayScreen.getText() + "6");
+            }
+
+        });
+        btn7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayScreen.setText(displayScreen.getText() + "7");
+            }
+
+        });
+        btn8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayScreen.setText(displayScreen.getText() + "8");
+            }
+
+        });
+        btn9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayScreen.setText(displayScreen.getText() + "9");
+            }
+
+        });
         // +, -, *, / need a similar but different approach.
     }
 }
