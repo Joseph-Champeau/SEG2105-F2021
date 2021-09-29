@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
     Button btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btnPlus, btnMinus, btnDiv,
@@ -33,6 +34,17 @@ public class MainActivity extends AppCompatActivity {
         btnMul = findViewById(R.id.btnMult);
         btnEqual = findViewById(R.id.btnEqual);
         btnDec = findViewById(R.id.btnDec);
-        btnDiv = findViewById(R.id.btnDiv);
+        btnClr = findViewById(R.id.btnClr);
+
+
+        // Copy paste code below for each number.
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayScreen.setText(displayScreen.getText() + "1");
+            }
+
+        });
+        // +, -, *, / need a similar but different approach.
     }
 }
