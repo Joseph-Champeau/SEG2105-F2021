@@ -11,9 +11,13 @@ public class MainActivity extends AppCompatActivity {
     private Button btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btnPlus, btnMinus, btnDiv,
             btnMul, btnEqual, btnDec, btnClr;
 
+
     TextView displayScreen ;
 
-
+    private final char DIVI = '/';
+    private final char MULTI = '*';
+    private final char SUB= '-';
+    private final char ADD = '+';
     private double val1= Double.NaN;
     private double val2;
 
@@ -110,37 +114,38 @@ public class MainActivity extends AppCompatActivity {
         btnEqual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                calculate();
+                displayScreen.setText(displayScreen.getText() + "9");
+                //displayScreen.setText(null);
 
-                displayScreen.setText(null);
-                //displayScreen.setText(displayScreen.getText() + "9");
             }
 
         });
         btnMul.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //displayScreen.setText(displayScreen.getText() + "9");
+                displayScreen.setText(displayScreen.getText() + "*");
             }
 
         });
         btnDiv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //displayScreen.setText(displayScreen.getText() + "9");
+                displayScreen.setText(displayScreen.getText() + "/");
             }
 
         });
         btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //displayScreen.setText(displayScreen.getText() + "9");
+                displayScreen.setText(displayScreen.getText() + "+");
             }
 
         });
         btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //displayScreen.setText(displayScreen.getText() + "9");
+                displayScreen.setText(displayScreen.getText() + "-");
             }
 
         });
@@ -148,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         btnDec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //displayScreen.setText(displayScreen.getText() + "9");
+                displayScreen.setText(displayScreen.getText() + ".");
             }
 
         });
@@ -156,9 +161,9 @@ public class MainActivity extends AppCompatActivity {
         btnClr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v ) {
-                if ( displayScreen.getText().length()>0){
-                    CharSequence obj = displayScreen.getText().toString();
-                    displayScreen.setText(obj.subSequence(0 ,obj.length()-1));
+                if ( displayScreen.getText().length()>0){ //counts the number of digits/operations within the display screen
+                    CharSequence obj = displayScreen.getText().toString(); //assign the display screen as a character sequence
+                    displayScreen.setText(obj.subSequence(0 ,obj.length()-1)); //upon click, it will remove the last value of the displayscreen
                 } else {
                     val1=Double.NaN;
                     val2=Double.NaN;
@@ -168,5 +173,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         // +, -, *, / need a similar but different approach.
+    }
+
+    private void calculate(){
+
     }
 }

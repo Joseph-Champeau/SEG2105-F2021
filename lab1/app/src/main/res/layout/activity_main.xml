@@ -30,7 +30,14 @@
         <TextView
             android:id="@+id/displayScreen"
             android:layout_width="386dp"
-            android:layout_height="241dp"
+            android:layout_height="wrap_content"
+            android:textColor="#DDD8D8"
+            android:textSize="96sp" />
+
+        <TextView
+            android:id="@+id/computationTextView"
+            android:layout_width="match_parent"
+            android:layout_height="115dp"
             android:textColor="#DDD8D8"
             android:textSize="96sp" />
 
@@ -207,7 +214,7 @@
             android:id="@+id/btnEqual"
             style="@android:style/Widget.DeviceDefault.Button.Colored"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="90dp"
             android:text="="
             android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
     </LinearLayout>
