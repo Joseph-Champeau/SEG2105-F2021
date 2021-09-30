@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private Operator op = Operator.none;
     private boolean checkDec = true; // checks if a decimal is already in place
     private boolean checkEql = true; // check if equal button has been pressed already
+    private String operationsSign = "+*-/"; //values of possibly operations
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,54 +184,78 @@ public class MainActivity extends AppCompatActivity {
         btnMul.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (op == Operator.none && displayScreen.getText().toString().length() != 0) {
-                    op = Operator.multiply;
+                String obj = computationTextView.getText().toString();
+                char last= obj.charAt(obj.length()-1);
+                if (operationsSign.contains(String.valueOf(last))){
+                    obj = computationTextView.getText().toString(); //assign the display screen as a character sequence
+                    computationTextView.setText(obj.subSequence(0 ,obj.length()-1)); //upon click, it will remove the last value of the displayscreen
+
+                } else{
                     d1 = Double.parseDouble(displayScreen.getText().toString());
+                }
+                    op = Operator.multiply;
                     displayScreen.setText("");
                     computationTextView.setText(computationTextView.getText() + "*");
                     checkDec = true;
                     checkEql = true;
-                }
             }
 
         });
         btnDiv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (op == Operator.none && displayScreen.getText().toString().length() != 0) {
-                    op = Operator.divide;
+                String obj = computationTextView.getText().toString();
+                char last= obj.charAt(obj.length()-1);
+                if (operationsSign.contains(String.valueOf(last))){
+                    obj = computationTextView.getText().toString(); //assign the display screen as a character sequence
+                    computationTextView.setText(obj.subSequence(0 ,obj.length()-1)); //upon click, it will remove the last value of the displayscreen
+
+                } else{
                     d1 = Double.parseDouble(displayScreen.getText().toString());
+                }
+                    op = Operator.divide;
                     displayScreen.setText("");
                     computationTextView.setText(computationTextView.getText() + "/");
                     checkDec = true;
                     checkEql = true;
-                }
             }
         });
         btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (op == Operator.none && displayScreen.getText().toString().length() != 0) {
+                String obj = computationTextView.getText().toString();
+                char last= obj.charAt(obj.length()-1);
+                if (operationsSign.contains(String.valueOf(last))){
+                    obj = computationTextView.getText().toString(); //assign the display screen as a character sequence
+                    computationTextView.setText(obj.subSequence(0 ,obj.length()-1)); //upon click, it will remove the last value of the displayscreen
+
+                } else{
+                    d1 = Double.parseDouble(displayScreen.getText().toString());
+                }
                     op = Operator.add;
-                    d1=Double.parseDouble(displayScreen.getText().toString());
                     displayScreen.setText("");
                     computationTextView.setText(computationTextView.getText() + "+");
                     checkDec = true;
                     checkEql = true;
-                }
             }
         });
         btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (op == Operator.none && displayScreen.getText().toString().length() != 0) {
-                    op = Operator.minus;
+                String obj = computationTextView.getText().toString();
+                char last= obj.charAt(obj.length()-1);
+                if (operationsSign.contains(String.valueOf(last))){
+                    obj = computationTextView.getText().toString(); //assign the display screen as a character sequence
+                    computationTextView.setText(obj.subSequence(0 ,obj.length()-1)); //upon click, it will remove the last value of the displayscreen
+
+                } else{
                     d1 = Double.parseDouble(displayScreen.getText().toString());
-                    computationTextView.setText(computationTextView.getText() + "-");
+                }
+                    op=Operator.minus;
                     displayScreen.setText("");
+                    computationTextView.setText(computationTextView.getText() + "-");
                     checkDec = true;
                     checkEql = true;
-                }
             }
         });
 
