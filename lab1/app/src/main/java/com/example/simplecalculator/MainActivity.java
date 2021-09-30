@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private enum Operator {none, add, minus, multiply, divide}
     private double d1 = 0, d2 = 0;
     private Operator op = Operator.none;
+    private String operationsSign = "+*-/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                     else {
                         result = Math.round(result * 1000d) / 1000d;
                         displayScreen.setText(String.valueOf((int) result));
-                        computationTextView.setText(String.valueOf(result));
+                        computationTextView.setText(String.valueOf((int)result));
                     }
 
 
@@ -167,8 +168,16 @@ public class MainActivity extends AppCompatActivity {
         btnMul.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String obj = computationTextView.getText().toString();
+                char last= obj.charAt(obj.length()-1);
+                if (operationsSign.contains(String.valueOf(last))){
+                    obj = computationTextView.getText().toString(); //assign the display screen as a character sequence
+                    computationTextView.setText(obj.subSequence(0 ,obj.length()-1)); //upon click, it will remove the last value of the displayscreen
+
+                } else{
+                    d1 = Double.parseDouble(displayScreen.getText().toString());
+                }
                 op = Operator.multiply;
-                d1 = Double.parseDouble(displayScreen.getText().toString());
                 displayScreen.setText("");
                 computationTextView.setText(computationTextView.getText() + "*");
             }
@@ -177,8 +186,16 @@ public class MainActivity extends AppCompatActivity {
         btnDiv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String obj = computationTextView.getText().toString();
+                char last= obj.charAt(obj.length()-1);
+                if (operationsSign.contains(String.valueOf(last))){
+                    obj = computationTextView.getText().toString(); //assign the display screen as a character sequence
+                    computationTextView.setText(obj.subSequence(0 ,obj.length()-1)); //upon click, it will remove the last value of the displayscreen
+
+                } else{
+                    d1 = Double.parseDouble(displayScreen.getText().toString());
+                }
                 op = Operator.divide;
-                d1 = Double.parseDouble(displayScreen.getText().toString());
                 displayScreen.setText("");
                 computationTextView.setText(computationTextView.getText() + "/");
             }
@@ -187,8 +204,16 @@ public class MainActivity extends AppCompatActivity {
         btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String obj = computationTextView.getText().toString();
+                char last= obj.charAt(obj.length()-1);
+                if (operationsSign.contains(String.valueOf(last))){
+                    obj = computationTextView.getText().toString(); //assign the display screen as a character sequence
+                    computationTextView.setText(obj.subSequence(0 ,obj.length()-1)); //upon click, it will remove the last value of the displayscreen
+
+                } else{
+                    d1 = Double.parseDouble(displayScreen.getText().toString());
+                }
                 op = Operator.add;
-                d1=Double.parseDouble(displayScreen.getText().toString());
                 displayScreen.setText("");
                 computationTextView.setText(computationTextView.getText() + "+");
             }
@@ -197,8 +222,16 @@ public class MainActivity extends AppCompatActivity {
         btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String obj = computationTextView.getText().toString();
+                char last= obj.charAt(obj.length()-1);
+                if (operationsSign.contains(String.valueOf(last))){
+                    obj = computationTextView.getText().toString(); //assign the display screen as a character sequence
+                    computationTextView.setText(obj.subSequence(0 ,obj.length()-1)); //upon click, it will remove the last value of the displayscreen
+
+                } else{
+                    d1 = Double.parseDouble(displayScreen.getText().toString());
+                }
                 op = Operator.minus;
-                d1 = Double.parseDouble(displayScreen.getText().toString());
                 computationTextView.setText(computationTextView.getText() + "-");
                 displayScreen.setText("");
             }
