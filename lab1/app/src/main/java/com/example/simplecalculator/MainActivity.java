@@ -114,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+
         btnEqual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
+            // +, -, *, need a similar to above but different approach. This is wrong.
         });
         btnMul.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,6 +177,5 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        // +, -, *, / need a similar but different approach.
     }
 }
