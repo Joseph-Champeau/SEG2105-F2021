@@ -9,14 +9,16 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
     private Button btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btnPlus, btnMinus, btnDiv,
-            btnMul, btnEqual, btnDec, btnClr;
+            btnMul, btnEqual, btnDec, btnClr, btnDel;
 
-    TextView displayScreen ;
+    TextView displayScreen;
     TextView computationTextView;
 
     private enum Operator {none, add, minus, multiply, divide}
     private double d1 = 0, d2 = 0;
     private Operator op = Operator.none;
+    private boolean checkDec = true; // checks if a decimal is already in place
+    private boolean checkEql = true; // check if equal button has been pressed already
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         btnEqual = (Button)findViewById(R.id.btnEqual);
         btnDec = (Button)findViewById(R.id.btnDec);
         btnClr = (Button)findViewById(R.id.btnClr);
+        btnDel = (Button)findViewById(R.id.btnDel);
         displayScreen= (TextView) findViewById(R.id.displayScreen);
         computationTextView= (TextView) findViewById(R.id.computationTextView);
 
@@ -48,80 +51,92 @@ public class MainActivity extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayScreen.setText(displayScreen.getText() +"1");
-                computationTextView.setText(computationTextView.getText() + "1");
+                if (checkEql) {
+                    displayScreen.setText(displayScreen.getText() + "1");
+                    computationTextView.setText(computationTextView.getText() + "1");
+                }
             }
-
         });
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayScreen.setText(displayScreen.getText() +"2");
-                computationTextView.setText(computationTextView.getText() + "2");
+                if (checkEql) {
+                    displayScreen.setText(displayScreen.getText() + "2");
+                    computationTextView.setText(computationTextView.getText() + "2");
+                }
             }
-
         });
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayScreen.setText(displayScreen.getText() +"3");
-                computationTextView.setText(computationTextView.getText() + "3");
+                if (checkEql) {
+                    displayScreen.setText(displayScreen.getText() + "3");
+                    computationTextView.setText(computationTextView.getText() + "3");
+                }
             }
-
         });
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayScreen.setText(displayScreen.getText() +"4");
-                computationTextView.setText(computationTextView.getText() + "4");
+                if (checkEql) {
+                    displayScreen.setText(displayScreen.getText() + "4");
+                    computationTextView.setText(computationTextView.getText() + "4");
+                }
             }
-
         });
         btn5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayScreen.setText(displayScreen.getText() + "5");
-                computationTextView.setText(computationTextView.getText() + "5");
+                if (checkEql) {
+                    displayScreen.setText(displayScreen.getText() + "5");
+                    computationTextView.setText(computationTextView.getText() + "5");
+                }
             }
-
         });
         btn6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayScreen.setText(displayScreen.getText() +"6");
-                computationTextView.setText(computationTextView.getText() + "6");
+                if (checkEql) {
+                    displayScreen.setText(displayScreen.getText() + "6");
+                    computationTextView.setText(computationTextView.getText() + "6");
+                }
             }
-
         });
         btn7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayScreen.setText(displayScreen.getText() +"7");
-                computationTextView.setText(computationTextView.getText() + "7");
+                if (checkEql) {
+                    displayScreen.setText(displayScreen.getText() + "7");
+                    computationTextView.setText(computationTextView.getText() + "7");
+                }
             }
-
         });
         btn8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayScreen.setText(displayScreen.getText() +"8");
-                computationTextView.setText(computationTextView.getText() + "8");
+                if (checkEql) {
+                    displayScreen.setText(displayScreen.getText() + "8");
+                    computationTextView.setText(computationTextView.getText() + "8");
+                }
             }
-
         });
         btn9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayScreen.setText(displayScreen.getText() +"9");
-                computationTextView.setText(computationTextView.getText() + "9");
+                if (checkEql) {
+                    displayScreen.setText(displayScreen.getText() + "9");
+                    computationTextView.setText(computationTextView.getText() + "9");
+                }
             }
 
         });
         btn0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayScreen.setText(displayScreen.getText() +"0");
-                computationTextView.setText(computationTextView.getText() + "0");
+                if (checkEql) {
+                    displayScreen.setText(displayScreen.getText() +"0");
+                    computationTextView.setText(computationTextView.getText() + "0");
+                }
             }
 
         });
@@ -131,8 +146,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(op != Operator.none) {
-
-                    d2 = Double.parseDouble(displayScreen.getText().toString());
+                    if (displayScreen.getText().toString().equals("")) {
+                        d2 = 0.0; // defaults value to 0 if = is pressed while display screen = ""
+                    } else {
+                        d2 = Double.parseDouble(displayScreen.getText().toString());
+                    }
                     double result;
                     result = 0;
                     if (op == Operator.add) {
@@ -155,77 +173,111 @@ public class MainActivity extends AppCompatActivity {
                     else {
                         result = Math.round(result * 1000d) / 1000d;
                         displayScreen.setText(String.valueOf((int) result));
-                        computationTextView.setText(String.valueOf(result));
+                        computationTextView.setText(String.valueOf((int) result));
                     }
-
+                    checkEql = false; // limits the use of any key but operators (+,-,/ and *)
 
                 }
             }
-
-            // +, -, *, need a similar to above but different approach. This is wrong.
         });
         btnMul.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                op = Operator.multiply;
-                d1 = Double.parseDouble(displayScreen.getText().toString());
-                displayScreen.setText("");
-                computationTextView.setText(computationTextView.getText() + "*");
+                if (op == Operator.none && displayScreen.getText().toString().length() != 0) {
+                    op = Operator.multiply;
+                    d1 = Double.parseDouble(displayScreen.getText().toString());
+                    displayScreen.setText("");
+                    computationTextView.setText(computationTextView.getText() + "*");
+                    checkDec = true;
+                    checkEql = true;
+                }
             }
 
         });
         btnDiv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                op = Operator.divide;
-                d1 = Double.parseDouble(displayScreen.getText().toString());
-                displayScreen.setText("");
-                computationTextView.setText(computationTextView.getText() + "/");
+                if (op == Operator.none && displayScreen.getText().toString().length() != 0) {
+                    op = Operator.divide;
+                    d1 = Double.parseDouble(displayScreen.getText().toString());
+                    displayScreen.setText("");
+                    computationTextView.setText(computationTextView.getText() + "/");
+                    checkDec = true;
+                    checkEql = true;
+                }
             }
-
         });
         btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                op = Operator.add;
-                d1=Double.parseDouble(displayScreen.getText().toString());
-                displayScreen.setText("");
-                computationTextView.setText(computationTextView.getText() + "+");
+                if (op == Operator.none && displayScreen.getText().toString().length() != 0) {
+                    op = Operator.add;
+                    d1=Double.parseDouble(displayScreen.getText().toString());
+                    displayScreen.setText("");
+                    computationTextView.setText(computationTextView.getText() + "+");
+                    checkDec = true;
+                    checkEql = true;
+                }
             }
-
         });
         btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                op = Operator.minus;
-                d1 = Double.parseDouble(displayScreen.getText().toString());
-                computationTextView.setText(computationTextView.getText() + "-");
-                displayScreen.setText("");
+                if (op == Operator.none && displayScreen.getText().toString().length() != 0) {
+                    op = Operator.minus;
+                    d1 = Double.parseDouble(displayScreen.getText().toString());
+                    computationTextView.setText(computationTextView.getText() + "-");
+                    displayScreen.setText("");
+                    checkDec = true;
+                    checkEql = true;
+                }
             }
-
         });
 
         btnDec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayScreen.setText(displayScreen.getText() +".");
-                computationTextView.setText(computationTextView.getText() + ".");
+                if (checkDec && checkEql && (!(displayScreen.getText().toString().equals("")))) {
+                    displayScreen.setText(displayScreen.getText() + ".");
+                    computationTextView.setText(computationTextView.getText() + ".");
+                    checkDec = false;
+                } else if (checkDec && checkEql) {
+                    displayScreen.setText(displayScreen.getText() + "0.");
+                    computationTextView.setText(computationTextView.getText() + "0.");
+                    checkDec = false;
+                }
             }
-
         });
 
         btnClr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v ) {
-                if ( displayScreen.getText().length()>0){ //counts the number of digits/operations within the display screen
-                    CharSequence obj = displayScreen.getText().toString(); //assign the display screen as a character sequence
-                    displayScreen.setText(obj.subSequence(0 ,obj.length()-1)); //upon click, it will remove the last value of the displayscreen
-                } else {
-                    d1=Double.NaN;
-                    d2=Double.NaN;
-                    displayScreen.setText("");
-                    computationTextView.setText("");
+                d1=Double.NaN;
+                d2=Double.NaN;
+                displayScreen.setText("");
+                computationTextView.setText("");
+                checkDec = true;
+                checkEql = true;
+                op = Operator.none;
+            }
+        });
 
+        btnDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v ) {
+                if (checkEql) {
+                    if (displayScreen.getText().length() > 0) { //counts the number of digits/operations within the display screen
+                        CharSequence obj = displayScreen.getText().toString(); //assign the display screen as a character sequence
+                        if (obj.toString().substring(obj.toString().length() - 1).equals(".")) {
+                            checkDec = true;
+                        }
+                        displayScreen.setText(obj.subSequence(0, obj.length() - 1)); // upon click, it will remove the last value of the displayScreen
+                        CharSequence objComp = computationTextView.getText().toString(); // assign the computationTextView screen as a character sequenc
+                        computationTextView.setText(objComp.subSequence(0, objComp.length() - 1)); //upon click, it will remove the last value of the computationTextView
+                    } else {
+                        displayScreen.setText("");
+                        computationTextView.setText(computationTextView.getText().toString());
+                    }
                 }
             }
         });
