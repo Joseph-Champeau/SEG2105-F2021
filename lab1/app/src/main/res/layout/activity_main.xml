@@ -35,14 +35,18 @@
                 android:layout_height="wrap_content"
                 android:textColor="#DDD8D8"
                 android:ems="10"
-                android:textSize="36sp" />
+                android:textSize="36sp" 
+                android:maxLines="1"
+                android:maxLength="20" />
 
             <TextView
                 android:id="@+id/displayScreen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#DDD8D8"
-                android:textSize="96sp" />
+                android:textSize="66sp" 
+                android:maxLines="1"
+                android:maxLength="10" />
 
             <LinearLayout
                 android:layout_width="match_parent"
