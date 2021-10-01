@@ -9,7 +9,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-35dp">
 
 
         <LinearLayout
@@ -20,32 +22,22 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="20pt"
-                android:background="#432578"
-                android:text="Simple Calculator"
-                android:textColor="#FFFBFB"
-                android:textSize="20sp"
-                android:textStyle="normal" />
-
-            <TextView
                 android:id="@+id/computationTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#DDD8D8"
                 android:ems="10"
-                android:textSize="36sp"
+                android:maxLength="20"
                 android:maxLines="1"
-                android:maxLength="20"/>
+                android:textColor="#DDD8D8"
+                android:textSize="36sp" />
 
             <TextView
                 android:id="@+id/displayScreen"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="161dp"
+                android:maxLines="1"
                 android:textColor="#DDD8D8"
-                android:textSize="66sp"
-                android:maxLines="1" />
+                android:textSize="66sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

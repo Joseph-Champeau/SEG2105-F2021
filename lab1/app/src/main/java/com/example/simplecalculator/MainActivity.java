@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         computationTextView= (TextView) findViewById(R.id.computationTextView);
 
 
-        // Copy paste code below for each number.
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,78 +183,87 @@ public class MainActivity extends AppCompatActivity {
         btnMul.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String obj = computationTextView.getText().toString();
-                char last= obj.charAt(obj.length()-1);
-                if (operationsSign.contains(String.valueOf(last))){
-                    obj = computationTextView.getText().toString(); //assign the display screen as a character sequence
-                    computationTextView.setText(obj.subSequence(0 ,obj.length()-1)); //upon click, it will remove the last value of the displayscreen
+                if (computationTextView.getText() != "") {
+                    String obj = computationTextView.getText().toString();
+                    char last = obj.charAt(obj.length() - 1);
+                    if (operationsSign.contains(String.valueOf(last))) {
+                        obj = computationTextView.getText().toString(); //assign the display screen as a character sequence
+                        computationTextView.setText(obj.subSequence(0, obj.length() - 1)); //upon click, it will remove the last value of the displayscreen
 
-                } else{
-                    d1 = Double.parseDouble(displayScreen.getText().toString());
-                }
+                    } else {
+                        d1 = Double.parseDouble(displayScreen.getText().toString());
+                    }
                     op = Operator.multiply;
                     displayScreen.setText("");
                     computationTextView.setText(computationTextView.getText() + "*");
                     checkDec = true;
                     checkEql = true;
+                }
             }
+
 
         });
         btnDiv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String obj = computationTextView.getText().toString();
-                char last= obj.charAt(obj.length()-1);
-                if (operationsSign.contains(String.valueOf(last))){
-                    obj = computationTextView.getText().toString(); //assign the display screen as a character sequence
-                    computationTextView.setText(obj.subSequence(0 ,obj.length()-1)); //upon click, it will remove the last value of the displayscreen
+                if (computationTextView.getText() != "") {
+                    String obj = computationTextView.getText().toString();
+                    char last = obj.charAt(obj.length() - 1);
+                    if (operationsSign.contains(String.valueOf(last))) {
+                        obj = computationTextView.getText().toString(); //assign the display screen as a character sequence
+                        computationTextView.setText(obj.subSequence(0, obj.length() - 1)); //upon click, it will remove the last value of the displayscreen
 
-                } else{
-                    d1 = Double.parseDouble(displayScreen.getText().toString());
-                }
+                    } else {
+                        d1 = Double.parseDouble(displayScreen.getText().toString());
+                    }
                     op = Operator.divide;
                     displayScreen.setText("");
                     computationTextView.setText(computationTextView.getText() + "/");
                     checkDec = true;
                     checkEql = true;
+                }
             }
         });
         btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String obj = computationTextView.getText().toString();
-                char last= obj.charAt(obj.length()-1);
-                if (operationsSign.contains(String.valueOf(last))){
-                    obj = computationTextView.getText().toString(); //assign the display screen as a character sequence
-                    computationTextView.setText(obj.subSequence(0 ,obj.length()-1)); //upon click, it will remove the last value of the displayscreen
+                if (computationTextView.getText() != "") {
+                    String obj = computationTextView.getText().toString();
+                    char last = obj.charAt(obj.length() - 1);
+                    if (operationsSign.contains(String.valueOf(last))) {
+                        obj = computationTextView.getText().toString(); //assign the display screen as a character sequence
+                        computationTextView.setText(obj.subSequence(0, obj.length() - 1)); //upon click, it will remove the last value of the displayscreen
 
-                } else{
-                    d1 = Double.parseDouble(displayScreen.getText().toString());
-                }
+                    } else {
+                        d1 = Double.parseDouble(displayScreen.getText().toString());
+                    }
                     op = Operator.add;
                     displayScreen.setText("");
                     computationTextView.setText(computationTextView.getText() + "+");
                     checkDec = true;
                     checkEql = true;
+                }
             }
         });
         btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String obj = computationTextView.getText().toString();
-                char last= obj.charAt(obj.length()-1);
-                if (operationsSign.contains(String.valueOf(last))){
-                    obj = computationTextView.getText().toString(); //assign the display screen as a character sequence
-                    computationTextView.setText(obj.subSequence(0 ,obj.length()-1)); //upon click, it will remove the last value of the displayscreen
+                if (computationTextView.getText() != "") {
+                    String obj = computationTextView.getText().toString();
+                    char last = obj.charAt(obj.length() - 1);
+                    if (operationsSign.contains(String.valueOf(last))) {
+                        obj = computationTextView.getText().toString(); //assign the display screen as a character sequence
+                        computationTextView.setText(obj.subSequence(0, obj.length() - 1)); //upon click, it will remove the last value of the displayscreen
 
-                } else{
-                    d1 = Double.parseDouble(displayScreen.getText().toString());
-                }
-                    op=Operator.minus;
+                    } else {
+                        d1 = Double.parseDouble(displayScreen.getText().toString());
+                    }
+                    op = Operator.minus;
                     displayScreen.setText("");
                     computationTextView.setText(computationTextView.getText() + "-");
                     checkDec = true;
                     checkEql = true;
+                }
             }
         });
 
