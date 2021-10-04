@@ -76,7 +76,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/Default_Empty"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:srcCompat="@drawable/default_Empty"
+        tools:srcCompat="@tools:sample/avatars"
+        android:src= "@drawable/default_Empty"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
