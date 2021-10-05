@@ -2,98 +2,137 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
+    android:background="#9C6074"
     tools:context=".ProfileActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="Select a New Avatar"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:id="@+id/tableLayout2"
+        android:layout_width="410dp"
+        android:layout_height="396dp"
+        android:background="#A8FFFCFC"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#00837B7B">
 
             <ImageView
-                android:id="@+id/imageView8"
+                android:id="@+id/logoImage05"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:srcCompat="@tools:sample/avatars"
-                android:src= "@drawable/fign01_hawks"/>
+                android:layout_weight="2"
+                android:stretchColumns="*"
+                android:onClick="SetTeamIcon"
+                app:srcCompat="@drawable/fign05_wizards" />
 
             <ImageView
-                android:id="@+id/imageView9"
+                android:id="@+id/logoImage06"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:srcCompat="@tools:sample/avatars"
-                android:src= "@drawable/fign02_celtics"/>
+                android:layout_weight="2"
+                android:stretchColumns="*"
+                android:onClick="SetTeamIcon"
+                app:srcCompat="@drawable/fign06_raptors" />
 
             <ImageView
-                android:id="@+id/imageView10"
+                android:id="@+id/logoImage01"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:srcCompat="@tools:sample/avatars"
-                android:src= "@drawable/fign03_nets"/>
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:stretchColumns="*"
+                android:onClick="SetTeamIcon"
+                app:srcCompat="@drawable/fign07_spurs" />
+
         </TableRow>
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/logoImage02"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:srcCompat="@tools:sample/avatars"
-                android:src= "@drawable/fign04_hornets"/>
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:stretchColumns="*"
+                android:onClick="SetTeamIcon"
+                app:srcCompat="@drawable/fign08_jazz" />
 
             <ImageView
-                android:id="@+id/imageView6"
+                android:id="@+id/logoImage03"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:srcCompat="@tools:sample/avatars"
-                android:src= "@drawable/fign05_wizards"/>
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:stretchColumns="*"
+                android:onClick="SetTeamIcon"
+                app:srcCompat="@drawable/fign09_kings" />
 
             <ImageView
-                android:id="@+id/imageView7"
+                android:id="@+id/logoImage04"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:srcCompat="@tools:sample/avatars"
-                android:src= "@drawable/fign06_raptors"/>
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:stretchColumns="*"
+                android:onClick="SetTeamIcon"
+                app:srcCompat="@drawable/fign04_hornets" />
+
         </TableRow>
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/logoImage07"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:srcCompat="@tools:sample/avatars"
-                android:src= "@drawable/fign07_spurs"/>
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:stretchColumns="*"
+                android:onClick="SetTeamIcon"
+                app:srcCompat="@drawable/fign01_hawks" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/logoImage08"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:srcCompat="@tools:sample/avatars"
-                android:src= "@drawable/fign08_jazz"/>
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:stretchColumns="*"
+                android:onClick="SetTeamIcon"
+                app:srcCompat="@drawable/fign02_celtics" />
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/logoImage09"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:srcCompat="@tools:sample/avatars"
-                android:src= "@drawable/fign09_kings"/>
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:stretchColumns="*"
+                android:onClick="SetTeamIcon"
+                app:srcCompat="@drawable/fign03_nets" />
+
         </TableRow>
-
     </TableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
