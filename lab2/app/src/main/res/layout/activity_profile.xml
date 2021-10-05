@@ -56,7 +56,7 @@
                 app:srcCompat="@drawable/fign06_raptors" />
 
             <ImageView
-                android:id="@+id/logoImage01"
+                android:id="@+id/logoImage07"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -72,7 +72,7 @@
             android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/logoImage02"
+                android:id="@+id/logoImage08"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -81,7 +81,7 @@
                 app:srcCompat="@drawable/fign08_jazz" />
 
             <ImageView
-                android:id="@+id/logoImage03"
+                android:id="@+id/logoImage09"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -106,7 +106,7 @@
             android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/logoImage07"
+                android:id="@+id/logoImage01"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -115,7 +115,7 @@
                 app:srcCompat="@drawable/fign01_hawks" />
 
             <ImageView
-                android:id="@+id/logoImage08"
+                android:id="@+id/logoImage02"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -124,7 +124,7 @@
                 app:srcCompat="@drawable/fign02_celtics" />
 
             <ImageView
-                android:id="@+id/logoImage09"
+                android:id="@+id/logoImage03"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
