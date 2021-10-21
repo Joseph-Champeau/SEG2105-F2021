@@ -10,8 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Deliverable_1">
         <activity
+            android:name=".Navigation_menu"
+            android:exported="true"
+            android:label="@string/title_activity_navigation"
+            android:theme="@style/Theme.Deliverable_1.NoActionBar" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
+            //android:theme="@style/AppTheme.NoActionBar"
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
