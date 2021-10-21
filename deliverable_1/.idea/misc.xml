@@ -6,9 +6,12 @@
         <entry key="..\:/Users/jccha/AndroidStudioProjects/deliverable_1/app/src/main/res/layout/activity_main.xml" value="0.176" />
         <entry key="..\:/Users/michi/SEG2105-F2021/deliverable_1/app/src/main/res/drawable/ic_checkbox.xml" value="0.346875" />
         <entry key="..\:/Users/michi/SEG2105-F2021/deliverable_1/app/src/main/res/drawable/ic_menu_camera.xml" value="0.346875" />
+        <entry key="..\:/Users/michi/SEG2105-F2021/deliverable_1/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.346875" />
+        <entry key="..\:/Users/michi/SEG2105-F2021/deliverable_1/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.346875" />
         <entry key="..\:/Users/michi/SEG2105-F2021/deliverable_1/app/src/main/res/layout/activity_displaymain.xml" value="0.31666666666666665" />
         <entry key="..\:/Users/michi/SEG2105-F2021/deliverable_1/app/src/main/res/layout/activity_main.xml" value="0.45969202898550726" />
         <entry key="..\:/Users/michi/SEG2105-F2021/deliverable_1/app/src/main/res/layout/activity_navigation.xml" value="0.203125" />
+        <entry key="..\:/Users/michi/SEG2105-F2021/deliverable_1/app/src/main/res/layout/activity_navigation_menu.xml" value="0.203125" />
         <entry key="..\:/Users/michi/SEG2105-F2021/deliverable_1/app/src/main/res/layout/app_bar_mainscreen.xml" value="0.3307291666666667" />
         <entry key="..\:/Users/michi/SEG2105-F2021/deliverable_1/app/src/main/res/layout/app_bar_navigation_menu.xml" value="0.176" />
         <entry key="..\:/Users/michi/SEG2105-F2021/deliverable_1/app/src/main/res/layout/content_mainscreen.xml" value="0.34270833333333334" />
@@ -21,6 +24,7 @@
         <entry key="..\:/Users/michi/SEG2105-F2021/deliverable_1/app/src/main/res/layout/navigation_header.xml" value="0.3307291666666667" />
         <entry key="..\:/Users/michi/SEG2105-F2021/deliverable_1/app/src/main/res/layout/navigation_menu_header.xml" value="0.203125" />
         <entry key="..\:/Users/michi/SEG2105-F2021/deliverable_1/app/src/main/res/menu/activity_mainscreen_drawer.xml" value="0.203125" />
+        <entry key="..\:/Users/michi/SEG2105-F2021/deliverable_1/app/src/main/res/menu/mainscreen.xml" value="0.3307291666666667" />
         <entry key="..\:/Users/michi/SEG2105-F2021/deliverable_1/app/src/main/res/menu/mainscreen_drawer.xml" value="0.203125" />
         <entry key="..\:/Users/michi/SEG2105-F2021/deliverable_1/app/src/main/res/menu/navigation.xml" value="0.203125" />
         <entry key="..\:/Users/michi/SEG2105-F2021/deliverable_1/app/src/main/res/menu/navigation_menu.xml" value="0.203125" />

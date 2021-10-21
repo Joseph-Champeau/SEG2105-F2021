@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/SEG2105-F2021.iml" filepath="$PROJECT_DIR$/.idea/SEG2105-F2021.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Deli1.iml" filepath="$PROJECT_DIR$/.idea/modules/Deli1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Deli1.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Deli1.app.iml" />
     </modules>
   </component>
 </project>
