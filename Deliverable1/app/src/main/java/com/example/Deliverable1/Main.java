@@ -86,7 +86,7 @@ public class Main extends AppCompatActivity {
                         String type = userProfile.type;
 
                         if(type.equals("admin")){
-                            startActivity(new Intent(Main.this, FrontScreen.class ));
+                            startActivity(new Intent(Main.this, Admin.class ));
                         }
                     }
 

@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Deliverable1">
         <activity
+            android:name=".Admin"
+            android:exported="true" />
+        <activity
             android:name=".Main"
             android:exported="true" />
         <activity
