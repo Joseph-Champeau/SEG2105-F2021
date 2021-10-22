@@ -4,34 +4,70 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Main">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:theme="@style/AppBarOverlay">
+
+        <Button
+            android:id="@+id/signOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:textStyle= "bold"
+            android:backgroundTint="#0ED6B9"
+            android:textColor= "#ffff"
+            android:textSize= "20sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            />
 
         <TextView
             android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="Welcome!"
+            android:textSize="80sp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/UsernameW"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:minHeight="?actionBarSize"
-            android:padding="@dimen/appbar_padding"
-            android:text="@string/app_name"
-            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
+            android:layout_gravity="center"
+            android:text="Manage your fitness"
+            android:textSize="40sp"
+            android:textStyle="italic"
+            android:layout_marginTop="30dp"
+            />
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+
+
+
+
+        <TextView
+            android:id="@+id/TypeW"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Manage your fitness"
+            android:textSize="40sp"
+            android:textStyle="italic"
+            android:layout_marginTop="50dp"
+            />
+
+
+
+
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

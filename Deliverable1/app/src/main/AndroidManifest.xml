@@ -10,13 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Deliverable1">
         <activity
-            android:name=".FrontScreen"
+            android:name=".Main"
             android:exported="true" />
         <activity
-            android:name=".MainscreenActivity"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.Deliverable1.NoActionBar">
+            android:name=".RegisterUser"
+            android:exported="true" />
+        <activity
+            android:name=".FrontScreen"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
