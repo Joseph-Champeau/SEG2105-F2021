@@ -4,55 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#D8000000"
     tools:context=".Admin">
 
 
-    <Button
-        android:id="@+id/addclass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="124dp"
-        android:gravity="center"
-        android:text="Add Class"
-        app:layout_constraintBottom_toBottomOf="@+id/text_del_instructor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.461"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="380dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Class"
-        android:inputType="textEmailAddress"
-        android:textSize="24sp"
-        tools:layout_editor_absoluteX="15dp"
-        tools:layout_editor_absoluteY="103dp" />
-
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="380dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:ems="10"
-        android:hint="Description"
-        android:inputType="textPassword"
-        android:textSize="24sp"
-        tools:layout_editor_absoluteX="15dp"
-        tools:layout_editor_absoluteY="59dp" />
 
     <TextView
-        android:id="@+id/add_class"
-        android:layout_width="wrap_content"
+        android:id="@+id/text_slideshow"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="548dp"
-        android:text="Manage Instructors"
+        android:layout_marginBottom="120dp"
+        android:text="Manage Accounts"
         android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/white"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_del_instructor"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
 
@@ -64,6 +32,7 @@
         android:layout_marginBottom="548dp"
         android:text="Manage Instructors"
         android:textAlignment="center"
+        android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,7 +55,7 @@
             android:id="@+id/autoCompleteDeleteInstructors"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            android:textColor="@color/white"
             android:layout_weight="1"
             android:inputType="none"
             android:text="Select an instructor to delete" />
@@ -99,6 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="404dp"
         android:text="Delete Instructor"
+        android:backgroundTint="@color/teal_200"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -110,6 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="328dp"
         android:text="Manage Members"
+        android:textColor="@color/white"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -132,7 +103,7 @@
             android:id="@+id/autoCompleteDeleteMembers"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            android:textColor="@color/white"
             android:layout_weight="1"
             android:inputType="none"
             android:text="Select an member to delete" />
@@ -143,11 +114,25 @@
         android:id="@+id/deleteMemberBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="176dp"
         android:text="Delete Member"
+        android:backgroundTint="@color/teal_200"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.527"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="290dp"
+        android:text="Home"
+        android:backgroundTint="@color/teal_200"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
 
 

@@ -23,7 +23,7 @@ public class Main extends AppCompatActivity {
     private String userID;
 
     private Button logout;
-    private  Button admin;
+    private Button admin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +86,7 @@ public class Main extends AppCompatActivity {
                         String type = userProfile.type;
 
                         if(type.equals("admin")){
-                            startActivity(new Intent(Main.this, Admin.class ));
+                            startActivity(new Intent(Main.this, AdminMain.class ));
                         }
                     }
 

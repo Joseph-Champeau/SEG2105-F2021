@@ -4,12 +4,19 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/CharllieDhaldane/Desktop/Git/Leadership App/SEG2105-F2021/Deliverable1/app/src/main/res/layout/activity_admin.xml" value="0.33" />
+        <entry key="..\:/Users/CharllieDhaldane/Desktop/Git/Leadership App/SEG2105-F2021/Deliverable1/app/src/main/res/layout/activity_admin_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/CharllieDhaldane/Desktop/Git/Leadership App/SEG2105-F2021/Deliverable1/app/src/main/res/layout/activity_class.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/CharllieDhaldane/Desktop/Git/Leadership App/SEG2105-F2021/Deliverable1/app/src/main/res/layout/activity_front_screen.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/CharllieDhaldane/Desktop/Git/Leadership App/SEG2105-F2021/Deliverable1/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/CharllieDhaldane/Desktop/Git/Leadership App/SEG2105-F2021/Deliverable1/app/src/main/res/layout/activity_mainscreen.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/CharllieDhaldane/Desktop/Git/Leadership App/SEG2105-F2021/Deliverable1/app/src/main/res/layout/activity_register_user.xml" value="0.33" />
         <entry key="..\:/Users/CharllieDhaldane/Desktop/Git/Leadership App/SEG2105-F2021/Deliverable1/app/src/main/res/layout/app_bar_mainscreen.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/CharllieDhaldane/Desktop/Git/Leadership App/SEG2105-F2021/Deliverable1/app/src/main/res/layout/content_mainscreen.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/CharllieDhaldane/Desktop/Git/Leadership App/SEG2105-F2021/Deliverable1/app/src/main/res/layout/fragment_gallery.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/CharllieDhaldane/Desktop/Git/Leadership App/SEG2105-F2021/Deliverable1/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/CharllieDhaldane/Desktop/Git/Leadership App/SEG2105-F2021/Deliverable1/app/src/main/res/layout/fragment_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/CharllieDhaldane/Desktop/Git/Leadership App/SEG2105-F2021/Deliverable1/app/src/main/res/layout/fragment_slideshow.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/CharllieDhaldane/Desktop/Git/Leadership App/SEG2105-F2021/Deliverable1/app/src/main/res/layout/nav_header_mainscreen.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/michi/AndroidStudioProjects/MyApplication/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.5703125" />
         <entry key="..\:/Users/michi/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/ic_launcher_background.xml" value="0.18796296296296297" />
         <entry key="..\:/Users/michi/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/ic_menu_camera.xml" value="0.5703125" />
