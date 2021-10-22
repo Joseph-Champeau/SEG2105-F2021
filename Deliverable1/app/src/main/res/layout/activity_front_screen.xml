@@ -40,7 +40,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="60dp"
             android:ems="10"
-            android:hint="Username"
+            android:hint="Email"
             android:inputType="textEmailAddress"
             android:textSize="24sp"
             />
@@ -98,6 +98,17 @@
                 android:textStyle="bold"
                />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="25dp"
+            android:text="admin email is admin@gmail.com firebase doesnt allow username login"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            />
 
         <ProgressBar
             android:id="@+id/progressBar"
