@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -62,15 +63,20 @@ public class AdminAccounts extends AppCompatActivity implements View.OnClickList
         instructorsDropdown = (Spinner) findViewById(R.id.manageInstructorsSpinner);
         memberDropdown = (Spinner) findViewById(R.id.manageMembersSpinner);
 
+        users = new Hashtable<String, String>();
 
         instructorEmails = new ArrayList<>();
         instructorEmails.add(0, "Select instructor");
+
         memberEmails = new ArrayList<>();
         memberEmails.add(0, "Select member");
-        users = new Hashtable<String, String>();
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
 
-        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+        getUserData();
+        initializeInstructorDropdown();
+        initializeMemberDropdown();
+    }
+    private void getUserData() {
+        FirebaseDatabase.getInstance().getReference("Users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -79,42 +85,31 @@ public class AdminAccounts extends AppCompatActivity implements View.OnClickList
                     String uID = snapshot.getKey();
                     String email = snapshot.child("email").getValue(String.class);
 
-                    if (type != null && (type.equals("Instructor") || type.equals("Member")))  {
-                        users.put(email, uID);
-                    }
+                    if (type != null && uID != null && email!= null) {
 
-                    if (type != null && type.equals("Instructor")) {
-                        instructorEmails.add(email);
-                    }
+                        if (!(instructorEmails.contains(email) || memberEmails.contains(email))) {
 
-                    if (type != null && type.equals("Member")) {
-                        memberEmails.add(email);
+                            if (type.equals("Instructor")) {
+                                instructorEmails.add(email);
+                            }
+
+                            if (type.equals("Member")) {
+                                memberEmails.add(email);
+                            }
+
+                            if ((type.equals("Instructor") || type.equals("Member"))) {
+                                users.put(email, uID);
+                            }
+                        }
                     }
-                    initializeInstructorDropdown();
-                    initializeMemberDropdown();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(AdminAccounts.this, "Something bad", Toast.LENGTH_LONG).show();
+                Toast.makeText(AdminAccounts.this, "Database Error", Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.home:
-                startActivity(new Intent(this, AdminMain.class));
-                break;
-            case R.id.deleteInstructorBtn:
-                deleteInstructor();
-                break;
-            case R.id.deleteMemberBtn:
-                deleteMember();
-                break;
-        }
     }
 
     public void initializeInstructorDropdown() {
@@ -169,50 +164,83 @@ public class AdminAccounts extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    public void deleteInstructor() { // add warning & confirm functionality
-        if (!(selectedInstructorEmail.equals(""))) {
+    @Override
+    public void onClick(@NonNull View view) {
+        switch (view.getId()) {
+            case R.id.home:
+                startActivity(new Intent(this, AdminMain.class));
+                break;
+            case R.id.deleteInstructorBtn:
+                deleteInstructor();
+                break;
+            case R.id.deleteMemberBtn:
+                deleteMember();
+                break;
+        }
+    }
+
+    public void deleteInstructor() {
+        if (selectedInstructorEmail.equals("")) {
+            Toast.makeText(AdminAccounts.this, "Select an instructor to delete", Toast.LENGTH_SHORT).show();
+        } else {
             String key = users.get(selectedInstructorEmail);
             if (key != null) {
-                FirebaseDatabase.getInstance().getReference("Users").child(key).addValueEventListener(new ValueEventListener() {
+                FirebaseDatabase.getInstance().getReference("Users").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        mDatabaseReference.child(key).removeValue(); // delete from realtime database
-                        // need to delete user authentication credentials...this requires Admin SDK which breaks current project. Credentials are deleted manually for now
-                        Toast.makeText(AdminAccounts.this, "Instructor deleted", Toast.LENGTH_SHORT).show();
-                        finish(); // closes activity
-                        startActivity(getIntent()); // reloads activity with updated data
+                        FirebaseDatabase.getInstance().getReference("Users").child(key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(AdminAccounts.this, "Instructor deleted", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        instructorEmails.clear();
+                        instructorEmails.add(0, "Select instructor");
+                        memberEmails.clear();
+                        memberEmails.add(0, "Select member");
+                        users.clear();
+                        getUserData();
+                        initializeInstructorDropdown();
+                        initializeMemberDropdown();
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(AdminAccounts.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                        Toast.makeText(AdminAccounts.this, "Database Error", Toast.LENGTH_LONG).show();
                     }
                 });
-                selectedInstructorEmail=""; // reset selection
             }
         }
     }
 
-    public void deleteMember() { // add warning & confirm functionality
-        if (!(selectedMemberEmail.equals(""))) {
+    public void deleteMember() {
+        if (selectedMemberEmail.equals("")) {
+            Toast.makeText(AdminAccounts.this, "Select a member to delete", Toast.LENGTH_SHORT).show();
+        } else {
             String key = users.get(selectedMemberEmail);
             if (key != null) {
-                FirebaseDatabase.getInstance().getReference("Users").child(key).addValueEventListener(new ValueEventListener() {
+                FirebaseDatabase.getInstance().getReference("Users").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        mDatabaseReference.child(key).removeValue(); // delete from realtime database
-                        // need to delete user authentication credentials...
-                        Toast.makeText(AdminAccounts.this, "Instructor deleted", Toast.LENGTH_SHORT).show();
-                        finish();
-                        startActivity(getIntent());
+                        FirebaseDatabase.getInstance().getReference("Users").child(key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(AdminAccounts.this, "Member deleted", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        instructorEmails.clear();
+                        instructorEmails.add(0, "Select instructor");
+                        memberEmails.clear();
+                        memberEmails.add(0, "Select member");
+                        users.clear();
+                        getUserData();
+                        initializeInstructorDropdown();
+                        initializeMemberDropdown();
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(AdminAccounts.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                        Toast.makeText(AdminAccounts.this, "Database Error", Toast.LENGTH_LONG).show();
                     }
                 });
-                selectedMemberEmail=""; // reset selection
             }
         }
     }

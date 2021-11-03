@@ -70,8 +70,8 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
         editTextEditName = (EditText) findViewById(R.id.text_edit_class_name_field);
         editTextEditDesc = (EditText) findViewById(R.id.text_edit_class_description_field);
 
-        deleteSpinner = (Spinner) findViewById(R.id.deleteClassSpinner); // need to add endless scroll functionality
-        editSpinner = (Spinner) findViewById(R.id.editClassSpinner); // need to add endless scroll functionality
+        deleteSpinner = (Spinner) findViewById(R.id.deleteClassSpinner);
+        editSpinner = (Spinner) findViewById(R.id.editClassSpinner);
 
         classTypesMap = new Hashtable<String, String>();
 
@@ -160,7 +160,7 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
     }
 
     @Override
-    public void onClick(@NonNull View view) {
+    public void onClick(View view) {
         switch (view.getId()) {
             case R.id.home:
                 startActivity(new Intent(this, AdminMain.class));
