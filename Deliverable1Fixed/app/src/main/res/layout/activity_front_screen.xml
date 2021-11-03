@@ -93,17 +93,6 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/help"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="25dp"
-            android:text="admin email is admin@gmail.com firebase doesnt allow username login"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleLarge"

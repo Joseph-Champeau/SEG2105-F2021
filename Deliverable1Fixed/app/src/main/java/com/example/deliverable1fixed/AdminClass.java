@@ -240,7 +240,7 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(AdminClass.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                        Toast.makeText(AdminClass.this, "Database Error", Toast.LENGTH_LONG).show();
                     }
                 });
                 selectedClassForEditing = ""; // reset selection
@@ -265,7 +265,7 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(AdminClass.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                        Toast.makeText(AdminClass.this, "Database Error", Toast.LENGTH_LONG).show();
                     }
                 });
                 selectedClassForEditing = ""; // reset selection
