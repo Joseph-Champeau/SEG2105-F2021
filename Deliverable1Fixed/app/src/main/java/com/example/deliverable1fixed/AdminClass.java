@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,18 +34,16 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
 
     private Button deleteButton;
     private Spinner deleteSpinner;
-    private String selectedClassForDeletion;
+    private String selectedClassTypeForDeletion;
 
     private Button editButton;
     private Spinner editSpinner;
-    private String selectedClassForEditing;
+    private String selectedClassTypeForEditing;
 
-    private Hashtable<String, String> classesMap;
+    private Hashtable<String, String> classTypesMap;
 
-    private DatabaseReference mDatabaseReference;
-
-    private ArrayList<String> classesForDeletion;
-    private ArrayList<String> classesForEditing;
+    private ArrayList<String> classTypesForDeletion;
+    private ArrayList<String> classTypesForEditing;
 
     private EditText editTextCreateName, editTextCreateDesc, editTextEditName, editTextEditDesc;
 
@@ -74,39 +73,45 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
         deleteSpinner = (Spinner) findViewById(R.id.deleteClassSpinner); // need to add endless scroll functionality
         editSpinner = (Spinner) findViewById(R.id.editClassSpinner); // need to add endless scroll functionality
 
-        classesMap = new Hashtable<String, String>();
+        classTypesMap = new Hashtable<String, String>();
 
-        classesForDeletion = new ArrayList<>();
-        classesForDeletion.add(0, "Select class");
+        classTypesForDeletion = new ArrayList<>();
+        classTypesForDeletion.add(0, "Select class");
 
-        classesForEditing = new ArrayList<>();
-        classesForEditing.add(0, "Select class");
+        classTypesForEditing = new ArrayList<>();
+        classTypesForEditing.add(0, "Select class");
 
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Classes");
+        getClassTypeData();
+        initializeDeleteClassTypeDropdown();
+        initializeEditClassTypeDropdown();
+    }
 
-        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+    private void getClassTypeData() {
+        FirebaseDatabase.getInstance().getReference("ClassTypes").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String name = snapshot.child("name").getValue(String.class);
                     String uID = snapshot.getKey();
-                    classesForDeletion.add(name);
-                    classesForEditing.add(name);
-                    classesMap.put(name, uID);
-                    initializeDeleteClassDropdown();
-                    initializeEditClassDropdown();
+                    if(name != null && uID != null) {
+                        if(!(classTypesForDeletion.contains(name) || classTypesForEditing.contains(name))) {
+                            classTypesForDeletion.add(name);
+                            classTypesForEditing.add(name);
+                            classTypesMap.put(name, uID);
+                        }
+                    }
                 }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(AdminClass.this, "Something bad", Toast.LENGTH_LONG).show();
+                Toast.makeText(AdminClass.this, "Database Error", Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    public void initializeDeleteClassDropdown() {
+    private void initializeDeleteClassTypeDropdown() {
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, classesForDeletion);
+                new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, classTypesForDeletion);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         deleteSpinner.setAdapter(adapter);
 
@@ -116,22 +121,22 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
                 if (!(parent.getItemAtPosition(position).equals("Select class"))) {
                     String item = parent.getItemAtPosition(position).toString();
                     Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_SHORT).show();
-                    selectedClassForDeletion = item;
+                    selectedClassTypeForDeletion = item;
                 } else {
-                    selectedClassForDeletion = "";
+                    selectedClassTypeForDeletion = "";
                 }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 Toast.makeText(AdminClass.this, "Select class", Toast.LENGTH_LONG).show();
-                selectedClassForDeletion = "";
+                selectedClassTypeForDeletion = "";
             }
         });
     }
 
-    public void initializeEditClassDropdown() {
+    private void initializeEditClassTypeDropdown() {
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, classesForEditing);
+                new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, classTypesForEditing);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         editSpinner.setAdapter(adapter);
 
@@ -141,41 +146,41 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
                 if (!(parent.getItemAtPosition(position).equals("Select class"))) {
                     String item = parent.getItemAtPosition(position).toString();
                     Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_SHORT).show();
-                    selectedClassForEditing = item;
+                    selectedClassTypeForEditing = item;
                 } else {
-                    selectedClassForEditing = "";
+                    selectedClassTypeForEditing = "";
                 }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 Toast.makeText(AdminClass.this, "Select class", Toast.LENGTH_LONG).show();
-                selectedClassForEditing = "";
+                selectedClassTypeForEditing = "";
             }
         });
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(@NonNull View view) {
         switch (view.getId()) {
             case R.id.home:
                 startActivity(new Intent(this, AdminMain.class));
                 break;
             case R.id.createClassBtn:
-                createClass();
+                createClassType();
                 break;
             case R.id.deleteClassBtn:
-                deleteClass();
+                deleteClassType();
                 break;
             case R.id.editClassBtn:
-                editClass();
+                editClassType();
                 break;
         }
     }
 
-    public void createClass() {
+    private void createClassType() {
 
         String name = editTextCreateName.getText().toString().trim();
-        if(name.isEmpty()){
+        if(name.isEmpty()) {
             String estring = "Enter a valid name";
             ForegroundColorSpan fgcspan = new ForegroundColorSpan(getResources().getColor(R.color.white));
             SpannableStringBuilder ssbuilder = new SpannableStringBuilder(estring);
@@ -195,15 +200,39 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
             editTextCreateDesc.requestFocus();
             return;
         }
+        if(classTypesForDeletion.contains(name)) {
+            Toast.makeText(AdminClass.this, "This class already exists", Toast.LENGTH_SHORT).show();
+        }
+
+
+
         ClassType newClass = new ClassType(name, description);
-        FirebaseDatabase.getInstance().getReference().child("Classes").push().setValue(newClass);
-        Toast.makeText(AdminClass.this, "Class created", Toast.LENGTH_SHORT).show();
-        finish(); // closes activity
-        startActivity(getIntent()); // reloads activity with updated data
+        FirebaseDatabase.getInstance().getReference("ClassTypes").push().setValue(newClass).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(AdminClass.this, "Class created", Toast.LENGTH_SHORT).show();
+            }
+        });
+        editTextCreateName.setText("");
+        editTextCreateDesc.setText("");
+        classTypesForDeletion.clear();
+        classTypesForDeletion.add(0, "Select class");
+        classTypesForEditing.clear();
+        classTypesForEditing.add(0, "Select class");
+        classTypesMap.clear();
+        getClassTypeData();
+        initializeDeleteClassTypeDropdown();
+        initializeEditClassTypeDropdown();
     }
 
-    public void editClass() {
+    private void editClassType() {
         String name = editTextEditName.getText().toString().trim();
+
+        if (selectedClassTypeForEditing.equals("")) {
+            Toast.makeText(AdminClass.this, "Select a class to edit", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if(name.isEmpty()){
             String estring = "Enter a valid name";
             ForegroundColorSpan fgcspan = new ForegroundColorSpan(getResources().getColor(R.color.white));
@@ -225,42 +254,68 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
             return;
         }
 
-        if (!(selectedClassForEditing.equals(""))) {
-            String key = classesMap.get(selectedClassForEditing);
-            if (key != null) {
-                FirebaseDatabase.getInstance().getReference("Classes").child(key).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        mDatabaseReference.child(key).child("name").setValue(name); // set new name
-                        mDatabaseReference.child(key).child("description").setValue(description); // set new description
-                        Toast.makeText(AdminClass.this, "Class updated", Toast.LENGTH_SHORT).show();
-                        finish(); // closes activity
-                        startActivity(getIntent()); // reloads activity with updated data
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(AdminClass.this, "Database Error", Toast.LENGTH_LONG).show();
-                    }
-                });
-                selectedClassForEditing = ""; // reset selection
-            }
+        String key = classTypesMap.get(selectedClassTypeForEditing);
+        if (key != null) {
+            FirebaseDatabase.getInstance().getReference("ClassTypes").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    FirebaseDatabase.getInstance().getReference("ClassTypes").child(key).child("name").
+                            setValue(name).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(AdminClass.this, "Name updated", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    FirebaseDatabase.getInstance().getReference("ClassTypes").child(key).child("description").
+                            setValue(description).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(AdminClass.this, "Description updated", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    Toast.makeText(AdminClass.this, "Class updated", Toast.LENGTH_SHORT).show();
+                    editTextEditName.setText("");
+                    editTextEditDesc.setText("");
+                    classTypesForDeletion.clear();
+                    classTypesForDeletion.add(0, "Select class");
+                    classTypesForEditing.clear();
+                    classTypesForEditing.add(0, "Select class");
+                    classTypesMap.clear();
+                    getClassTypeData();
+                    initializeDeleteClassTypeDropdown();
+                    initializeEditClassTypeDropdown();
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(AdminClass.this, "Database Error", Toast.LENGTH_LONG).show();
+                }
+            });
         }
-
-
     }
 
-    public void deleteClass() {
-        if (!(selectedClassForDeletion.equals(""))) {
-            String key = classesMap.get(selectedClassForDeletion);
+    private void deleteClassType() {
+        if (selectedClassTypeForDeletion.equals("")) {
+            Toast.makeText(AdminClass.this, "Select a class to delete", Toast.LENGTH_SHORT).show();
+        } else {
+            String key = classTypesMap.get(selectedClassTypeForDeletion);
             if (key != null) {
-                FirebaseDatabase.getInstance().getReference("Classes").child(key).addValueEventListener(new ValueEventListener() {
+                FirebaseDatabase.getInstance().getReference("ClassTypes").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        mDatabaseReference.child(key).removeValue(); // delete from realtime database
-                        Toast.makeText(AdminClass.this, "Class deleted", Toast.LENGTH_SHORT).show();
-                        finish(); // closes activity
-                        startActivity(getIntent()); // reloads activity with updated data
+                        FirebaseDatabase.getInstance().getReference("ClassTypes").child(key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(AdminClass.this, "Class deleted", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        classTypesForDeletion.clear();
+                        classTypesForDeletion.add(0, "Select class");
+                        classTypesForEditing.clear();
+                        classTypesForEditing.add(0, "Select class");
+                        classTypesMap.clear();
+                        getClassTypeData();
+                        initializeEditClassTypeDropdown();
+                        initializeDeleteClassTypeDropdown();
                     }
 
                     @Override
@@ -268,7 +323,6 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
                         Toast.makeText(AdminClass.this, "Database Error", Toast.LENGTH_LONG).show();
                     }
                 });
-                selectedClassForEditing = ""; // reset selection
             }
         }
     }

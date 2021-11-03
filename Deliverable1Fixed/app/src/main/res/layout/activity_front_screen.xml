@@ -39,7 +39,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="60dp"
             android:ems="10"
-            android:hint="Email"
+            android:hint="Email/Username"
             android:inputType="textEmailAddress"
             android:textSize="24sp" />
 
