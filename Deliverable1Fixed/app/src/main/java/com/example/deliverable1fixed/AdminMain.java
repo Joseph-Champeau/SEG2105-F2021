@@ -62,7 +62,7 @@ public class AdminMain extends AppCompatActivity implements View.OnClickListener
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(AdminMain.this, "Something bad", Toast.LENGTH_LONG).show();
+                Toast.makeText(AdminMain.this, "Database Error", Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -1,13 +1,13 @@
 package com.example.deliverable1fixed;
 
-public class Class {
+public class ClassType {
 
     public String name;
     public String description;
 
-    public Class() {}
+    public ClassType() {}
 
-    public Class(String name, String description) {
+    public ClassType(String name, String description) {
         this.name = name;
         this.description = description;
     }

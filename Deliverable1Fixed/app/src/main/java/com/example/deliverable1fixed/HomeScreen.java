@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +33,8 @@ public class HomeScreen extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_home_screen);
 
-        logout = (Button) findViewById(R.id.signOut);
+        Button logout = (Button) findViewById(R.id.signOut);
+
         admin = (Button) findViewById(R.id.adminButton);
 
         logout.setOnClickListener(new View.OnClickListener() {
@@ -44,6 +44,7 @@ public class HomeScreen extends AppCompatActivity {
                 startActivity(new Intent(HomeScreen.this, FrontScreen.class));
             }
         });
+
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");
         userID = user.getUid();
@@ -70,12 +71,15 @@ public class HomeScreen extends AppCompatActivity {
                     EmailWTextView.setText("Email: " + email);
                     NameWTextView.setText("Name: "+ name);
                     AgeWTextView.setText("Age: "+ age);
+                    if (userProfile.type.equals("Member") || userProfile.type.equals("Instructor")) { // if user is not Admin type
+                        admin.setVisibility(View.GONE); // hide admin button from view
+                    }
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(HomeScreen.this, "Something bad", Toast.LENGTH_LONG).show();
+                Toast.makeText(HomeScreen.this, "Database Error", Toast.LENGTH_LONG).show();
             }
         });
         admin.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +98,7 @@ public class HomeScreen extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(HomeScreen.this, "Something bad", Toast.LENGTH_LONG).show();
+                        Toast.makeText(HomeScreen.this, "Database Error", Toast.LENGTH_LONG).show();
                     }
                 });
             }

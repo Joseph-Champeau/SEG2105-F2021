@@ -195,7 +195,7 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
             editTextCreateDesc.requestFocus();
             return;
         }
-        Class newClass = new Class(name, description);
+        ClassType newClass = new ClassType(name, description);
         FirebaseDatabase.getInstance().getReference().child("Classes").push().setValue(newClass);
         Toast.makeText(AdminClass.this, "Class created", Toast.LENGTH_SHORT).show();
         finish(); // closes activity

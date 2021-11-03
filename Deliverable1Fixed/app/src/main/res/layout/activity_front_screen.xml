@@ -33,7 +33,7 @@
             android:textStyle="italic" />
 
         <EditText
-            android:id="@+id/email"
+            android:id="@+id/identifier"
             android:layout_width="380dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
