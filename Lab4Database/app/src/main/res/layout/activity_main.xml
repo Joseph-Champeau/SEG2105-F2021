@@ -86,7 +86,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/btnAdd"
+            android:id="@+id/Add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -94,7 +94,7 @@
             android:text="Add" />
 
         <Button
-            android:id="@+id/btnFind"
+            android:id="@+id/Find"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -102,7 +102,7 @@
             android:text="Find" />
 
         <Button
-            android:id="@+id/btnDelete"
+            android:id="@+id/Delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -110,7 +110,7 @@
             android:text="Delete" />
 
         <Button
-            android:id="@+id/btnViewAll"
+            android:id="@+id/idViewAllbtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
