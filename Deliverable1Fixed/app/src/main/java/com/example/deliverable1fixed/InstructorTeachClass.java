@@ -44,6 +44,7 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
     private DatabaseReference referenceClasses;
 
     private EditText editTextSetCapacity;
+    private EditText editTextSetName;
 
     private Spinner daysSpinner;
     private String selectedDay;
@@ -89,6 +90,8 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
 
         Resources res = getResources();
 
+        editTextSetName = (EditText) findViewById(R.id.text_teach_class_name_field);
+
         editTextSetCapacity= (EditText) findViewById(R.id.text_teach_class_capacity_field);
         editTextSetCapacity.setTransformationMethod(new NumericKeyBoardTransformationMethod());
 
@@ -120,6 +123,7 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
         pullClassesData();
         initializeAllSpinnerDropdowns();
         checkDayAndClassType(new ClassType(), ""); // initialize pull with null values
+        checkExistingName(""); // initialize pull with null values
     }
 
     @Override
@@ -175,6 +179,7 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
             }
         });
     }
+
 
     private void initializeAllSpinnerDropdowns() {
 
@@ -271,18 +276,30 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
         });
     }
 
-    private boolean checkDayAndClassType(ClassType classType, String day) {
+    private String checkDayAndClassType(ClassType classType, String day) {
         if(classesList != null) {
             for (int i = 0; i < classesList.size(); i++) {
                 if (classesList.get(i).classType.name.equals(classType.name)) {
                     if (classesList.get(i).day.equals(day)) {
-                        return true;
+                        return classesList.get(i).instructor.fullName;
                     }
                 }
             }
-            return false;
+            return "";
         }
-        return false;
+        return "";
+    }
+
+    private String checkExistingName(String name) {
+        if(classesList != null) {
+            for (int i = 0; i < classesList.size(); i++) {
+                    if (classesList.get(i).name.equals(name)) {
+                        return classesList.get(i).name;
+                    }
+                }
+            return "";
+        }
+        return "";
     }
 
     private void createClass() {
@@ -291,6 +308,23 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
         if(classType != null) {
 
             // form field validation
+            String name = editTextSetName.getText().toString().trim();
+            if (name.isEmpty()) {
+                String estring = "Enter a valid name";
+                ForegroundColorSpan fgcspan = new ForegroundColorSpan(getResources().getColor(R.color.white));
+                SpannableStringBuilder ssbuilder = new SpannableStringBuilder(estring);
+                ssbuilder.setSpan(fgcspan, 0, estring.length(), 0);
+                editTextSetName.setError(ssbuilder);
+                editTextSetName.requestFocus();
+                return;
+            }
+            if(!(checkExistingName(name).equals(""))) {
+                Toast.makeText(InstructorTeachClass.this, "Already existing " + classType.name +
+                                " class named: " + checkExistingName(name), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+
             if (selectedDifficultyLevel.equals("")) {
                 Toast.makeText(InstructorTeachClass.this, "Select a difficulty level", Toast.LENGTH_SHORT).show();
                 return;
@@ -301,9 +335,10 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
             }
 
             // verify if there exists a class of the same type on the selectedDay
-            if(checkDayAndClassType(classType, selectedDay)) {
+            if(!(checkDayAndClassType(classType, selectedDay).equals(""))) {
                 Toast.makeText(InstructorTeachClass.this, "Already existing " + classType.name +
-                        " class on " + selectedDay, Toast.LENGTH_SHORT).show();
+                        " class on " + selectedDay + " scheduled by: " + checkDayAndClassType(classType, selectedDay)
+                        , Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -311,7 +346,6 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
                 Toast.makeText(InstructorTeachClass.this, "Select a time slot", Toast.LENGTH_SHORT).show();
                 return;
             }
-
             String capacity = editTextSetCapacity.getText().toString().trim();
             if (capacity.isEmpty()) {
                 String estring = "Enter a valid capacity";
@@ -324,7 +358,7 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
             }
 
             // push to realtime database
-            Class newClass = new Class(user, classType, selectedDifficultyLevel, selectedDay, selectedTimeSlot, capacity);
+            Class newClass = new Class(name, user, classType, selectedDifficultyLevel, selectedDay, selectedTimeSlot, capacity);
             referenceClasses.push().setValue(newClass).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
@@ -332,6 +366,7 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
                 }
             });
             // reset page (without refresh)
+            editTextSetName.setText("");
             editTextSetCapacity.setText("");
             classTypesList.clear();
             classTypesList.add(0, "Select class type");
