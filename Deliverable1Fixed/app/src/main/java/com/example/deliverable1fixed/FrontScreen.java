@@ -155,7 +155,7 @@ public class FrontScreen extends AppCompatActivity implements View.OnClickListen
                 progressBar.setVisibility(View.GONE);
                 return false;
             } else if (!(emailAuthMap.containsKey(identifier))) {
-                Toast.makeText(FrontScreen.this, "Login failed: invalid email", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Login failed: invalid email", Toast.LENGTH_LONG).show();
                 progressBar.setVisibility(View.GONE);
                 return false;
             } else if (!(Objects.equals(emailAuthMap.get(identifier), password))) {

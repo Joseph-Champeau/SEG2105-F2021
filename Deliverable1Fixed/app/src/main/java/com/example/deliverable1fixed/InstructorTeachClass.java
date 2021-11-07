@@ -62,6 +62,8 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
     private ArrayList<String> classTypesList;
     private Hashtable<String, ClassType> classTypesMap;
 
+    private ArrayList<Class> classesList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,10 +112,14 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
         classTypesList = new ArrayList<>();
         classTypesList.add(0, "Select class type");
 
+        classesList = new ArrayList<>();
+
         classTypesMap = new Hashtable<String, ClassType>();
 
         pullClassTypeData();
+        pullClassesData();
         initializeAllSpinnerDropdowns();
+        checkDayAndClassType(new ClassType(), ""); // initialize pull with null values
     }
 
     @Override
@@ -121,6 +127,7 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
         switch (v.getId()) {
             case R.id.createClassToTeachBtn:
                 createClass();
+                break;
             case R.id.homeBtn:
                 Intent intentView = new Intent(InstructorTeachClass.this, InstructorMain.class);
                 intentView.putExtra("arg", userID);
@@ -141,6 +148,24 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
                             classTypesList.add(name);
                             classTypesMap.put(name, classTypeObject);
                         }
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(InstructorTeachClass.this, "Database Error", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void pullClassesData() {
+        referenceClasses.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Class classObject = snapshot.getValue(Class.class);
+                    if(classObject != null) {
+                        classesList.add(classObject);
                     }
                 }
             }
@@ -246,26 +271,18 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
         });
     }
 
-    private void checkDayAndClassType(String day, ClassType classType) {
-        referenceClasses.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Class classObject = snapshot.getValue(Class.class);
-                    if (classObject != null) {
-                        if (classObject.classType.equals(classType) && classObject.day.equals(day)) {
-                            Toast.makeText(InstructorTeachClass.this, classType.name +
-                                    " class already scheduled on " + day, Toast.LENGTH_LONG).show();
-                            return;
-                        }
+    private boolean checkDayAndClassType(ClassType classType, String day) {
+        if(classesList != null) {
+            for (int i = 0; i < classesList.size(); i++) {
+                if (classesList.get(i).classType.name.equals(classType.name)) {
+                    if (classesList.get(i).day.equals(day)) {
+                        return true;
                     }
                 }
             }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(InstructorTeachClass.this, "Database Error", Toast.LENGTH_LONG).show();
-            }
-        });
+            return false;
+        }
+        return false;
     }
 
     private void createClass() {
@@ -284,7 +301,11 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
             }
 
             // verify if there exists a class of the same type on the selectedDay
-            checkDayAndClassType(selectedDay, classType);
+            if(checkDayAndClassType(classType, selectedDay)) {
+                Toast.makeText(InstructorTeachClass.this, "Already existing " + classType.name +
+                        " class on " + selectedDay, Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             if (selectedTimeSlot.equals("")) {
                 Toast.makeText(InstructorTeachClass.this, "Select a time slot", Toast.LENGTH_SHORT).show();
@@ -315,8 +336,13 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
             classTypesList.clear();
             classTypesList.add(0, "Select class type");
             classTypesMap.clear();
+            classesList.clear();
             pullClassTypeData();
+            pullClassesData();
             initializeAllSpinnerDropdowns();
+        } else {
+            Toast.makeText(InstructorTeachClass.this, "Select a class type", Toast.LENGTH_SHORT).show();
+            return;
         }
     }
 }
