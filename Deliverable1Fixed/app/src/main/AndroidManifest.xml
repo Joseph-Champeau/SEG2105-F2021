@@ -11,6 +11,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Deliverable1Fixed">
         <activity
+            android:name=".InstructorMain"
+            android:exported="true"/>
+        <activity
+            android:name=".InstructorTeachClass"
+            android:exported="true"/>
+        <activity
             android:name=".AdminClass"
             android:exported="true"/>
         <activity

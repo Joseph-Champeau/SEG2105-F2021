@@ -28,8 +28,10 @@ import java.util.Hashtable;
 
 public class AdminClass extends AppCompatActivity implements View.OnClickListener {
 
-    private Button homeButton;
+    private DatabaseReference reference;
+    private String userID;
 
+    private Button homeButton;
     private Button createButton;
 
     private Button deleteButton;
@@ -52,6 +54,9 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_admin_manage_classes);
+
+        userID = getIntent().getExtras().getString("arg");
+        reference = FirebaseDatabase.getInstance().getReference("ClassTypes");
 
         homeButton = (Button) findViewById(R.id.home);
         homeButton.setOnClickListener(this);
@@ -87,7 +92,7 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
     }
 
     private void getClassTypeData() {
-        FirebaseDatabase.getInstance().getReference("ClassTypes").addValueEventListener(new ValueEventListener() {
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -163,7 +168,9 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.home:
-                startActivity(new Intent(this, AdminMain.class));
+                Intent intentClasses = new Intent(AdminClass.this, AdminMain.class);
+                intentClasses.putExtra("arg", userID);
+                startActivity(intentClasses);
                 break;
             case R.id.createClassBtn:
                 createClassType();
@@ -207,7 +214,7 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
 
 
         ClassType newClass = new ClassType(name, description);
-        FirebaseDatabase.getInstance().getReference("ClassTypes").push().setValue(newClass).addOnSuccessListener(new OnSuccessListener<Void>() {
+        reference.push().setValue(newClass).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(AdminClass.this, "Class created", Toast.LENGTH_SHORT).show();
@@ -256,17 +263,17 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
 
         String key = classTypesMap.get(selectedClassTypeForEditing);
         if (key != null) {
-            FirebaseDatabase.getInstance().getReference("ClassTypes").addListenerForSingleValueEvent(new ValueEventListener() {
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    FirebaseDatabase.getInstance().getReference("ClassTypes").child(key).child("name").
+                    reference.child(key).child("name").
                             setValue(name).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             Toast.makeText(AdminClass.this, "Name updated", Toast.LENGTH_SHORT).show();
                         }
                     });
-                    FirebaseDatabase.getInstance().getReference("ClassTypes").child(key).child("description").
+                    reference.child(key).child("description").
                             setValue(description).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
@@ -299,10 +306,10 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
         } else {
             String key = classTypesMap.get(selectedClassTypeForDeletion);
             if (key != null) {
-                FirebaseDatabase.getInstance().getReference("ClassTypes").addListenerForSingleValueEvent(new ValueEventListener() {
+                reference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        FirebaseDatabase.getInstance().getReference("ClassTypes").child(key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        reference.child(key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
                                 Toast.makeText(AdminClass.this, "Class deleted", Toast.LENGTH_SHORT).show();

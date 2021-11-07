@@ -10,8 +10,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,9 +18,9 @@ import com.google.firebase.database.ValueEventListener;
 
 public class AdminMain extends AppCompatActivity implements View.OnClickListener{
 
-    private FirebaseUser admin;
     private DatabaseReference reference;
     private String userID;
+
     private Button classes;
     private Button accounts;
     private Button logout;
@@ -41,9 +39,8 @@ public class AdminMain extends AppCompatActivity implements View.OnClickListener
         logout = (Button) findViewById(R.id.adminSignOut);
         logout.setOnClickListener(this);
 
-        admin = FirebaseAuth.getInstance().getCurrentUser();
+        userID = getIntent().getExtras().getString("arg"); // passed from previous page
         reference = FirebaseDatabase.getInstance().getReference("Users");
-        userID = admin.getUid();
 
         final TextView UsernameWTextView = (TextView) findViewById(R.id.adminUsername);
         final TextView TypeWTextView = (TextView) findViewById(R.id.adminUserType);
@@ -54,7 +51,6 @@ public class AdminMain extends AppCompatActivity implements View.OnClickListener
                 if(userProfile != null){
                     String username = userProfile.username;
                     String type = userProfile.type;
-
                     UsernameWTextView.setText("Username: " + username);
                     TypeWTextView.setText("Type: " + type);
                 }
@@ -71,15 +67,19 @@ public class AdminMain extends AppCompatActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.classes:
-                startActivity(new Intent(this, AdminClass.class));
+                Intent intentClasses = new Intent(AdminMain.this, AdminClass.class);
+                intentClasses.putExtra("arg", userID);
+                startActivity(intentClasses);
                 break;
 
             case R.id.accounts:
-                startActivity(new Intent(this, AdminAccounts.class));
+                Intent intentAccounts = new Intent(AdminMain.this, AdminAccounts.class);
+                intentAccounts.putExtra("arg", userID);
+                startActivity(intentAccounts);
                 break;
 
             case R.id.adminSignOut:
-                startActivity(new Intent(this, FrontScreen.class));
+                startActivity(new Intent(AdminMain.this, FrontScreen.class));
                 break;
         }
     }

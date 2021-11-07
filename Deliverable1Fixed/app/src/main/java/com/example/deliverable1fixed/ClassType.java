@@ -11,5 +11,4 @@ public class ClassType {
         this.name = name;
         this.description = description;
     }
-
 }

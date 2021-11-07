@@ -37,7 +37,8 @@ public class AdminAccounts extends AppCompatActivity implements View.OnClickList
     private String selectedMemberEmail;
     private String selectedInstructorEmail;
 
-    private DatabaseReference mDatabaseReference;
+    private DatabaseReference reference;
+    private String userID;
 
     private ArrayList<String> instructorEmails;
     private ArrayList<String> memberEmails;
@@ -50,6 +51,9 @@ public class AdminAccounts extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_admin_manage_accounts);
+
+        userID = getIntent().getExtras().getString("arg"); // passed from previous page
+        reference = FirebaseDatabase.getInstance().getReference("Users");
 
         homeButton = (Button) findViewById(R.id.home);
         homeButton.setOnClickListener(this);
@@ -76,7 +80,7 @@ public class AdminAccounts extends AppCompatActivity implements View.OnClickList
         initializeMemberDropdown();
     }
     private void getUserData() {
-        FirebaseDatabase.getInstance().getReference("Users").addValueEventListener(new ValueEventListener() {
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -168,7 +172,9 @@ public class AdminAccounts extends AppCompatActivity implements View.OnClickList
     public void onClick(@NonNull View view) {
         switch (view.getId()) {
             case R.id.home:
-                startActivity(new Intent(this, AdminMain.class));
+                Intent intent = new Intent(AdminAccounts.this, AdminMain.class);
+                intent.putExtra("arg", userID);
+                startActivity(intent);
                 break;
             case R.id.deleteInstructorBtn:
                 deleteInstructor();
@@ -185,10 +191,10 @@ public class AdminAccounts extends AppCompatActivity implements View.OnClickList
         } else {
             String key = users.get(selectedInstructorEmail);
             if (key != null) {
-                FirebaseDatabase.getInstance().getReference("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+                reference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        FirebaseDatabase.getInstance().getReference("Users").child(key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        reference.child(key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
                                 Toast.makeText(AdminAccounts.this, "Instructor deleted", Toast.LENGTH_SHORT).show();
@@ -218,10 +224,10 @@ public class AdminAccounts extends AppCompatActivity implements View.OnClickList
         } else {
             String key = users.get(selectedMemberEmail);
             if (key != null) {
-                FirebaseDatabase.getInstance().getReference("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+                reference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        FirebaseDatabase.getInstance().getReference("Users").child(key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        reference.child(key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
                                 Toast.makeText(AdminAccounts.this, "Member deleted", Toast.LENGTH_SHORT).show();

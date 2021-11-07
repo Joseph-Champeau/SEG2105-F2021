@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
@@ -65,8 +66,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
         radioGroup = findViewById(R.id.radioGroup);
 
-        radioButton = findViewById(R.id.memeber);
-        mAuth = FirebaseAuth.getInstance();
+        radioButton = findViewById(R.id.userTypeRadBtn);
 
         emails = new ArrayList<>();
         usernames = new ArrayList<>();
@@ -77,7 +77,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.title:
-                startActivity(new Intent(this, FrontScreen.class));
+                startActivity(new Intent(RegisterUser.this, FrontScreen.class));
                 break;
             case R.id.register:
                 registerUser();
@@ -87,7 +87,6 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
     public void checkButton(View v){
         int radioId = radioGroup.getCheckedRadioButtonId();
-
         radioButton = findViewById(radioId);
     }
 
@@ -216,36 +215,16 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         if(validateRegistrationFormFields(email, password, fullName, age, username)) {
             pullUserData();
             progressBar.setVisibility(View.VISIBLE);
-
             if(validateRegistrationEmailAndUsername(email, username)) {
-                mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(task.isSuccessful()){
-                                    User user = new User(fullName, age, email, username, type, password);
-
-                                    FirebaseDatabase.getInstance().getReference("Users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
-                                            .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if(task.isSuccessful()){
-                                                Toast.makeText(RegisterUser.this, "Registered successfully", Toast.LENGTH_SHORT).show();
-                                                progressBar.setVisibility(View.GONE);
-                                                startActivity(new Intent(RegisterUser.this, FrontScreen.class ));
-
-                                            } else {
-                                                Toast.makeText(RegisterUser.this, "Registered failed", Toast.LENGTH_LONG).show();
-                                                progressBar.setVisibility(View.GONE);
-                                            }
-                                        }
-                                    });
-                                } else {
-                                    Toast.makeText(RegisterUser.this, "Registered failed", Toast.LENGTH_LONG).show();
-                                    progressBar.setVisibility(View.VISIBLE);
-                                }
-                            }
-                        });
+                User newUser = new User(fullName, age, email, username, type, password);
+                FirebaseDatabase.getInstance().getReference("Users").push().setValue(newUser).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(RegisterUser.this, "User registered successfully", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                        startActivity(new Intent(RegisterUser.this, FrontScreen.class ));
+                    }
+                });
             }
         }
     }

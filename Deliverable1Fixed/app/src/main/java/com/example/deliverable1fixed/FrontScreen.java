@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
@@ -13,30 +14,32 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.firebase.auth.FirebaseAuth;
+
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.AuthResult;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Objects;
 
 public class FrontScreen extends AppCompatActivity implements View.OnClickListener {
 
-    private FirebaseAuth mAuth;
     private TextView register;
     private EditText editTextIdentifier, editTextPassword;
     private Button signIn;
     private ProgressBar progressBar;
 
-    private Hashtable<String, String> identifierAuthMap;
-    private Hashtable<String, String> identifierUsernameToEmailAuthMap;
+    public String userID;
+    private DatabaseReference reference;
+    private Hashtable<String, String> emailUidMap;
+    private Hashtable<String, String> usernameUidMap;
+
+    private Hashtable<String, String> emailAuthMap;
+    private Hashtable<String, String> usernameAuthMap;
 
 
     @Override
@@ -46,6 +49,8 @@ public class FrontScreen extends AppCompatActivity implements View.OnClickListen
         FirebaseApp.initializeApp(this);
         register = (TextView) findViewById(R.id.register);
         register.setOnClickListener(this);
+        // userID = "D6LdIf8urEP3ur9y99ytJ5nf5HI3";
+        reference = FirebaseDatabase.getInstance().getReference("Users");
 
         signIn = (Button) findViewById(R.id.signIn);
         signIn.setOnClickListener(this);
@@ -54,11 +59,12 @@ public class FrontScreen extends AppCompatActivity implements View.OnClickListen
         editTextPassword = (EditText) findViewById(R.id.password);
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        mAuth = FirebaseAuth.getInstance();
 
-        identifierAuthMap = new Hashtable<String, String>();
-        identifierUsernameToEmailAuthMap = new Hashtable<String, String>();
-
+        emailAuthMap = new Hashtable<String, String>();
+        emailUidMap = new Hashtable<String, String>();
+        usernameAuthMap = new Hashtable<String, String>();
+        usernameUidMap = new Hashtable<String, String>();
+        pullUserData(true); // instantiate data pull (fixes login delay issue)
         pullUserData(false); // instantiate data pull (fixes login delay issue)
     }
 
@@ -111,7 +117,7 @@ public class FrontScreen extends AppCompatActivity implements View.OnClickListen
     }
 
     private void pullUserData(boolean identifierType) {
-        DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
+        DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference("Users");
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -119,16 +125,18 @@ public class FrontScreen extends AppCompatActivity implements View.OnClickListen
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         String email = snapshot.child("email").getValue(String.class);
                         String password = snapshot.child("password").getValue(String.class);
-                        identifierAuthMap.put(email, password);
+                        String uID = snapshot.getKey();
+                        emailAuthMap.put(email, password);
+                        emailUidMap.put(email, uID);
                     }
                     // Toast.makeText(FrontScreen.this, "Data Received", Toast.LENGTH_SHORT).show();
                 } else {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         String username = snapshot.child("username").getValue(String.class);
                         String password = snapshot.child("password").getValue(String.class);
-                        String email = snapshot.child("email").getValue(String.class);
-                        identifierAuthMap.put(email, password);
-                        identifierUsernameToEmailAuthMap.put(username,email);
+                        String uID = snapshot.getKey();
+                        usernameAuthMap.put(username, password);
+                        usernameUidMap.put(username, uID);
                     }
                     // Toast.makeText(FrontScreen.this, "Data Received", Toast.LENGTH_SHORT).show();
                 }
@@ -140,50 +148,52 @@ public class FrontScreen extends AppCompatActivity implements View.OnClickListen
         });
     }
 
-    private boolean validateCredentials(String identifier, String password) {
-        if (identifierAuthMap == null) {
-            Toast.makeText(FrontScreen.this, "Login failed: service unavailable", Toast.LENGTH_LONG).show();
-            progressBar.setVisibility(View.GONE);
-            return false;
-        } else if (!(identifierAuthMap.containsKey(identifier))) {
-            Toast.makeText(FrontScreen.this, "Login failed: invalid email/username", Toast.LENGTH_LONG).show();
-            progressBar.setVisibility(View.GONE);
-            return false;
-        } else if (!(Objects.equals(identifierAuthMap.get(identifier), password))) {
-            Toast.makeText(FrontScreen.this, "Login failed: invalid password", Toast.LENGTH_LONG).show();
-            progressBar.setVisibility(View.GONE);
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    private boolean matchUsernameToEmail(String username) {
-        if (identifierUsernameToEmailAuthMap == null) {
-            Toast.makeText(FrontScreen.this, "Login failed: service unavailable", Toast.LENGTH_LONG).show();
-            progressBar.setVisibility(View.GONE);
-            return false;
-        } else if (!(identifierUsernameToEmailAuthMap.containsKey(username))) {
-            Toast.makeText(FrontScreen.this, "Login failed: invalid email/username", Toast.LENGTH_LONG).show();
-            progressBar.setVisibility(View.GONE);
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    private void initiateUserSession(String email, String password) {
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()) {
-                    startActivity(new Intent(FrontScreen.this, HomeScreen.class));
-                } else {
-                    Toast.makeText(FrontScreen.this, "Login failed: service unavailable", Toast.LENGTH_LONG).show();
-                }
+    private boolean validateCredentials(boolean type, String identifier, String password) {
+        if (type) {
+            if (emailAuthMap == null) {
+                Toast.makeText(FrontScreen.this, "Login failed: service unavailable", Toast.LENGTH_LONG).show();
                 progressBar.setVisibility(View.GONE);
+                return false;
+            } else if (!(emailAuthMap.containsKey(identifier))) {
+                Toast.makeText(FrontScreen.this, "Login failed: invalid email", Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.GONE);
+                return false;
+            } else if (!(Objects.equals(emailAuthMap.get(identifier), password))) {
+                Toast.makeText(FrontScreen.this, "Login failed: invalid password", Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.GONE);
+                return false;
+            } else {
+                return true;
             }
-        });
+        } else {
+            if (usernameAuthMap == null) {
+                Toast.makeText(FrontScreen.this, "Login failed: service unavailable", Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.GONE);
+                return false;
+            } else if (!(usernameAuthMap.containsKey(identifier))) {
+                Toast.makeText(FrontScreen.this, "Login failed: invalid username", Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.GONE);
+                return false;
+            } else if (!(Objects.equals(usernameAuthMap.get(identifier), password))) {
+                Toast.makeText(FrontScreen.this, "Login failed: invalid password", Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.GONE);
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+
+    private void initiateUserSession(String identifier) {
+        if (checkIdentifierType(identifier)) {
+            Intent intent = new Intent(FrontScreen.this, HomeScreen.class);
+            intent.putExtra("arg", emailUidMap.get(identifier));
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(FrontScreen.this, HomeScreen.class);
+            intent.putExtra("arg", usernameUidMap.get(identifier));
+            startActivity(intent);
+        }
     }
 
     private void userLogin() {
@@ -194,19 +204,9 @@ public class FrontScreen extends AppCompatActivity implements View.OnClickListen
             progressBar.setVisibility(View.VISIBLE);
             boolean type = checkIdentifierType(identifier);
             pullUserData(type);
-            if(type) {
-                if (validateCredentials(identifier, password)) {
-                    initiateUserSession(identifier, password);
-                }
-            } else {
-                if (matchUsernameToEmail(identifier)) {
-                    String email = identifierUsernameToEmailAuthMap.get(identifier);
-                    if (validateCredentials(email, password)) {
-                        initiateUserSession(email, password);
-                    }
-                }
+            if (validateCredentials(type, identifier, password)) {
+                initiateUserSession(identifier);
             }
         }
     }
-
 }
