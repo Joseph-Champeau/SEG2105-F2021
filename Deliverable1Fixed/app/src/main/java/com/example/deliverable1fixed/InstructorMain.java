@@ -24,7 +24,7 @@ public class InstructorMain extends AppCompatActivity implements View.OnClickLis
     private DatabaseReference reference;
 
     private Button logout;
-    private Button viewClasses;
+    private Button searchClasses;
     private Button teachClass;
     private Button manageClasses;
 
@@ -41,8 +41,8 @@ public class InstructorMain extends AppCompatActivity implements View.OnClickLis
         logout = (Button) findViewById(R.id.instructorSignOut);
         logout.setOnClickListener(this);
 
-        viewClasses = (Button) findViewById(R.id.instructorViewClassesBtn);
-        viewClasses.setOnClickListener(this);
+        searchClasses = (Button) findViewById(R.id.instructorSearchClassesBtn);
+        searchClasses.setOnClickListener(this);
 
         teachClass = (Button) findViewById(R.id.instructorTeachClassesBtn);
         teachClass.setOnClickListener(this);
@@ -76,7 +76,7 @@ public class InstructorMain extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.instructorViewClassesBtn:
+            case R.id.instructorSearchClassesBtn:
                 Intent intentView = new Intent(InstructorMain.this, AdminClass.class);
                 intentView.putExtra("arg", userID);
                 startActivity(intentView);

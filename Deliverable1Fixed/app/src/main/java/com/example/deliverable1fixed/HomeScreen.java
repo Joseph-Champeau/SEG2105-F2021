@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +13,6 @@ import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,19 +22,21 @@ import com.google.firebase.database.ValueEventListener;
 public class HomeScreen extends AppCompatActivity {
     public String userID;
     private DatabaseReference reference;
+    private Resources res;
 
     private Button logout;
     private Button admin;
-    private Button viewClasses;
+    private Button userInstructorMember;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_home_screen);
+        res = getResources();
 
         admin = (Button) findViewById(R.id.adminButton); // viewed by admins only
-        viewClasses = (Button) findViewById(R.id.viewClasses); // viewed by all atm
+        userInstructorMember = (Button) findViewById(R.id.userInstructorMemberBtn); // viewed by all atm
         logout = (Button) findViewById(R.id.signOut);
 
 
@@ -72,9 +74,18 @@ public class HomeScreen extends AppCompatActivity {
                     NameWTextView.setText("Name: "+ name);
                     AgeWTextView.setText("Age: "+ age);
                     if (userProfile.type != null) {
-                        if (userProfile.type.equals("Member") || userProfile.type.equals("Instructor")) { // if user is not Admin type
+                        if (!(userProfile.type.equals("Admin"))) { // if user is not Admin type
                             admin.setVisibility(View.GONE); // hide admin button from view
+                            if (userProfile.type.equals("Member")) {
+                                userInstructorMember.setText(res.getString(R.string.member));
+                            }
+                            if (userProfile.type.equals("Instructor")) {
+                                userInstructorMember.setText(res.getString(R.string.instructor));
+                            }
+                        } else {
+
                         }
+
                     }
                 }
             }
@@ -107,7 +118,7 @@ public class HomeScreen extends AppCompatActivity {
                 });
             }
         });
-        viewClasses.setOnClickListener(new View.OnClickListener() {
+        userInstructorMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {

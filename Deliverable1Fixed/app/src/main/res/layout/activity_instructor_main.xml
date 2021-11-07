@@ -71,7 +71,7 @@
             android:textSize="20sp"
             android:textStyle="italic" />
         <Button
-            android:id="@+id/instructorViewClassesBtn"
+            android:id="@+id/instructorSearchClassesBtn"
             android:layout_width="300dp"
             android:layout_height="65dp"
             android:layout_marginLeft="55dp"

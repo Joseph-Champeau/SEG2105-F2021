@@ -8,7 +8,10 @@
         <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_front_screen.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_home_screen.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_main.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_teach_class.xml" value="0.1276595744680851" />
+        <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_manage_classes.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_search_classes.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_teach_class.xml" value="0.4" />
+        <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_register_user.xml" value="0.20520833333333333" />
       </map>
     </option>
   </component>

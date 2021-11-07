@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Deliverable1Fixed</string>
 
+    <string name="member">Member</string>
+    <string name="instructor">Instructor</string>
+
     <string-array name="days">
         <item>Select a day</item>
         <item>Sunday</item>
