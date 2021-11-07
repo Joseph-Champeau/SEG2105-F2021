@@ -83,7 +83,7 @@ public class HomeScreen extends AppCompatActivity {
                                 userInstructorMember.setText(res.getString(R.string.instructor));
                             }
                         } else {
-
+                            userInstructorMember.setText(res.getString(R.string.classes));
                         }
 
                     }

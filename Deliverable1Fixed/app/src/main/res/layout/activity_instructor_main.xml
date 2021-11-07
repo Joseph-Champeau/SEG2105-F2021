@@ -34,12 +34,13 @@
             android:id="@+id/titleInstructor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="5dp"
             android:fontFamily="sans-serif-black"
             android:gravity="center"
             android:text="Instructor Home"
             android:textSize="50sp"
             android:textStyle="bold" />
+
         <TextView
             android:id="@+id/instructorWelcome"
             android:layout_width="wrap_content"
@@ -78,10 +79,11 @@
             android:layout_marginTop="20dp"
             android:backgroundTint="#0ED6B9"
             android:onClick="onClick"
-            android:text="View classes"
+            android:text="Search classes"
             android:textColor="#ffff"
             android:textSize="20sp"
             android:textStyle="bold" />
+
         <Button
             android:id="@+id/instructorTeachClassesBtn"
             android:layout_width="300dp"
@@ -96,14 +98,26 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/instructorManageClassesBtn"
+            android:id="@+id/instructorEditClassesBtn"
             android:layout_width="300dp"
             android:layout_height="65dp"
             android:layout_marginLeft="55dp"
             android:layout_marginTop="20dp"
             android:backgroundTint="#0ED6B9"
             android:onClick="onClick"
-            android:text="Manage classes"
+            android:text="Edit class"
+            android:textColor="#ffff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+        <Button
+            android:id="@+id/instructorDeleteClassesBtn"
+            android:layout_width="300dp"
+            android:layout_height="65dp"
+            android:layout_marginLeft="55dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#0ED6B9"
+            android:onClick="onClick"
+            android:text="delete class"
             android:textColor="#ffff"
             android:textSize="20sp"
             android:textStyle="bold" />

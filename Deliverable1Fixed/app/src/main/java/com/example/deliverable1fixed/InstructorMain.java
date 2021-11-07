@@ -26,7 +26,8 @@ public class InstructorMain extends AppCompatActivity implements View.OnClickLis
     private Button logout;
     private Button searchClasses;
     private Button teachClass;
-    private Button manageClasses;
+    private Button editClasses;
+    private Button deleteClasses;
 
 
     @Override
@@ -47,8 +48,11 @@ public class InstructorMain extends AppCompatActivity implements View.OnClickLis
         teachClass = (Button) findViewById(R.id.instructorTeachClassesBtn);
         teachClass.setOnClickListener(this);
 
-        manageClasses = (Button) findViewById(R.id.instructorManageClassesBtn);
-        manageClasses.setOnClickListener(this);
+        editClasses = (Button) findViewById(R.id.instructorEditClassesBtn);
+        editClasses.setOnClickListener(this);
+
+        deleteClasses = (Button) findViewById(R.id.instructorDeleteClassesBtn);
+        deleteClasses.setOnClickListener(this);
 
         final TextView UsernameWTextView = (TextView) findViewById(R.id.instructorUsername);
         final TextView TypeWTextView = (TextView) findViewById(R.id.instructorUserType);
@@ -71,15 +75,13 @@ public class InstructorMain extends AppCompatActivity implements View.OnClickLis
         });
     }
 
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.instructorSearchClassesBtn:
-                Intent intentView = new Intent(InstructorMain.this, AdminClass.class);
-                intentView.putExtra("arg", userID);
-                startActivity(intentView);
+                Intent intentSearch = new Intent(InstructorMain.this, InstructorSearchClasses.class);
+                intentSearch.putExtra("arg", userID);
+                startActivity(intentSearch);
                 break;
 
             case R.id.instructorTeachClassesBtn:
@@ -88,10 +90,15 @@ public class InstructorMain extends AppCompatActivity implements View.OnClickLis
                 startActivity(intentTeach);
                 break;
 
-            case R.id.instructorManageClassesBtn:
-                Intent intentManage = new Intent(InstructorMain.this, AdminAccounts.class);
-                intentManage.putExtra("arg", userID);
-                startActivity(intentManage);
+            case R.id.instructorEditClassesBtn:
+                Intent intentEdit = new Intent(InstructorMain.this, InstructorEditClasses.class);
+                intentEdit.putExtra("arg", userID);
+                startActivity(intentEdit);
+                break;
+            case R.id.instructorDeleteClassesBtn:
+                Intent intentDelete = new Intent(InstructorMain.this, InstructorDeleteClasses.class);
+                intentDelete.putExtra("arg", userID);
+                startActivity(intentDelete);
                 break;
 
             case R.id.instructorSignOut:

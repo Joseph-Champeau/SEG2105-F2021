@@ -28,13 +28,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class InstructorSearchClasses extends AppCompatActivity implements View.OnClickListener{
+public class InstructorDeleteClasses extends AppCompatActivity implements View.OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
-        setContentView(R.layout.activity_instructor_search_classes);
+        setContentView(R.layout.activity_instructor_delete_classes);
     }
 
     @Override
@@ -42,3 +42,4 @@ public class InstructorSearchClasses extends AppCompatActivity implements View.O
 
     }
 }
+

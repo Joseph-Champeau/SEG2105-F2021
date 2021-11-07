@@ -3,6 +3,7 @@
 
     <string name="member">Member</string>
     <string name="instructor">Instructor</string>
+    <string name="classes">Classes</string>
 
     <string-array name="days">
         <item>Select a day</item>
