@@ -1,6 +1,291 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D80C0C0C"
+    android:orientation="vertical"
+    tools:context=".InstructorSearchClasses">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/sortButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:backgroundTint="#0ED6B9"
+            android:onClick="showSortTapped"
+            android:text="SORT"
+            android:textColor="#ffff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:text="Easy Fit"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+
+        <Button
+            android:id="@+id/filterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginRight="5dp"
+            android:background="@null"
+            android:backgroundTint="#0ED6B9"
+            android:onClick="showFilterTapped"
+            android:text="FILTER"
+            android:textColor="#ffff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <SearchView
+        android:id="@+id/ClassListSearchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FFFFFF"
+        android:iconifiedByDefault="false"
+        android:queryHint="Class Name, Instructor, etc."
+        android:textColor="@color/white">
+
+    </SearchView>
+
+    <LinearLayout
+        android:id="@+id/filterTabsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/allFilter"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:backgroundTint="#0B0B0B"
+            android:onClick="allFilterTapped"
+            android:text="All"
+            tools:ignore="TextContrastCheck" />
+
+        <Button
+            android:id="@+id/yogaFilter"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:backgroundTint="#2743CF"
+            android:onClick="yogaFilterTapped"
+            android:text="Yoga"
+            android:textColor="@color/white"
+            tools:ignore="TextContrastCheck" />
+
+        <Button
+            android:id="@+id/cyclingFilter"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:backgroundTint="#DC2424"
+            android:onClick="cyclingFilterTapped"
+            android:text="Cycling"
+            android:textColor="@color/white"
+            tools:ignore="TextContrastCheck" />
+
+        <Button
+            android:id="@+id/danceFilter"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:backgroundTint="#FF1818"
+            android:onClick="danceFilterTapped"
+            android:text="Dance"
+            android:textColor="@color/white"
+            tools:ignore="TextContrastCheck" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/filterTabsLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/cardioFilter"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:backgroundTint="#DC2424"
+            android:onClick="cardioFilterTapped"
+            android:text="Cardio"
+            android:textColor="@color/white"
+            tools:ignore="TextContrastCheck" />
+
+        <Button
+            android:id="@+id/aquaFilter"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:onClick="aquaFilterTapped"
+            android:text="Aqua"
+            android:textColor="@color/white"
+            tools:ignore="TextContrastCheck" />
+
+        <Button
+            android:id="@+id/platesFilter"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:backgroundTint="#2743CF"
+            android:onClick="pilatesFilterTapped"
+            android:text="Pilates"
+            android:textColor="@color/white"
+            tools:ignore="TextContrastCheck" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/filterTabsLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/HIITFilter"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:backgroundTint="#2743CF"
+            android:onClick="hiitFilterTapped"
+            android:text="HIIT N Athletics"
+            tools:ignore="TextContrastCheck" />
+
+        <Button
+            android:id="@+id/zumbaFilter"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:onClick="zumbaFilterTapped"
+            android:text="Zumba"
+            android:textColor="@color/white"
+            tools:ignore="TextContrastCheck" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/sortTabsLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:backgroundTint="#15DF29"
+            android:onClick="capacityTapped"
+            android:text="More Room"
+            tools:ignore="TextContrastCheck" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:backgroundTint="#15DF29"
+            android:onClick="capacityDESCTapped"
+            android:text="Limited Spots"
+            android:textColor="@color/white"
+            tools:ignore="TextContrastCheck" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:backgroundTint="#15DF29"
+            android:onClick="InsensityTapped"
+            android:text="Level"
+            android:textColor="@color/white"
+            tools:ignore="TextContrastCheck" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:backgroundTint="#15DF29"
+            android:onClick="activtynameSort"
+            android:text="Activity"
+            android:textColor="@color/white"
+            tools:ignore="TextContrastCheck" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/filterTabsLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/homeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginRight="0dp"
+            android:background="@null"
+            android:backgroundTint="#0B0B0B"
+            android:onClick="showFilterTapped"
+            android:text="Home"
+            android:textColor="#ffff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <Button
+            android:id="@+id/createClassBtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginRight="0dp"
+            android:background="@null"
+            android:backgroundTint="@color/teal_200"
+            android:onClick="onClick"
+            android:text="Create Class"
+            android:textColor="#ffff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/classListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

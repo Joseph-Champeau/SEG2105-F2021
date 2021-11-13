@@ -62,24 +62,24 @@ public class HomeScreen extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userProfile = snapshot.getValue(User.class);
                 if(userProfile != null){
-                    String username = userProfile.username;
-                    String type = userProfile.type;
-                    String email = userProfile.email;
-                    String age = userProfile.age;
-                    String name = userProfile.fullName;
+                    String username = userProfile.getUsername();
+                    String type = userProfile.getType();
+                    String email = userProfile.getEmail();
+                    String age = userProfile.getAge();
+                    String name = userProfile.getFullName();
 
                     UsernameWTextView.setText("Username: " + username);
                     TypeWTextView.setText("Type: " + type);
                     EmailWTextView.setText("Email: " + email);
                     NameWTextView.setText("Name: "+ name);
                     AgeWTextView.setText("Age: "+ age);
-                    if (userProfile.type != null) {
-                        if (!(userProfile.type.equals("Admin"))) { // if user is not Admin type
+                    if (userProfile.getType() != null) {
+                        if (!(userProfile.getType().equals("Admin"))) { // if user is not Admin type
                             admin.setVisibility(View.GONE); // hide admin button from view
-                            if (userProfile.type.equals("Member")) {
+                            if (userProfile.getType().equals("Member")) {
                                 userInstructorMember.setText(res.getString(R.string.member));
                             }
-                            if (userProfile.type.equals("Instructor")) {
+                            if (userProfile.getType().equals("Instructor")) {
                                 userInstructorMember.setText(res.getString(R.string.instructor));
                             }
                         } else {
@@ -102,7 +102,7 @@ public class HomeScreen extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         User userProfile = snapshot.getValue(User.class);
-                        String type = userProfile.type;
+                        String type = userProfile.getType();
 
                         if(type.equals("Admin")) {
                             Intent intentClasses = new Intent(HomeScreen.this, AdminMain.class);
@@ -125,7 +125,7 @@ public class HomeScreen extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         User userProfile = snapshot.getValue(User.class);
-                        String type = userProfile.type;
+                        String type = userProfile.getType();
 
                         if(type.equals("Instructor")) {
                             Intent intentClasses = new Intent(HomeScreen.this, InstructorMain.class);
