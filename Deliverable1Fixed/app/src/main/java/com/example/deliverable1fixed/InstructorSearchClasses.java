@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -41,10 +40,10 @@ public class InstructorSearchClasses extends AppCompatActivity implements View.O
     public static ArrayList<Class> classesList;
     private Button sortButton;
     private Button filterButton;
-    private LinearLayout filterView1;
-    private LinearLayout filterView2;
-    private LinearLayout filterView3;
-    private LinearLayout filterView4;
+    private LinearLayout row1;
+    private LinearLayout row2;
+    private LinearLayout row3;
+    private LinearLayout row4;
     private LinearLayout sortView;
 
     boolean sortHidden = true;
@@ -76,22 +75,19 @@ public class InstructorSearchClasses extends AppCompatActivity implements View.O
             }
         });
 
-
         Resources res = getResources();
-
         Button home = (Button) findViewById(R.id.homeBtn);
         home.setOnClickListener(this);
-
         Button create = (Button) findViewById(R.id.createClassBtn);
         create.setOnClickListener(this);
 
-        initSearchWidgets();
-        initWidgets();
+        searching();
+        setupLayout();
         setupData();
         setUpList();
-        //setUpOnclickListener();
-        hideFilter();
-        hideSort();
+        sortView.setVisibility(View.GONE);
+        closeFilter();
+        closeFilter();
 
     }
     @Override
@@ -111,17 +107,17 @@ public class InstructorSearchClasses extends AppCompatActivity implements View.O
         }
     }
 
-    private void initWidgets() {
+    private void setupLayout() {
         sortButton = (Button) findViewById(R.id.sortButton);
         filterButton = (Button) findViewById(R.id.filterButton);
-        filterView1 = (LinearLayout) findViewById(R.id.filterTabsLayout);
-        filterView2 = (LinearLayout) findViewById(R.id.filterTabsLayout2);
-        filterView3= (LinearLayout) findViewById(R.id.filterTabsLayout3);
-        filterView4 = (LinearLayout) findViewById(R.id.filterTabsLayout4);
+        row1 = (LinearLayout) findViewById(R.id.filterTabsLayout);
+        row2 = (LinearLayout) findViewById(R.id.filterTabsLayout2);
+        row3= (LinearLayout) findViewById(R.id.filterTabsLayout3);
+        row4 = (LinearLayout) findViewById(R.id.filterTabsLayout4);
         sortView = (LinearLayout) findViewById(R.id.sortTabsLayout2);
     }
 
-    private void initSearchWidgets() {
+    private void searching() {
         searchView = (SearchView) findViewById(R.id.ClassListSearchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -204,7 +200,7 @@ public class InstructorSearchClasses extends AppCompatActivity implements View.O
     }*/
 
 
-    private void filterList(String status) {
+    private void strainer(String status) {
         selectedFilter = status;
         ArrayList<Class> filteredsessions = new ArrayList<Class>();
         for(Class session: classesList) {
@@ -218,57 +214,57 @@ public class InstructorSearchClasses extends AppCompatActivity implements View.O
 
         setAdapter(filteredsessions);
     }
-    public void yogaFilterTapped(View view) { filterList("Yoga"); }
-    public void cyclingFilterTapped(View view) { filterList("Cycling"); }
-    public void zumbaFilterTapped(View view) { filterList("Zumba"); }
-    public void aquaFilterTapped(View view) { filterList("Aqua "); }
-    public void hiitFilterTapped(View view) { filterList("HIIT N Athletics"); }
-    public void danceFilterTapped(View view) { filterList("dance"); }
-    public void cardioFilterTapped(View view) { filterList("cardio"); }
-    public void pilatesFilterTapped(View view) {filterList("cardio");}
+    public void yogaFilterTapped(View view) { strainer("Yoga"); }
+    public void cyclingFilterTapped(View view) { strainer("Cycling"); }
+    public void zumbaFilterTapped(View view) { strainer("Zumba"); }
+    public void aquaFilterTapped(View view) { strainer("Aqua "); }
+    public void hiitFilterTapped(View view) { strainer("HIIT N Athletics"); }
+    public void danceFilterTapped(View view) { strainer("dance"); }
+    public void cardioFilterTapped(View view) { strainer("cardio"); }
+    public void pilatesFilterTapped(View view) {strainer("cardio");}
 
 
-    public void showFilterTapped(View view) {
+    public void showFilterClicked(View view) {
         if(filterHidden == true) {
             filterHidden = false;
             showFilter();
         }
         else {
             filterHidden = true;
-            hideFilter();
+            closeFilter();
         }
     }
 
-    public void showSortTapped(View view) {
+    public void showSortClick(View view) {
         if(sortHidden == true) {
             sortHidden = false;
             showSort();
         }
         else {
             sortHidden = true;
-            hideSort();
+            closeSort();
         }
     }
 
-    private void hideFilter() {
+    private void closeFilter() {
         searchView.setVisibility(View.GONE);
-        filterView1.setVisibility(View.GONE);
-        filterView2.setVisibility(View.GONE);
-        filterView3.setVisibility(View.GONE);
-        filterView4.setVisibility(View.VISIBLE);
+        row1.setVisibility(View.GONE);
+        row2.setVisibility(View.GONE);
+        row3.setVisibility(View.GONE);
+        row4.setVisibility(View.VISIBLE);
         filterButton.setText("FILTER");
     }
 
     private void showFilter() {
         searchView.setVisibility(View.VISIBLE);
-        filterView1.setVisibility(View.VISIBLE);
-        filterView2.setVisibility(View.VISIBLE);
-        filterView3.setVisibility(View.VISIBLE);
-        filterView4.setVisibility(View.GONE);
+        row1.setVisibility(View.VISIBLE);
+        row2.setVisibility(View.VISIBLE);
+        row3.setVisibility(View.VISIBLE);
+        row4.setVisibility(View.GONE);
         filterButton.setText("HIDE");
     }
 
-    private void hideSort() {
+    private void closeSort() {
         sortView.setVisibility(View.GONE);
         sortButton.setText("SORT");
     }
@@ -311,6 +307,6 @@ public class InstructorSearchClasses extends AppCompatActivity implements View.O
                 }
                 setAdapter(filteredsessions);
             }
-        } else { filterList(selectedFilter); }
+        } else { strainer(selectedFilter); }
     }
 }

@@ -67,16 +67,15 @@ public class Class {
         }
     };
 
-
+    // displaying in a level-sorted
     public static Comparator<Class> levelAscending = new Comparator<Class>()
     {
         @Override
         public int compare(Class class01, Class class02)
         {
-            List<String> level = Arrays.asList("Beginner", "Intermediate", "Advanced");;
+            List<String> level = Arrays.asList("Beginner", "Intermediate", "Advanced");//Level options
             int level1 = level.indexOf(class01.getDifficultyLevel());
             int level2 = level.indexOf(class02.getDifficultyLevel());
-
 
             return Integer.compare(level1, level2);
         }
