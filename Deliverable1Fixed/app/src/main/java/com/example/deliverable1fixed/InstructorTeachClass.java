@@ -122,7 +122,7 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
         pullClassTypeData();
         pullClassesData();
         initializeAllSpinnerDropdowns();
-        checkDayAndClassType(new ClassType(), ""); // initialize pull with null values
+        checkDayAndClassType(new ClassType("", ""), ""); // initialize pull with null values
         checkExistingName(""); // initialize pull with null values
     }
 
