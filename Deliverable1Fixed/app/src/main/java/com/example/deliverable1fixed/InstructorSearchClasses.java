@@ -49,8 +49,7 @@ public class InstructorSearchClasses extends AppCompatActivity implements View.O
     boolean sortHidden = true;
     boolean filterHidden = true;
 
-
-    private String selectedFilter = "all";
+    private String filterSel = "all";
     private String currentSearchText = "";
     private SearchView searchView;
 
@@ -85,9 +84,14 @@ public class InstructorSearchClasses extends AppCompatActivity implements View.O
         setupLayout();
         setupData();
         setUpList();
+        setAdapter(classesList);
+
+        /*Organize initial layout*/
+        row1.setVisibility(View.GONE);
+        row2.setVisibility(View.GONE);
+        row3.setVisibility(View.GONE);
+        row4.setVisibility(View.VISIBLE);
         sortView.setVisibility(View.GONE);
-        closeFilter();
-        closeFilter();
 
     }
     @Override
@@ -132,10 +136,10 @@ public class InstructorSearchClasses extends AppCompatActivity implements View.O
                 for(Class session: classesList) {
                     //Sort by instructor
                     if(session.instructor.getFullName().toLowerCase().contains(s.toLowerCase())||session.classType.name.toLowerCase().contains(s.toLowerCase())){
-                        if(selectedFilter.equals("all")) { filteredClass.add(session); }
+                        if(filterSel.equals("all")) { filteredClass.add(session); }
                         else {
-                            if(session.instructor.getFullName().toLowerCase().contains(selectedFilter.toLowerCase())||session.classType.name.toLowerCase().contains(selectedFilter)){
-                            //||session.classType.name.toLowerCase().contains(selectedFilter)
+                            if(session.instructor.getFullName().toLowerCase().contains(filterSel.toLowerCase())||session.classType.name.toLowerCase().contains(filterSel)){
+                            //||session.classType.name.toLowerCase().contains(filterSel)
                                 filteredClass.add(session);
                             }
                         }
@@ -148,8 +152,6 @@ public class InstructorSearchClasses extends AppCompatActivity implements View.O
         });
     }
     private void setupData() {
-
-        //referenceClasses = FirebaseDatabase.getInstance().getReference("Classes");
         referenceClasses.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -178,30 +180,12 @@ public class InstructorSearchClasses extends AppCompatActivity implements View.O
         listView.setAdapter(adapter);
     }
     public void allFilterTapped(View view) {
-        selectedFilter = "all";
+        filterSel = "all";
         setAdapter(classesList);
     }
-
-
-
-    //Description of particular class
-    /*private void setUpOnclickListener() {
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
-            {
-                Class selectsession = (Class) (listView.getItemAtPosition(position));
-                Intent showDetail = new Intent(getApplicationContext(), ClassInfo.class);
-                showDetail.putExtra("id",selectsession.classType.name);
-                startActivity(showDetail);
-            }
-        });
-
-    }*/
-
-
+    
     private void strainer(String status) {
-        selectedFilter = status;
+        filterSel = status;
         ArrayList<Class> filteredsessions = new ArrayList<Class>();
         for(Class session: classesList) {
             if(session.instructor.getFullName().toLowerCase().contains(status.toLowerCase())|| session.classType.name.toLowerCase().contains(status.toLowerCase())) {
@@ -214,6 +198,7 @@ public class InstructorSearchClasses extends AppCompatActivity implements View.O
 
         setAdapter(filteredsessions);
     }
+    /*-------Set of Classes Available at the Gym ---------*/
     public void yogaFilterTapped(View view) { strainer("Yoga"); }
     public void cyclingFilterTapped(View view) { strainer("Cycling"); }
     public void zumbaFilterTapped(View view) { strainer("Zumba"); }
@@ -245,7 +230,7 @@ public class InstructorSearchClasses extends AppCompatActivity implements View.O
             closeSort();
         }
     }
-
+    /* Filter Button Checked or Unchecked Methods*/
     private void closeFilter() {
         searchView.setVisibility(View.GONE);
         row1.setVisibility(View.GONE);
@@ -263,7 +248,7 @@ public class InstructorSearchClasses extends AppCompatActivity implements View.O
         row4.setVisibility(View.GONE);
         filterButton.setText("HIDE");
     }
-
+    /* Sort Button Checked or Unchecked Mehtods*/
     private void closeSort() {
         sortView.setVisibility(View.GONE);
         sortButton.setText("SORT");
@@ -274,30 +259,31 @@ public class InstructorSearchClasses extends AppCompatActivity implements View.O
         sortButton.setText("HIDE");
     }
 
+    /*---------------------------Sorting Methods---------------------*/
     public void capacityTapped(View view) {
         Collections.sort(classesList, Class.capacityAscending);
-        checkForFilter();
+        filterChecker();
     }
 
     public void capacityDESCTapped(View view) {
         Collections.sort(classesList, Class.capacityAscending);
         Collections.reverse(classesList);
-        checkForFilter();
+        filterChecker();
     }
 
     public void InsensityTapped(View view) {
         Collections.sort(classesList, Class.levelAscending);
-        checkForFilter();
+        filterChecker();
     }
 
     public void activtynameSort(View view) {
         Collections.sort(classesList, Class.activtyAscending);
         //Collections.reverse(classesList);
-        checkForFilter();
+        filterChecker();
     }
-
-    private void checkForFilter() {
-        if(selectedFilter.equals("all")) {
+    /*----------------Checker for any Filter Changes----------*/
+    private void filterChecker() {
+        if(filterSel.equals("all")) {
             if(currentSearchText.equals("")) {
                 setAdapter(classesList);
             } else {
@@ -307,6 +293,6 @@ public class InstructorSearchClasses extends AppCompatActivity implements View.O
                 }
                 setAdapter(filteredsessions);
             }
-        } else { strainer(selectedFilter); }
+        } else { strainer(filterSel); }
     }
 }

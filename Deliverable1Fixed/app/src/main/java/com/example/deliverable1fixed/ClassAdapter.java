@@ -22,9 +22,9 @@ public class ClassAdapter extends ArrayAdapter<Class> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.cell, parent, false);
         }
         //Add later
-        TextView tv = (TextView) convertView.findViewById(R.id.className);
+        TextView output = (TextView) convertView.findViewById(R.id.className);
         //ImageView iv = (ImageView) convertView.findViewById(R.id.classImage);
-        tv.setText(class1.getDifficultyLevel()+"-"+class1.getName()+ "-" + class1.getDay()+ "'s at "+ class1.getTimeInterval() +" taught by " + class1.getInstructor().getFullName() +" ("+ class1.getCapacity() +" spots left)");
+        output.setText(class1.getDifficultyLevel()+"-"+class1.getName()+ "\n" + class1.getDay()+ "'s at "+ class1.getTimeInterval() +"\nTaught by " + class1.getInstructor().getFullName() +"\n ("+ class1.getCapacity() +" spots left)");
         //iv.setImageResource(class1.getCapacity());
 
         return convertView;
