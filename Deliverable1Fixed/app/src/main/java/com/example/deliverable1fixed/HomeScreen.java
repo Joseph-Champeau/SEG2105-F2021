@@ -26,7 +26,7 @@ public class HomeScreen extends AppCompatActivity {
 
     private Button logout;
     private Button admin;
-    private Button userInstructorMember;
+    private Button userInstructorAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class HomeScreen extends AppCompatActivity {
         res = getResources();
 
         admin = (Button) findViewById(R.id.adminButton); // viewed by admins only
-        userInstructorMember = (Button) findViewById(R.id.userInstructorMemberBtn); // viewed by all atm
+        userInstructorAdmin = (Button) findViewById(R.id.userInstructorMemberBtn); // viewed by all atm
         logout = (Button) findViewById(R.id.signOut);
 
 
@@ -76,16 +76,13 @@ public class HomeScreen extends AppCompatActivity {
                     if (userProfile.getType() != null) {
                         if (!(userProfile.getType().equals("Admin"))) { // if user is not Admin type
                             admin.setVisibility(View.GONE); // hide admin button from view
-                            if (userProfile.getType().equals("Member")) {
-                                userInstructorMember.setText(res.getString(R.string.member));
-                            }
                             if (userProfile.getType().equals("Instructor")) {
-                                userInstructorMember.setText(res.getString(R.string.instructor));
+                                userInstructorAdmin.setText(res.getString(R.string.instructor));
                             }
-                        } else {
-                            userInstructorMember.setText(res.getString(R.string.classes));
                         }
-
+                        else {
+                            userInstructorAdmin.setText(res.getString(R.string.classes));
+                        }
                     }
                 }
             }
@@ -118,7 +115,7 @@ public class HomeScreen extends AppCompatActivity {
                 });
             }
         });
-        userInstructorMember.setOnClickListener(new View.OnClickListener() {
+        userInstructorAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -128,6 +125,11 @@ public class HomeScreen extends AppCompatActivity {
                         String type = userProfile.getType();
 
                         if(type.equals("Instructor")) {
+                            Intent intentClasses = new Intent(HomeScreen.this, InstructorMain.class);
+                            intentClasses.putExtra("arg", userID);
+                            startActivity(intentClasses);
+                        }
+                        if(type.equals("Admin") && userInstructorAdmin.getText().toString().equals("Classes")) {
                             Intent intentClasses = new Intent(HomeScreen.this, InstructorMain.class);
                             intentClasses.putExtra("arg", userID);
                             startActivity(intentClasses);
