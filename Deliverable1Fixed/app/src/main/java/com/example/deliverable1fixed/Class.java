@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Class {
 
-    public String name;
+    public String name; // should this be included?
     public User instructor;
     public ClassType classType;
     public String difficultyLevel;
@@ -15,6 +15,15 @@ public class Class {
     public int capacity;
 
     public Class() {}
+
+    public Class(User instructor, ClassType classType) { // should this be the default constructor?
+        this.instructor = instructor;
+        this.classType = classType;
+        this.difficultyLevel = "";
+        this.day = "";
+        this.timeInterval = "";
+        this.capacity = 0;
+    }
 
     public Class(String name, User instructor, ClassType classType, String difficultyLevel, String day, String timeInterval, int capacity) {
         this.name = name;

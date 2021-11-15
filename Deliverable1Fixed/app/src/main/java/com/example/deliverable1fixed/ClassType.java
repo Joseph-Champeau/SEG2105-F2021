@@ -11,4 +11,12 @@ public class ClassType {
         this.name = name;
         this.description = description;
     }
+
+    public String getClassTypeName() {
+        return this.name;
+    }
+
+    public String getClassTypeDesc() {
+        return this.description;
+    }
 }
