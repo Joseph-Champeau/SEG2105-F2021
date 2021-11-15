@@ -61,8 +61,8 @@ public class InstructorMain extends AppCompatActivity implements View.OnClickLis
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userProfile = snapshot.getValue(User.class);
                 if(userProfile != null){
-                    String username = userProfile.username;
-                    String type = userProfile.type;
+                    String username = userProfile.getUsername();
+                    String type = userProfile.getType();
                     UsernameWTextView.setText("Username: " + username);
                     TypeWTextView.setText("Type: " + type);
                 }

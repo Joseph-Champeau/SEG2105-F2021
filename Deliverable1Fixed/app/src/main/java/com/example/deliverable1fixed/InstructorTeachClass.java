@@ -1,32 +1,32 @@
-package com.example.deliverable1fixed;
+        package com.example.deliverable1fixed;
 
-import android.content.Intent;
-import android.content.res.Resources;
-import android.os.Bundle;
-import android.text.SpannableStringBuilder;
-import android.text.method.PasswordTransformationMethod;
-import android.text.style.ForegroundColorSpan;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
+        import android.content.Intent;
+        import android.content.res.Resources;
+        import android.os.Bundle;
+        import android.text.SpannableStringBuilder;
+        import android.text.method.PasswordTransformationMethod;
+        import android.text.style.ForegroundColorSpan;
+        import android.view.View;
+        import android.widget.AdapterView;
+        import android.widget.ArrayAdapter;
+        import android.widget.Button;
+        import android.widget.EditText;
+        import android.widget.Spinner;
+        import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+        import androidx.annotation.NonNull;
+        import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+        import com.google.android.gms.tasks.OnSuccessListener;
+        import com.google.firebase.FirebaseApp;
+        import com.google.firebase.database.DataSnapshot;
+        import com.google.firebase.database.DatabaseError;
+        import com.google.firebase.database.DatabaseReference;
+        import com.google.firebase.database.FirebaseDatabase;
+        import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
+        import java.util.ArrayList;
+        import java.util.Hashtable;
 
 public class InstructorTeachClass extends AppCompatActivity implements View.OnClickListener{
 
@@ -281,7 +281,7 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
             for (int i = 0; i < classesList.size(); i++) {
                 if (classesList.get(i).classType.name.equals(classType.name)) {
                     if (classesList.get(i).day.equals(day)) {
-                        return classesList.get(i).instructor.fullName;
+                        return classesList.get(i).instructor.getFullName();
                     }
                 }
             }
@@ -293,10 +293,10 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
     private String checkExistingName(String name) {
         if(classesList != null) {
             for (int i = 0; i < classesList.size(); i++) {
-                    if (classesList.get(i).name.equals(name)) {
-                        return classesList.get(i).name;
-                    }
+                if (classesList.get(i).name.equals(name)) {
+                    return classesList.get(i).name;
                 }
+            }
             return "";
         }
         return "";
@@ -320,7 +320,7 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
             }
             if(!(checkExistingName(name).equals(""))) {
                 Toast.makeText(InstructorTeachClass.this, "Already existing " + classType.name +
-                                " class named: " + checkExistingName(name), Toast.LENGTH_SHORT).show();
+                        " class named: " + checkExistingName(name), Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -337,7 +337,7 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
             // verify if there exists a class of the same type on the selectedDay
             if(!(checkDayAndClassType(classType, selectedDay).equals(""))) {
                 Toast.makeText(InstructorTeachClass.this, "Already existing " + classType.name +
-                        " class on " + selectedDay + " scheduled by: " + checkDayAndClassType(classType, selectedDay)
+                                " class on " + selectedDay + " scheduled by: " + checkDayAndClassType(classType, selectedDay)
                         , Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -346,8 +346,8 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
                 Toast.makeText(InstructorTeachClass.this, "Select a time slot", Toast.LENGTH_SHORT).show();
                 return;
             }
-            String capacity = editTextSetCapacity.getText().toString().trim();
-            if (capacity.isEmpty()) {
+            String capacity1 = editTextSetCapacity.getText().toString().trim();
+            if (capacity1.isEmpty()) {
                 String estring = "Enter a valid capacity";
                 ForegroundColorSpan fgcspan = new ForegroundColorSpan(getResources().getColor(R.color.white));
                 SpannableStringBuilder ssbuilder = new SpannableStringBuilder(estring);
@@ -356,6 +356,7 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
                 editTextSetCapacity.requestFocus();
                 return;
             }
+            int capacity= Integer.parseInt(capacity1);
 
             // push to realtime database
             Class newClass = new Class(name, user, classType, selectedDifficultyLevel, selectedDay, selectedTimeSlot, capacity);

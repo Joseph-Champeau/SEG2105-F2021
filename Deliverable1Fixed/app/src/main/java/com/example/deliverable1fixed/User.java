@@ -2,12 +2,12 @@ package com.example.deliverable1fixed;
 
 public class User {
 
-    public String fullName;
-    public String age;
-    public String email;
-    public String username;
-    public String type;
-    public String password;
+    private String fullName;
+    private String age;
+    private String email;
+    private String username;
+    private String type;
+    private String password;
 
     public User () {}
 
@@ -19,4 +19,16 @@ public class User {
         this.type=type;
         this.password=password;
     }
+
+    public String getPassword(){return password;}
+
+    public String getFullName(){return fullName;}
+
+    public String getAge(){return age;}
+
+    public String getUsername(){return username;}
+
+    public String getType(){return type;}
+
+    public String getEmail(){return email;}
 }

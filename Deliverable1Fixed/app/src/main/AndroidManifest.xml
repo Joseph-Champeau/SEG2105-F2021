@@ -14,7 +14,13 @@
             android:name=".InstructorMain"
             android:exported="true"/>
         <activity
+            android:name=".InstructorSearchClasses"
+            android:exported="true"/>
+        <activity
             android:name=".InstructorTeachClass"
+            android:exported="true"/>
+        <activity
+            android:name=".InstructorEditClasses"
             android:exported="true"/>
         <activity
             android:name=".AdminClass"
