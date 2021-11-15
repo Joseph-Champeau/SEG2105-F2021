@@ -176,13 +176,16 @@ public class InstructorEditClasses extends AppCompatActivity implements View.OnC
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Class classObject = snapshot.getValue(Class.class);
                     if(classObject != null) {
-                        String uID = snapshot.getKey();
-                        String classDescription = classObject.name + "-" + classObject.day + "'s : " + classObject.timeInterval;
-                        if(!(classesDescList.contains(classDescription) || classesList.contains(classObject))) {
-                            classesList.add(classObject);
-                            classesObjMap.put(uID, classObject);
-                            classesDescList.add(classDescription);
-                            classesMap.put(classDescription, uID);
+                        User instructor = classObject.instructor;
+                        if (instructor.getUsername().equals(user.getUsername())) {
+                            String uID = snapshot.getKey();
+                            String classDescription = classObject.name + "-" + classObject.day + "'s : " + classObject.timeInterval;
+                            if (!(classesDescList.contains(classDescription) || classesList.contains(classObject))) {
+                                classesList.add(classObject);
+                                classesObjMap.put(uID, classObject);
+                                classesDescList.add(classDescription);
+                                classesMap.put(classDescription, uID);
+                            }
                         }
                     }
                 }
