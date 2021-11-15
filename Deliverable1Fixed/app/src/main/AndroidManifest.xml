@@ -32,10 +32,10 @@
             android:name=".AdminAccounts"
             android:exported="true"/>
         <activity
-            android:name=".HomeScreen"
+            android:name=".AdminMain"
             android:exported="true"/>
         <activity
-            android:name=".AdminMain"
+            android:name=".HomeScreen"
             android:exported="true"/>
         <activity
             android:name=".RegisterUser"
