@@ -180,7 +180,6 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
         });
     }
 
-
     private void initializeAllSpinnerDropdowns() {
 
         // classTypesSpinner

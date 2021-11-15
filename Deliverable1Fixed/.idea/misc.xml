@@ -3,19 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_admin_main.xml" value="0.55" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_admin_manage_accounts.xml" value="0.55" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_admin_manage_classes.xml" value="0.55" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_front_screen.xml" value="0.55" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_home_screen.xml" value="0.55" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_delete_classes.xml" value="0.55" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_edit_classes.xml" value="0.55" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_main.xml" value="0.55" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_search_classes.xml" value="0.328125" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_teach_class.xml" value="0.3903985507246377" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_register_user.xml" value="0.55" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/cell.xml" value="0.55" />
+        <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/drawable/border_shape.xml" value="0.3828125" />
+        <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3828125" />
         <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_admin_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_admin_manage_accounts.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_admin_manage_classes.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_front_screen.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_home_screen.xml" value="0.36666666666666664" />
@@ -26,6 +17,7 @@
         <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_search_classes.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_teach_class.xml" value="0.4" />
         <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_register_user.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/cell.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

@@ -23,6 +23,9 @@
             android:name=".InstructorEditClasses"
             android:exported="true"/>
         <activity
+            android:name=".InstructorDeleteClasses"
+            android:exported="true"/>
+        <activity
             android:name=".AdminClass"
             android:exported="true"/>
         <activity
