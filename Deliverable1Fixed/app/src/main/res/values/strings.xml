@@ -4,6 +4,13 @@
     <string name="member">Member</string>
     <string name="instructor">Instructor</string>
 
+    <string-array name="fields">
+        <item>day</item>
+        <item>capacity</item>
+        <item>difficultyLevel</item>
+        <item>timeInterval</item>
+    </string-array>
+
     <string-array name="days">
         <item>Select a day</item>
         <item>Sunday</item>

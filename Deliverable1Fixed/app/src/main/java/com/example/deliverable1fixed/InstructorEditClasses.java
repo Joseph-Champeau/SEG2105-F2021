@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Objects;
 import java.util.Set;
 /**
  * A class representing the editing classes
@@ -183,11 +184,17 @@ public class InstructorEditClasses extends AppCompatActivity implements View.OnC
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Class classObject = snapshot.getValue(Class.class);
                     if(classObject != null) {
+                        String testIfCancelled = classObject.day;
                         User instructor = classObject.instructor;
                         if (instructor.getUsername().equals(user.getUsername())) {
                             String uID = snapshot.getKey();
-                            String classDescription = classObject.name + "-" + classObject.day + "'s : " + classObject.timeInterval;
-                            if (!(classesDescList.contains(classDescription) || classesList.contains(classObject))) {
+                            String classDescription;
+                            if (testIfCancelled.equals("N/A")) {
+                                classDescription = classObject.name + "-" + "(cancelled)";
+                            } else {
+                                classDescription = classObject.name + "-" + classObject.day + "'s : " + classObject.timeInterval;
+                            }
+                            if (!(classesDescList.contains(classDescription)) && !(classesList.contains(classObject))) {
                                 classesList.add(classObject);
                                 classesObjMap.put(uID, classObject);
                                 classesDescList.add(classDescription);
@@ -333,8 +340,11 @@ public class InstructorEditClasses extends AppCompatActivity implements View.OnC
         if(classesList != null) {
             for (int i = 0; i < classesList.size(); i++) {
                 if (classesList.get(i).classType.getName().equals(classType.getName())) {
-                    if (classesList.get(i).day.equals(day)) {
-                        return classesList.get(i).instructor.getFullName();
+                    String dayX = classesList.get(i).day;
+                    if (!(dayX.equals("N/A"))) {
+                        if (dayX.equals(day)) {
+                            return classesList.get(i).instructor.getFullName();
+                        }
                     }
                 }
             }
@@ -435,7 +445,7 @@ public class InstructorEditClasses extends AppCompatActivity implements View.OnC
                                     });
                                 } else if (child.equals("capacity")) {
                                     referenceClasses.child(key).child(child).
-                                            setValue(Integer.parseInt(fields.get(child))).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            setValue(Integer.parseInt(Objects.requireNonNull(fields.get(child)))).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {
                                             Toast.makeText(InstructorEditClasses.this, child +" updated", Toast.LENGTH_SHORT).show();
@@ -474,11 +484,9 @@ public class InstructorEditClasses extends AppCompatActivity implements View.OnC
                 }
             } else {
                 Toast.makeText(InstructorEditClasses.this, "Select at least one field to edit", Toast.LENGTH_SHORT).show();
-                return;
             }
         } else {
                 Toast.makeText(InstructorEditClasses.this, "Select class to edit", Toast.LENGTH_LONG).show();
-                return;
         }
     }
 }

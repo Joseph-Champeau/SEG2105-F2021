@@ -293,8 +293,11 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
         if(classesList != null) {
             for (int i = 0; i < classesList.size(); i++) {
                 if (classesList.get(i).classType.getName().equals(classType.getName())) {
-                    if (classesList.get(i).day.equals(day)) {
-                        return classesList.get(i).instructor.getFullName();
+                    String dayX = classesList.get(i).day;
+                    if (!(dayX.equals("N/A"))) {
+                        if (dayX.equals(day)) {
+                            return classesList.get(i).instructor.getFullName();
+                        }
                     }
                 }
             }

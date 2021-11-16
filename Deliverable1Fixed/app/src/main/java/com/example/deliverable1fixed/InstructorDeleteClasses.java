@@ -3,14 +3,9 @@ package com.example.deliverable1fixed;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.text.SpannableStringBuilder;
-import android.text.method.PasswordTransformationMethod;
-import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -27,6 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Set;
+
 /**
  * A class representing the 'deleting' classes
  *  @author Michias Shiferaw, Simon Brunet, Joseph Champeau, Charlie Haldane
@@ -40,9 +37,13 @@ public class InstructorDeleteClasses extends AppCompatActivity implements View.O
 
     private DatabaseReference referenceClasses;
 
-    private Spinner classesSpinner;
-    private String selectedClass;
-    private ArrayList<String> classesList;
+    private Spinner classesDeleteSpinner;
+    private String selectedClassDelete;
+    private ArrayList<String> classesDeleteList;
+
+    private Spinner classesCancelSpinner;
+    private String selectedClassCancel;
+    private ArrayList<String> classesCancelList;
 
     private Hashtable<String, String> classesMap;
 
@@ -67,14 +68,19 @@ public class InstructorDeleteClasses extends AppCompatActivity implements View.O
             }
         });
 
-        classesSpinner = (Spinner) findViewById(R.id.deleteClassToTeachSpinner);
-        classesList = new ArrayList<>();
-        classesList.add(0, "Select a class to delete");
+        classesDeleteSpinner = (Spinner) findViewById(R.id.deleteClassToTeachSpinner);
+        classesDeleteList = new ArrayList<>();
+        classesDeleteList.add(0, "Select a class to delete");
+
+        classesCancelSpinner = (Spinner) findViewById(R.id.cancelClassToTeachSpinner);
+        classesCancelList = new ArrayList<>();
+        classesCancelList.add(0, "Select a class to cancel");
 
         classesMap = new Hashtable<String, String>();
 
         pullClassesData();
         initializeDeleteSpinnerDropdown();
+        initializeCancelSpinnerDropdown();
     }
 
     /** Pulls Classes data from realtime database */
@@ -85,13 +91,26 @@ public class InstructorDeleteClasses extends AppCompatActivity implements View.O
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Class classObject = snapshot.getValue(Class.class);
                     if(classObject != null) {
+                        String testIfCancelled = classObject.day;
                         User instructor = classObject.instructor;
-                        if (instructor.getUsername().equals(user.getUsername())) {
-                            String uID = snapshot.getKey();
-                            String classDescription = classObject.name + "-" + classObject.day + "'s : " + classObject.timeInterval;
-                            if (!(classesList.contains(classDescription))) {
-                                classesList.add(classDescription);
-                                classesMap.put(classDescription, uID);
+                        if (testIfCancelled.equals("N/A")) {
+                            if (instructor.getUsername().equals(user.getUsername())) {
+                                String uID = snapshot.getKey();
+                                String classDescription = classObject.name + "-" + "(cancelled)";
+                                if (!(classesDeleteList.contains(classDescription))) {
+                                    classesDeleteList.add(classDescription);
+                                    classesMap.put(classDescription, uID);
+                                }
+                            }
+                        } else {
+                            if (instructor.getUsername().equals(user.getUsername())) {
+                                String uID = snapshot.getKey();
+                                String classDescription = classObject.name + "-" + classObject.day + "'s : " + classObject.timeInterval;
+                                if (!(classesDeleteList.contains(classDescription))) {
+                                    classesCancelList.add(classDescription);
+                                    classesDeleteList.add(classDescription);
+                                    classesMap.put(classDescription, uID);
+                                }
                             }
                         }
                     }
@@ -107,24 +126,49 @@ public class InstructorDeleteClasses extends AppCompatActivity implements View.O
     /** Initializes deleteClass spinner dropdown adapter. And instantiates OnClick item listener. */
     private void initializeDeleteSpinnerDropdown() {
         ArrayAdapter<String> classesAdapter =
-                new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, classesList);
+                new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, classesDeleteList);
         classesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        classesSpinner.setAdapter(classesAdapter);
-        classesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        classesDeleteSpinner.setAdapter(classesAdapter);
+        classesDeleteSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (!(parent.getItemAtPosition(position).equals("Select a class to delete"))) {
                     String item = parent.getItemAtPosition(position).toString();
                     Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_SHORT).show();
-                    selectedClass = item;
+                    selectedClassDelete = item;
                 } else {
-                    selectedClass = "";
+                    selectedClassDelete = "";
                 }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 Toast.makeText(InstructorDeleteClasses.this, "Select a class to delete", Toast.LENGTH_LONG).show();
-                selectedClass = "";
+                selectedClassDelete = "";
+            }
+        });
+    }
+
+    /** Initializes cancelClass spinner dropdown adapter. And instantiates OnClick item listener. */
+    private void initializeCancelSpinnerDropdown() {
+        ArrayAdapter<String> classesAdapter =
+                new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, classesCancelList);
+        classesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        classesCancelSpinner.setAdapter(classesAdapter);
+        classesCancelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (!(parent.getItemAtPosition(position).equals("Select a class to cancel"))) {
+                    String item = parent.getItemAtPosition(position).toString();
+                    Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_SHORT).show();
+                    selectedClassCancel = item;
+                } else {
+                    selectedClassCancel = "";
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Toast.makeText(InstructorDeleteClasses.this, "Select a class to cancel", Toast.LENGTH_LONG).show();
+                selectedClassCancel = "";
             }
         });
     }
@@ -132,6 +176,9 @@ public class InstructorDeleteClasses extends AppCompatActivity implements View.O
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.cancelClassToTeachBtn:
+                cancelClass();
+                break;
             case R.id.deleteClassToTeachBtn:
                 deleteClass();
                 break;
@@ -146,10 +193,10 @@ public class InstructorDeleteClasses extends AppCompatActivity implements View.O
     /** Deletes the selected existing class permanently from the realtime database.
      * Refreshes the data initially pulled, the ArrayLists/Hashtable holding data and re-initializes the Spinners onSuccess. */
     private void deleteClass() {
-        if (selectedClass.equals("")) {
+        if (selectedClassDelete.equals("")) {
             Toast.makeText(InstructorDeleteClasses.this, "Select a class to delete", Toast.LENGTH_SHORT).show();
         } else {
-            String key = classesMap.get(selectedClass);
+            String key = classesMap.get(selectedClassDelete);
             if (key != null) {
                 referenceClasses.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -158,13 +205,65 @@ public class InstructorDeleteClasses extends AppCompatActivity implements View.O
                             @Override
                             public void onSuccess(Void unused) {
                                 Toast.makeText(InstructorDeleteClasses.this, "Class deleted", Toast.LENGTH_SHORT).show();
-                                classesList.clear();
-                                classesList.add(0, "Select a class to delete");
+                                classesDeleteList.clear();
+                                classesDeleteList.add(0, "Select a class to delete");
                                 classesMap.clear();
                                 pullClassesData();
                                 initializeDeleteSpinnerDropdown();
+                                initializeCancelSpinnerDropdown();
                             }
                         });
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(InstructorDeleteClasses.this, "Database Error", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        }
+    }
+
+    /** Cancels the selected existing class by removing details associated with it from the realtime database (day, timeSlot, difficulty, capacity).
+     * Refreshes the data initially pulled, the ArrayLists/Hashtable holding data and re-initializes the Spinners onSuccess. */
+    private void cancelClass() {
+        if (selectedClassCancel.equals("")) {
+            Toast.makeText(InstructorDeleteClasses.this, "Select a class to cancel", Toast.LENGTH_SHORT).show();
+        } else {
+            Resources res = getResources();
+            String[] fields = res.getStringArray(R.array.fields);
+            String key = classesMap.get(selectedClassCancel);
+            if (key != null) {
+                referenceClasses.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (String child : fields) {
+                            if (child.equals("capacity")) {
+                                referenceClasses.child(key).child(child).
+                                        setValue(Integer.parseInt("0")).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(InstructorDeleteClasses.this, child + " updated", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } else {
+                                referenceClasses.child(key).child(child).
+                                        setValue("N/A").addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(InstructorDeleteClasses.this, child + " updated", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }
+                        Toast.makeText(InstructorDeleteClasses.this, "Class: " + selectedClassCancel + " cancelled", Toast.LENGTH_SHORT).show();
+                        classesCancelList.clear();
+                        classesCancelList.add(0, "Select a class to cancel");
+                        classesDeleteList.clear();
+                        classesDeleteList.add(0, "Select a class to delete");
+                        classesMap.clear();
+                        pullClassesData();
+                        initializeDeleteSpinnerDropdown();
+                        initializeCancelSpinnerDropdown();
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
