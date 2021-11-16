@@ -28,7 +28,7 @@ public class AdminMain extends AppCompatActivity implements View.OnClickListener
 
     private Button classes;
     private Button accounts;
-    private Button logout;
+    private Button backBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +41,8 @@ public class AdminMain extends AppCompatActivity implements View.OnClickListener
         accounts = (Button) findViewById(R.id.accounts);
         accounts.setOnClickListener(this);
 
-        logout = (Button) findViewById(R.id.adminSignOut);
-        logout.setOnClickListener(this);
+        backBtn = (Button) findViewById(R.id.adminBackMain);
+        backBtn.setOnClickListener(this);
 
         userID = getIntent().getExtras().getString("arg"); // passed from previous page
         reference = FirebaseDatabase.getInstance().getReference("Users");
@@ -83,8 +83,8 @@ public class AdminMain extends AppCompatActivity implements View.OnClickListener
                 startActivity(intentAccounts);
                 break;
 
-            case R.id.adminSignOut:
-                startActivity(new Intent(AdminMain.this, FrontScreen.class));
+            case R.id.adminBackMain:
+                startActivity(new Intent(AdminMain.this, HomeScreen.class));
                 break;
         }
     }

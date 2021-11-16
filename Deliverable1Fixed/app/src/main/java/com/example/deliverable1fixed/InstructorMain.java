@@ -26,14 +26,6 @@ import com.google.firebase.database.ValueEventListener;
 public class InstructorMain extends AppCompatActivity implements View.OnClickListener {
 
     private String userID;
-    private DatabaseReference reference;
-
-    private Button logout;
-    private Button searchClasses;
-    private Button teachClass;
-    private Button editClasses;
-    private Button deleteClasses;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,21 +34,21 @@ public class InstructorMain extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_instructor_main);
 
         userID = getIntent().getExtras().getString("arg"); // passed from previous page
-        reference = FirebaseDatabase.getInstance().getReference("Users");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
 
-        logout = (Button) findViewById(R.id.instructorSignOut);
-        logout.setOnClickListener(this);
+        Button backBtn = (Button) findViewById(R.id.instructorBackMain);
+        backBtn.setOnClickListener(this);
 
-        searchClasses = (Button) findViewById(R.id.instructorSearchClassesBtn);
+        Button searchClasses = (Button) findViewById(R.id.instructorSearchClassesBtn);
         searchClasses.setOnClickListener(this);
 
-        teachClass = (Button) findViewById(R.id.instructorTeachClassesBtn);
+        Button teachClass = (Button) findViewById(R.id.instructorTeachClassesBtn);
         teachClass.setOnClickListener(this);
 
-        editClasses = (Button) findViewById(R.id.instructorEditClassesBtn);
+        Button editClasses = (Button) findViewById(R.id.instructorEditClassesBtn);
         editClasses.setOnClickListener(this);
 
-        deleteClasses = (Button) findViewById(R.id.instructorDeleteClassesBtn);
+        Button deleteClasses = (Button) findViewById(R.id.instructorDeleteClassesBtn);
         deleteClasses.setOnClickListener(this);
 
         final TextView UsernameWTextView = (TextView) findViewById(R.id.instructorUsername);
@@ -106,8 +98,8 @@ public class InstructorMain extends AppCompatActivity implements View.OnClickLis
                 startActivity(intentDelete);
                 break;
 
-            case R.id.instructorSignOut:
-                startActivity(new Intent(InstructorMain.this, FrontScreen.class));
+            case R.id.instructorBackMain:
+                startActivity(new Intent(InstructorMain.this, HomeScreen.class));
                 break;
         }
     }

@@ -307,21 +307,20 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
     }
 
     private void createClass() {
-
+        String name = editTextSetName.getText().toString().trim();
+        if (name.isEmpty()) {
+            String estring = "Enter a valid name";
+            ForegroundColorSpan fgcspan = new ForegroundColorSpan(getResources().getColor(R.color.white));
+            SpannableStringBuilder ssbuilder = new SpannableStringBuilder(estring);
+            ssbuilder.setSpan(fgcspan, 0, estring.length(), 0);
+            editTextSetName.setError(ssbuilder);
+            editTextSetName.requestFocus();
+            return;
+        }
         ClassType classType = classTypesMap.get(selectedClassType);
         if(classType != null) {
 
             // form field validation
-            String name = editTextSetName.getText().toString().trim();
-            if (name.isEmpty()) {
-                String estring = "Enter a valid name";
-                ForegroundColorSpan fgcspan = new ForegroundColorSpan(getResources().getColor(R.color.white));
-                SpannableStringBuilder ssbuilder = new SpannableStringBuilder(estring);
-                ssbuilder.setSpan(fgcspan, 0, estring.length(), 0);
-                editTextSetName.setError(ssbuilder);
-                editTextSetName.requestFocus();
-                return;
-            }
             if(!(checkExistingName(name).equals(""))) {
                 Toast.makeText(InstructorTeachClass.this, "Already existing " + classType.getName() +
                         " class named: " + checkExistingName(name), Toast.LENGTH_SHORT).show();
