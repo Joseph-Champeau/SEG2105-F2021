@@ -24,7 +24,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-
+/**
+ * A class representing the Admin account functionality and behavior
+ *  @author Michias Shiferaw, Simon Brunet, Joseph Champeau, Charlie Haldane
+ *  @version 2.0
+ *  @since 2021-11-17
+ */
 public class AdminAccounts extends AppCompatActivity implements View.OnClickListener{
 
     private Button homeButton;

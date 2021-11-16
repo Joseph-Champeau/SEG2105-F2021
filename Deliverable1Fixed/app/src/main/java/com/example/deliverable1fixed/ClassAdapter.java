@@ -9,6 +9,12 @@ import android.widget.TextView;
 
 import java.util.List;
 
+/**
+ * A class representing the adapter of Classes
+ *  @author Michias Shiferaw, Simon Brunet, Joseph Champeau, Charlie Haldane
+ *  @version 2.0
+ *  @since 2021-11-17
+ */
 public class ClassAdapter extends ArrayAdapter<Class> {
 
     public ClassAdapter(Context context, int resource, List<Class> classList) {

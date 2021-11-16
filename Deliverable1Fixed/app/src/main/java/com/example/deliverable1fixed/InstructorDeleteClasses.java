@@ -27,7 +27,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-
+/**
+ * A class representing the 'deleting' classes
+ *  @author Michias Shiferaw, Simon Brunet, Joseph Champeau, Charlie Haldane
+ *  @version 2.0
+ *  @since 2021-11-17
+ */
 public class InstructorDeleteClasses extends AppCompatActivity implements View.OnClickListener{
 
     private String userID;

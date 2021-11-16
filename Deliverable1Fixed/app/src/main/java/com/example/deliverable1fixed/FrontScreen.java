@@ -25,7 +25,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Objects;
-
+/**
+ * A class representing the FrontScreen page functionality and behavior
+ *  @author Michias Shiferaw, Simon Brunet, Joseph Champeau, Charlie Haldane
+ *  @version 2.0
+ *  @since 2021-11-17
+ */
 public class FrontScreen extends AppCompatActivity implements View.OnClickListener {
 
     private TextView register;

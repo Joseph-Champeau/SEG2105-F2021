@@ -22,7 +22,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
+/**
+ * A class representing the searching classes
+ *  @author Michias Shiferaw, Simon Brunet, Joseph Champeau, Charlie Haldane
+ *  @version 2.0
+ *  @since 2021-11-17
+ */
 public class InstructorSearchClasses extends AppCompatActivity implements View.OnClickListener {
     private static class NumericKeyBoardTransformationMethod extends PasswordTransformationMethod {
         @Override
@@ -135,10 +140,10 @@ public class InstructorSearchClasses extends AppCompatActivity implements View.O
                 ArrayList<Class> filteredClass = new ArrayList<Class>();
                 for(Class session: classesList) {
                     //Sort by instructor
-                    if(session.instructor.getFullName().toLowerCase().contains(s.toLowerCase())||session.classType.name.toLowerCase().contains(s.toLowerCase())){
+                    if(session.instructor.getFullName().toLowerCase().contains(s.toLowerCase())||session.classType.getName().toLowerCase().contains(s.toLowerCase())){
                         if(filterSel.equals("all")) { filteredClass.add(session); }
                         else {
-                            if(session.instructor.getFullName().toLowerCase().contains(filterSel.toLowerCase())||session.classType.name.toLowerCase().contains(filterSel)){
+                            if(session.instructor.getFullName().toLowerCase().contains(filterSel.toLowerCase())||session.classType.getName().toLowerCase().contains(filterSel)){
                             //||session.classType.name.toLowerCase().contains(filterSel)
                                 filteredClass.add(session);
                             }
@@ -188,7 +193,7 @@ public class InstructorSearchClasses extends AppCompatActivity implements View.O
         filterSel = status;
         ArrayList<Class> filteredsessions = new ArrayList<Class>();
         for(Class session: classesList) {
-            if(session.instructor.getFullName().toLowerCase().contains(status.toLowerCase())|| session.classType.name.toLowerCase().contains(status.toLowerCase())) {
+            if(session.instructor.getFullName().toLowerCase().contains(status.toLowerCase())|| session.classType.getName().toLowerCase().contains(status.toLowerCase())) {
                 if(currentSearchText == "") { filteredsessions.add(session);
                 } else {
                     if(session.instructor.getFullName().toLowerCase().contains(currentSearchText.toLowerCase())) { filteredsessions.add(session); }

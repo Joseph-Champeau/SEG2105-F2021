@@ -27,7 +27,12 @@
 
         import java.util.ArrayList;
         import java.util.Hashtable;
-
+        /**
+         * A class representing the teaching classes
+         *  @author Michias Shiferaw, Simon Brunet, Joseph Champeau, Charlie Haldane
+         *  @version 2.0
+         *  @since 2021-11-17
+         */
 public class InstructorTeachClass extends AppCompatActivity implements View.OnClickListener{
 
     private static class NumericKeyBoardTransformationMethod extends PasswordTransformationMethod {
@@ -278,7 +283,7 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
     private String checkDayAndClassType(ClassType classType, String day) {
         if(classesList != null) {
             for (int i = 0; i < classesList.size(); i++) {
-                if (classesList.get(i).classType.name.equals(classType.name)) {
+                if (classesList.get(i).classType.getName().equals(classType.getName())) {
                     if (classesList.get(i).day.equals(day)) {
                         return classesList.get(i).instructor.getFullName();
                     }
@@ -318,7 +323,7 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
                 return;
             }
             if(!(checkExistingName(name).equals(""))) {
-                Toast.makeText(InstructorTeachClass.this, "Already existing " + classType.name +
+                Toast.makeText(InstructorTeachClass.this, "Already existing " + classType.getName() +
                         " class named: " + checkExistingName(name), Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -335,7 +340,7 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
 
             // verify if there exists a class of the same type on the selectedDay
             if(!(checkDayAndClassType(classType, selectedDay).equals(""))) {
-                Toast.makeText(InstructorTeachClass.this, "Already existing " + classType.name +
+                Toast.makeText(InstructorTeachClass.this, "Already existing " + classType.getName() +
                                 " class on " + selectedDay + " scheduled by: " + checkDayAndClassType(classType, selectedDay)
                         , Toast.LENGTH_SHORT).show();
                 return;

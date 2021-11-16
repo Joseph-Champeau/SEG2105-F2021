@@ -3,7 +3,12 @@ package com.example.deliverable1fixed;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-
+/**
+ * A class representing the components of a CLASS
+ *  @author Michias Shiferaw, Simon Brunet, Joseph Champeau, Charlie Haldane
+ *  @version 2.0
+ *  @since 2021-11-17
+ */
 public class Class {
 
     public String name; // should this be included?
@@ -35,26 +40,17 @@ public class Class {
         this.capacity = capacity;
     }
 
-
     public String getName(){return name;}
-
     public User getInstructor() {return instructor;}
-
     public ClassType getClassType(){return classType;}
-
     public String getDifficultyLevel() {return difficultyLevel;}
-
     public String getDay(){return day;}
-
     public String getTimeInterval(){return timeInterval;}
-
     public int getCapacity(){return capacity;}
 
-    public static Comparator<Class> capacityAscending = new Comparator<Class>()
-    {
+    public static Comparator<Class> capacityAscending = new Comparator<Class>() {
         @Override
-        public int compare(Class class01, Class class02)
-        {
+        public int compare(Class class01, Class class02) {
             int id1 = Integer.valueOf(class01.getCapacity());
             int id2 = Integer.valueOf(class02.getCapacity());
 
@@ -62,8 +58,7 @@ public class Class {
         }
     };
 
-    public static Comparator<Class> activtyAscending = new Comparator<Class>()
-    {
+    public static Comparator<Class> activtyAscending = new Comparator<Class>(){
         @Override
         public int compare(Class class01, Class class02)
         {

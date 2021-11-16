@@ -1,5 +1,12 @@
 package com.example.deliverable1fixed;
 
+/**
+ * A class representing the editing classes
+ *  @author Michias Shiferaw, Simon Brunet, Joseph Champeau, Charlie Haldane
+ *  @version 2.0
+ *  @since 2021-11-17
+ */
+
 public class User {
 
     private String fullName;

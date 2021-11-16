@@ -26,7 +26,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Set;
-
+/**
+ * A class representing the editing classes
+ *  @author Michias Shiferaw, Simon Brunet, Joseph Champeau, Charlie Haldane
+ *  @version 2.0
+ *  @since 2021-11-17
+ */
 public class InstructorEditClasses extends AppCompatActivity implements View.OnClickListener{
 
     private static class NumericKeyBoardTransformationMethod extends PasswordTransformationMethod {
@@ -318,7 +323,7 @@ public class InstructorEditClasses extends AppCompatActivity implements View.OnC
     private String checkDayAndClassType(ClassType classType, String day) {
         if(classesList != null) {
             for (int i = 0; i < classesList.size(); i++) {
-                if (classesList.get(i).classType.name.equals(classType.name)) {
+                if (classesList.get(i).classType.getName().equals(classType.getName())) {
                     if (classesList.get(i).day.equals(day)) {
                         return classesList.get(i).instructor.getFullName();
                     }
@@ -379,14 +384,14 @@ public class InstructorEditClasses extends AppCompatActivity implements View.OnC
                     // verify if there exists a class of with the same name
                     String name = editTextEditName.getText().toString().trim();
                     if (!(checkExistingName(name).equals(""))) {
-                        Toast.makeText(InstructorEditClasses.this, "Already existing " + c.classType.name +
+                        Toast.makeText(InstructorEditClasses.this, "Already existing " + c.classType.getName() +
                                 " class named: " + checkExistingName(name), Toast.LENGTH_SHORT).show();
                         return;
                     }
 
                     // verify if there exists a class of the same type on the selectedDay
                     if(!(checkDayAndClassType(c.classType, selectedDay).equals(""))) {
-                        Toast.makeText(InstructorEditClasses.this, "Already existing " + c.classType.name +
+                        Toast.makeText(InstructorEditClasses.this, "Already existing " + c.classType.getName() +
                                         " class on " + selectedDay + " scheduled by: " + checkDayAndClassType(c.classType, selectedDay)
                                 , Toast.LENGTH_SHORT).show();
                         return;
