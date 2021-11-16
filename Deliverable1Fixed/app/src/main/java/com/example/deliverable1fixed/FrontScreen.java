@@ -33,12 +33,9 @@ import java.util.Objects;
  */
 public class FrontScreen extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView register;
     private EditText editTextIdentifier, editTextPassword;
-    private Button signIn;
     private ProgressBar progressBar;
 
-    public String userID;
     private DatabaseReference reference;
     private Hashtable<String, String> emailUidMap;
     private Hashtable<String, String> usernameUidMap;
@@ -52,13 +49,14 @@ public class FrontScreen extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_front_screen);
         FirebaseApp.initializeApp(this);
-        register = (TextView) findViewById(R.id.register);
-        register.setOnClickListener(this);
-        // userID = "D6LdIf8urEP3ur9y99ytJ5nf5HI3";
+
         reference = FirebaseDatabase.getInstance().getReference("Users");
 
-        signIn = (Button) findViewById(R.id.signIn);
+        Button signIn = (Button) findViewById(R.id.signIn);
         signIn.setOnClickListener(this);
+
+        TextView register = (TextView) findViewById(R.id.register);
+        register.setOnClickListener(this);
 
         editTextIdentifier = (EditText) findViewById(R.id.identifier);
         editTextPassword = (EditText) findViewById(R.id.password);
@@ -69,8 +67,8 @@ public class FrontScreen extends AppCompatActivity implements View.OnClickListen
         emailUidMap = new Hashtable<String, String>();
         usernameAuthMap = new Hashtable<String, String>();
         usernameUidMap = new Hashtable<String, String>();
-        pullUserData(true); // instantiate data pull (fixes login delay issue)
-        pullUserData(false); // instantiate data pull (fixes login delay issue)
+        pullUserData(true); // instantiate data pull
+        pullUserData(false); // instantiate data pull
     }
 
     @Override
@@ -86,6 +84,10 @@ public class FrontScreen extends AppCompatActivity implements View.OnClickListen
         }
     }
 
+    /** Validates the user account registration form fields for Instructors and Members
+     * @param identifier email or username of the user as a String
+     * @param password password of the user's account as a String
+     * @return Boolean true if all registration fields are successfully validated. Boolean false otherwise.*/
     private boolean validateLoginFormFields(String identifier, String password) {
         if(identifier.isEmpty()){
             String estring = "Email/username is required";
@@ -117,13 +119,17 @@ public class FrontScreen extends AppCompatActivity implements View.OnClickListen
         }
     }
 
+    /** Checks if identifier is an email or a username
+     * @param identifier email or password as a String
+     * @return Boolean true if email. False if username */
     private boolean checkIdentifierType(String identifier) {
         return identifier.contains("@");
     }
 
+    /** Pulls user data from realtime database
+     * @param identifierType Boolean true if identifierType is an email. False if a username */
     private void pullUserData(boolean identifierType) {
-        DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference("Users");
-        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (identifierType) {
@@ -134,7 +140,6 @@ public class FrontScreen extends AppCompatActivity implements View.OnClickListen
                         emailAuthMap.put(email, password);
                         emailUidMap.put(email, uID);
                     }
-                    // Toast.makeText(FrontScreen.this, "Data Received", Toast.LENGTH_SHORT).show();
                 } else {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         String username = snapshot.child("username").getValue(String.class);
@@ -143,7 +148,6 @@ public class FrontScreen extends AppCompatActivity implements View.OnClickListen
                         usernameAuthMap.put(username, password);
                         usernameUidMap.put(username, uID);
                     }
-                    // Toast.makeText(FrontScreen.this, "Data Received", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
@@ -153,6 +157,11 @@ public class FrontScreen extends AppCompatActivity implements View.OnClickListen
         });
     }
 
+    /** Validates the credentials entered by the user.
+     * @param type Boolean true if email. False if username
+     * @param identifier email or username of the user as a String
+     * @param password password of the user's account as a String
+     * @return Boolean true if all the user's entered credentials are valid. Boolean false otherwise.*/
     private boolean validateCredentials(boolean type, String identifier, String password) {
         if (type) {
             if (emailAuthMap == null) {
@@ -189,22 +198,24 @@ public class FrontScreen extends AppCompatActivity implements View.OnClickListen
         }
     }
 
+    /** Initiate the user's new session the credentials entered by the user.
+     * @param identifier email or username of the user as a String. */
     private void initiateUserSession(String identifier) {
         if (checkIdentifierType(identifier)) {
             Intent intent = new Intent(FrontScreen.this, HomeScreen.class);
-            intent.putExtra("arg", emailUidMap.get(identifier));
+            intent.putExtra("arg", emailUidMap.get(identifier)); // sends the user ID as arguments to the next page.
             startActivity(intent);
         } else {
             Intent intent = new Intent(FrontScreen.this, HomeScreen.class);
-            intent.putExtra("arg", usernameUidMap.get(identifier));
+            intent.putExtra("arg", usernameUidMap.get(identifier)); // sends the user ID as arguments to the next page.
             startActivity(intent);
         }
     }
 
+    /** initiate user login procedure. */
     private void userLogin() {
         String identifier = editTextIdentifier.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
-
         if(validateLoginFormFields(identifier, password)) {
             progressBar.setVisibility(View.VISIBLE);
             boolean type = checkIdentifierType(identifier);
