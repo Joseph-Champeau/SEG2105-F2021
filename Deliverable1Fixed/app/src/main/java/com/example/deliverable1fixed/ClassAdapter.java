@@ -30,7 +30,11 @@ public class ClassAdapter extends ArrayAdapter<Class> {
         //Add later
         TextView output = (TextView) convertView.findViewById(R.id.className);
         //ImageView iv = (ImageView) convertView.findViewById(R.id.classImage);
-        output.setText(class1.getDifficultyLevel()+"-"+class1.getName()+ "\n" + class1.getDay()+ "'s at "+ class1.getTimeInterval() +"\nTaught by " + class1.getInstructor().getFullName() +"\n ("+ class1.getCapacity() +" spots left)");
+        if (class1.day.equals("N/A")) {
+            output.setText(class1.getName() +"\nTaught by " + class1.getInstructor().getFullName() + "\n(Cancelled)");
+        } else {
+            output.setText(class1.getDifficultyLevel() + "-" + class1.getName() + "\n" + class1.getDay() + "'s at " + class1.getTimeInterval() + "\nTaught by " + class1.getInstructor().getFullName() + "\n (" + class1.getCapacity() + " spots left)");
+        }
         //iv.setImageResource(class1.getCapacity());
 
         return convertView;
