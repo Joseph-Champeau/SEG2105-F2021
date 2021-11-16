@@ -77,6 +77,7 @@ public class InstructorDeleteClasses extends AppCompatActivity implements View.O
         initializeDeleteSpinnerDropdown();
     }
 
+    /** Pulls Classes data from realtime database */
     private void pullClassesData() {
         referenceClasses.addValueEventListener(new ValueEventListener() {
             @Override
@@ -103,6 +104,7 @@ public class InstructorDeleteClasses extends AppCompatActivity implements View.O
         });
     }
 
+    /** Initializes deleteClass spinner dropdown adapter. And instantiates OnClick item listener. */
     private void initializeDeleteSpinnerDropdown() {
         ArrayAdapter<String> classesAdapter =
                 new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, classesList);
@@ -141,6 +143,8 @@ public class InstructorDeleteClasses extends AppCompatActivity implements View.O
         }
     }
 
+    /** Deletes the selected existing class permanently from the realtime database.
+     * Refreshes the data initially pulled, the ArrayLists/Hashtable holding data and re-initializes the Spinners onSuccess. */
     private void deleteClass() {
         if (selectedClass.equals("")) {
             Toast.makeText(InstructorDeleteClasses.this, "Select a class to delete", Toast.LENGTH_SHORT).show();
@@ -154,13 +158,13 @@ public class InstructorDeleteClasses extends AppCompatActivity implements View.O
                             @Override
                             public void onSuccess(Void unused) {
                                 Toast.makeText(InstructorDeleteClasses.this, "Class deleted", Toast.LENGTH_SHORT).show();
+                                classesList.clear();
+                                classesList.add(0, "Select a class to delete");
+                                classesMap.clear();
+                                pullClassesData();
+                                initializeDeleteSpinnerDropdown();
                             }
                         });
-                        classesList.clear();
-                        classesList.add(0, "Select a class to delete");
-                        classesMap.clear();
-                        pullClassesData();
-                        initializeDeleteSpinnerDropdown();
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
