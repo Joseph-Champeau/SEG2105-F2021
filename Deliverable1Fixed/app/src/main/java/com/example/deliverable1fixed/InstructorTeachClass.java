@@ -35,6 +35,7 @@
          */
 public class InstructorTeachClass extends AppCompatActivity implements View.OnClickListener{
 
+    /** Class for numeric keyboard. */
     private static class NumericKeyBoardTransformationMethod extends PasswordTransformationMethod {
         @Override
         public CharSequence getTransformation(CharSequence source, View view) {
@@ -69,7 +70,6 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
     private Hashtable<String, ClassType> classTypesMap;
 
     private ArrayList<Class> classesList;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +145,7 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
         }
     }
 
+    /** Pulls ClassType data from realtime database */
     private void pullClassTypeData() {
         referenceClassTypes.addValueEventListener(new ValueEventListener() {
             @Override
@@ -167,6 +168,7 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
         });
     }
 
+    /** Pulls Classes data from realtime database */
     private void pullClassesData() {
         referenceClasses.addValueEventListener(new ValueEventListener() {
             @Override
@@ -185,6 +187,7 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
         });
     }
 
+    /** Initializes all dropdown spinner adapters. And instantiates OnClick item listener for each. */
     private void initializeAllSpinnerDropdowns() {
 
         // classTypesSpinner
@@ -280,6 +283,12 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
         });
     }
 
+    /** Checks that the selected classType doesn't already exist on the same day.
+     * The return value is used later on during the creation validation process.
+     * @param classType ClassType selected by instructor
+     * @param day Day selected by instructor
+     * @return String "" if there is no instructor with a class of the same ClassType on the selected day.
+     * String instructor fullName if there is an instructor with a class of the same ClassType on the selected day.*/
     private String checkDayAndClassType(ClassType classType, String day) {
         if(classesList != null) {
             for (int i = 0; i < classesList.size(); i++) {
@@ -294,6 +303,10 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
         return "";
     }
 
+    /** Checks that the entered class name doesn't already exist.
+     * @param name String name inputted by the instructor.
+     * @return String "" if there is no class of the same name.
+     * String class existing name if there is a class of the same name.*/
     private String checkExistingName(String name) {
         if(classesList != null) {
             for (int i = 0; i < classesList.size(); i++) {
@@ -306,7 +319,10 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
         return "";
     }
 
+    /** Creates a new class using the details inputted by the instructor and pushes it to the realtime database.
+     * Refreshes the data initially pulled, the ArrayLists/Hashtable holding data and re-initializes the Spinners onSuccess*/
     private void createClass() {
+        // class creation form field validation
         String name = editTextSetName.getText().toString().trim();
         if (name.isEmpty()) {
             String estring = "Enter a valid name";
@@ -319,15 +335,11 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
         }
         ClassType classType = classTypesMap.get(selectedClassType);
         if(classType != null) {
-
-            // form field validation
             if(!(checkExistingName(name).equals(""))) {
                 Toast.makeText(InstructorTeachClass.this, "Already existing " + classType.getName() +
                         " class named: " + checkExistingName(name), Toast.LENGTH_SHORT).show();
                 return;
             }
-
-
             if (selectedDifficultyLevel.equals("")) {
                 Toast.makeText(InstructorTeachClass.this, "Select a difficulty level", Toast.LENGTH_SHORT).show();
                 return;
@@ -336,15 +348,12 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
                 Toast.makeText(InstructorTeachClass.this, "Select a day", Toast.LENGTH_SHORT).show();
                 return;
             }
-
-            // verify if there exists a class of the same type on the selectedDay
             if(!(checkDayAndClassType(classType, selectedDay).equals(""))) {
                 Toast.makeText(InstructorTeachClass.this, "Already existing " + classType.getName() +
                                 " class on " + selectedDay + " scheduled by: " + checkDayAndClassType(classType, selectedDay)
                         , Toast.LENGTH_SHORT).show();
                 return;
             }
-
             if (selectedTimeSlot.equals("")) {
                 Toast.makeText(InstructorTeachClass.this, "Select a time slot", Toast.LENGTH_SHORT).show();
                 return;
@@ -359,29 +368,27 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
                 editTextSetCapacity.requestFocus();
                 return;
             }
-            int capacity= Integer.parseInt(capacity1);
 
-            // push to realtime database
+            // push new class to realtime database
+            int capacity = Integer.parseInt(capacity1);
             Class newClass = new Class(name, user, classType, selectedDifficultyLevel, selectedDay, selectedTimeSlot, capacity);
             referenceClasses.push().setValue(newClass).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
-                    Toast.makeText(InstructorTeachClass.this, "Class created", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InstructorTeachClass.this, "Class: " + name + " created", Toast.LENGTH_SHORT).show();
+                    editTextSetName.setText("");
+                    editTextSetCapacity.setText("");
+                    classTypesList.clear();
+                    classTypesList.add(0, "Select class type");
+                    classTypesMap.clear();
+                    classesList.clear();
+                    pullClassTypeData();
+                    pullClassesData();
+                    initializeAllSpinnerDropdowns();
                 }
             });
-            // reset page (without refresh)
-            editTextSetName.setText("");
-            editTextSetCapacity.setText("");
-            classTypesList.clear();
-            classTypesList.add(0, "Select class type");
-            classTypesMap.clear();
-            classesList.clear();
-            pullClassTypeData();
-            pullClassesData();
-            initializeAllSpinnerDropdowns();
         } else {
             Toast.makeText(InstructorTeachClass.this, "Select a class type", Toast.LENGTH_SHORT).show();
-            return;
         }
     }
 }
