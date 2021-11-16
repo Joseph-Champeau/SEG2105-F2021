@@ -36,21 +36,15 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
     private DatabaseReference reference;
     private String userID;
 
-    private Button homeButton;
-    private Button createButton;
-
-    private Button deleteButton;
     private Spinner deleteSpinner;
     private String selectedClassTypeForDeletion;
+    private ArrayList<String> classTypesForDeletion;
 
-    private Button editButton;
     private Spinner editSpinner;
     private String selectedClassTypeForEditing;
+    private ArrayList<String> classTypesForEditing;
 
     private Hashtable<String, String> classTypesMap;
-
-    private ArrayList<String> classTypesForDeletion;
-    private ArrayList<String> classTypesForEditing;
 
     private EditText editTextCreateName, editTextCreateDesc, editTextEditName, editTextEditDesc;
 
@@ -63,16 +57,16 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
         userID = getIntent().getExtras().getString("arg");
         reference = FirebaseDatabase.getInstance().getReference("ClassTypes");
 
-        homeButton = (Button) findViewById(R.id.home);
+        Button homeButton = (Button) findViewById(R.id.home);
         homeButton.setOnClickListener(this);
 
-        createButton = (Button) findViewById(R.id.createClassBtn);
+        Button createButton = (Button) findViewById(R.id.createClassBtn);
         homeButton.setOnClickListener(this);
 
-        deleteButton = (Button) findViewById(R.id.deleteClassBtn);
+        Button deleteButton = (Button) findViewById(R.id.deleteClassBtn);
         homeButton.setOnClickListener(this);
 
-        editButton = (Button) findViewById(R.id.editClassBtn);
+        Button editButton = (Button) findViewById(R.id.editClassBtn);
         homeButton.setOnClickListener(this);
 
         editTextCreateName = (EditText) findViewById(R.id.text_create_class_name_field);
@@ -86,16 +80,17 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
         classTypesMap = new Hashtable<String, String>();
 
         classTypesForDeletion = new ArrayList<>();
-        classTypesForDeletion.add(0, "Select class");
+        classTypesForDeletion.add(0, "Select class type");
 
         classTypesForEditing = new ArrayList<>();
-        classTypesForEditing.add(0, "Select class");
+        classTypesForEditing.add(0, "Select class type");
 
         getClassTypeData();
         initializeDeleteClassTypeDropdown();
         initializeEditClassTypeDropdown();
     }
 
+    /** Pulls ClassType data from realtime database */
     private void getClassTypeData() {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -119,6 +114,7 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
         });
     }
 
+    /** Initializes the deleteClass dropdown spinner adapter. And instantiates on click item listener. */
     private void initializeDeleteClassTypeDropdown() {
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, classTypesForDeletion);
@@ -128,7 +124,7 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
         deleteSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (!(parent.getItemAtPosition(position).equals("Select class"))) {
+                if (!(parent.getItemAtPosition(position).equals("Select class type"))) {
                     String item = parent.getItemAtPosition(position).toString();
                     Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_SHORT).show();
                     selectedClassTypeForDeletion = item;
@@ -138,12 +134,13 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(AdminClass.this, "Select class", Toast.LENGTH_LONG).show();
+                Toast.makeText(AdminClass.this, "Select class type", Toast.LENGTH_LONG).show();
                 selectedClassTypeForDeletion = "";
             }
         });
     }
 
+    /** Initializes the editClass dropdown spinner adapter. And instantiates on click item listener. */
     private void initializeEditClassTypeDropdown() {
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, classTypesForEditing);
@@ -153,7 +150,7 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
         editSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (!(parent.getItemAtPosition(position).equals("Select class"))) {
+                if (!(parent.getItemAtPosition(position).equals("Select class type"))) {
                     String item = parent.getItemAtPosition(position).toString();
                     Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_SHORT).show();
                     selectedClassTypeForEditing = item;
@@ -163,7 +160,7 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(AdminClass.this, "Select class", Toast.LENGTH_LONG).show();
+                Toast.makeText(AdminClass.this, "Select class type", Toast.LENGTH_LONG).show();
                 selectedClassTypeForEditing = "";
             }
         });
@@ -189,8 +186,11 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    /** Creates a new class type and pushes it to the realtime database.
+     * Refreshes the data initially pulled, the ArrayLists/Hashtable holding data and re-initializes the Spinners onSuccess*/
     private void createClassType() {
 
+        // name field validation
         String name = editTextCreateName.getText().toString().trim();
         if(name.isEmpty()) {
             String estring = "Enter a valid name";
@@ -202,6 +202,7 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
             return;
         }
 
+        // description field validation
         String description = editTextCreateDesc.getText().toString().trim();
         if(description.isEmpty()) {
             String estring = "Enter a valid description";
@@ -212,40 +213,43 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
             editTextCreateDesc.requestFocus();
             return;
         }
+
+        // determines if there already exists a ClassType with the entered name.
         if(classTypesForDeletion.contains(name)) {
-            Toast.makeText(AdminClass.this, "This class already exists", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AdminClass.this, "This class type already exists", Toast.LENGTH_SHORT).show();
             return;
         }
 
-
-
+        // creates a new ClassType and pushes it to the realtime database
         ClassType newClass = new ClassType(name, description);
         reference.push().setValue(newClass).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(AdminClass.this, "Class created", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AdminClass.this, "ClassType: " + name + " created", Toast.LENGTH_SHORT).show();
+                editTextCreateName.setText("");
+                editTextCreateDesc.setText("");
+                classTypesForDeletion.clear();
+                classTypesForDeletion.add(0, "Select class type");
+                classTypesForEditing.clear();
+                classTypesForEditing.add(0, "Select class type");
+                classTypesMap.clear();
+                getClassTypeData();
+                initializeDeleteClassTypeDropdown();
+                initializeEditClassTypeDropdown();
             }
         });
-        editTextCreateName.setText("");
-        editTextCreateDesc.setText("");
-        classTypesForDeletion.clear();
-        classTypesForDeletion.add(0, "Select class");
-        classTypesForEditing.clear();
-        classTypesForEditing.add(0, "Select class");
-        classTypesMap.clear();
-        getClassTypeData();
-        initializeDeleteClassTypeDropdown();
-        initializeEditClassTypeDropdown();
     }
 
+    /** Edits an existing class type's details and pushes them to the realtime database.
+     * Refreshes the data initially pulled, the ArrayLists/Hashtable holding data and re-initializes the Spinners onSuccess*/
     private void editClassType() {
-        String name = editTextEditName.getText().toString().trim();
 
+        // name field validation
+        String name = editTextEditName.getText().toString().trim();
         if (selectedClassTypeForEditing.equals("")) {
-            Toast.makeText(AdminClass.this, "Select a class to edit", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AdminClass.this, "Select a class type to edit", Toast.LENGTH_SHORT).show();
             return;
         }
-
         if(name.isEmpty()){
             String estring = "Enter a valid name";
             ForegroundColorSpan fgcspan = new ForegroundColorSpan(getResources().getColor(R.color.white));
@@ -256,6 +260,7 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
             return;
         }
 
+        // description field validation
         String description = editTextEditDesc.getText().toString().trim();
         if(description.isEmpty()) {
             String estring = "Enter a valid description";
@@ -267,6 +272,7 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
             return;
         }
 
+        // pushes the edited details of an existing ClassType to the realtime database
         String key = classTypesMap.get(selectedClassTypeForEditing);
         if (key != null) {
             reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -286,13 +292,13 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
                             Toast.makeText(AdminClass.this, "Description updated", Toast.LENGTH_SHORT).show();
                         }
                     });
-                    Toast.makeText(AdminClass.this, "Class updated", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AdminClass.this, "ClassType: " + name + " updated", Toast.LENGTH_SHORT).show();
                     editTextEditName.setText("");
                     editTextEditDesc.setText("");
                     classTypesForDeletion.clear();
-                    classTypesForDeletion.add(0, "Select class");
+                    classTypesForDeletion.add(0, "Select class type");
                     classTypesForEditing.clear();
-                    classTypesForEditing.add(0, "Select class");
+                    classTypesForEditing.add(0, "Select class type");
                     classTypesMap.clear();
                     getClassTypeData();
                     initializeDeleteClassTypeDropdown();
@@ -306,9 +312,11 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    /** Deletes an existing class type from the realtime database.
+     * Refreshes the data initially pulled, the ArrayLists/Hashtable holding data and re-initializes the Spinners onSuccess*/
     private void deleteClassType() {
         if (selectedClassTypeForDeletion.equals("")) {
-            Toast.makeText(AdminClass.this, "Select a class to delete", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AdminClass.this, "Select a class type to delete", Toast.LENGTH_SHORT).show();
         } else {
             String key = classTypesMap.get(selectedClassTypeForDeletion);
             if (key != null) {
@@ -318,13 +326,13 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
                         reference.child(key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                Toast.makeText(AdminClass.this, "Class deleted", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AdminClass.this, "ClassType: " +  selectedClassTypeForDeletion + " deleted", Toast.LENGTH_SHORT).show();
                             }
                         });
                         classTypesForDeletion.clear();
-                        classTypesForDeletion.add(0, "Select class");
+                        classTypesForDeletion.add(0, "Select class type");
                         classTypesForEditing.clear();
-                        classTypesForEditing.add(0, "Select class");
+                        classTypesForEditing.add(0, "Select class type");
                         classTypesMap.clear();
                         getClassTypeData();
                         initializeEditClassTypeDropdown();

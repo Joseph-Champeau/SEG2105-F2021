@@ -429,7 +429,6 @@ public class InstructorEditClasses extends AppCompatActivity implements View.OnC
                                     });
                                 }
                             }
-                            // reset page (without refresh)
                             Toast.makeText(InstructorEditClasses.this, "Class updated", Toast.LENGTH_SHORT).show();
                             editTextEditName.setText("");
                             editTextEditCapacity.setText("");
