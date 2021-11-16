@@ -40,11 +40,8 @@ import java.util.Objects;
  */
 public class RegisterUser extends AppCompatActivity implements View.OnClickListener {
 
-    private FirebaseAuth mAuth;
-
     private RadioGroup radioGroup;
     private RadioButton radioButton;
-    private TextView title, register;
     private EditText editTextFullName, editTextAge, editTextEmail, editTextPassword, editTextUsername;
     private ProgressBar progressBar;
 
@@ -56,10 +53,10 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
         FirebaseApp.initializeApp(this);
-        title = (TextView) findViewById(R.id.title);
+        TextView title = (TextView) findViewById(R.id.title);
         title.setOnClickListener(this);
 
-        register = (Button) findViewById(R.id.register);
+        TextView register = (Button) findViewById(R.id.register);
         register.setOnClickListener(this);
 
         editTextFullName = (EditText) findViewById(R.id.FullName);
@@ -76,7 +73,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
         emails = new ArrayList<>();
         usernames = new ArrayList<>();
-        pullUserData();
+        pullUserData(); // initialize data pull
     }
 
     @Override
@@ -91,11 +88,13 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /** Handles radio button */
     public void checkButton(View v){
         int radioId = radioGroup.getCheckedRadioButtonId();
         radioButton = findViewById(radioId);
     }
 
+    /** Pulls user data from realtime database */
     private void pullUserData() {
         DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
@@ -107,7 +106,6 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                     String email = snapshot.child("email").getValue(String.class);
                     emails.add(email);
                 }
-                // Toast.makeText(RegisterUser.this, "Data Received", Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -116,6 +114,13 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    /** Validates the user account registration form fields for Instructors and Members
+     * @param age age of the user as a String
+     * @param username username of the user as a String
+     * @param fullName Full name of the user as a String
+     * @param email email of the user as a String
+     * @param password password of the user's account as a String
+     * @return Boolean true if all registration fields are successfully validated. Boolean false otherwise.*/
     private boolean validateRegistrationFormFields(String email, String password, String fullName, String age, String username) {
         if(fullName.isEmpty()){
             String estring = "Enter a valid name";
@@ -192,25 +197,29 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /** Validates the user account email and username as unique or already existing for Instructors and Members.
+     * @param username username of the user as a String
+     * @param email email of the user as a String
+     * @return Boolean true if email and username do not already exist. Boolean false if either already exists.*/
     private boolean validateRegistrationEmailAndUsername(String email, String username) {
-        if (emails != null && usernames != null) { // check if there are any users in database
-            for (int i = 0; i < emails.size(); i++) {
-                if (emails.get(i).equals(email)) {
-                    Toast.makeText(RegisterUser.this, "Registration failed: Email -> " + email + " already in use", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
-                    return false;
-                }
-                if (usernames.get(i).equals(username)) {
-                    Toast.makeText(RegisterUser.this, "Registration failed: Username: -> " + username + " taken", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
-                    return false;
-                }
+        if (emails != null && usernames != null) { // ensures that there are users in the database
+            if (emails.contains(email)) {
+                Toast.makeText(RegisterUser.this, "Registration failed: Email -> " + email + " already in use", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+                return false;
+            }
+            if (usernames.contains(username)) {
+                Toast.makeText(RegisterUser.this, "Registration failed: Username: -> " + username + " taken", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+                return false;
             }
         }
         return true;
     }
 
+    /** Registers Instructors and Members. Push to realtime database and starts new activity if successful*/
     private void registerUser() {
+        // fetch fields
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         String fullName = editTextFullName.getText().toString().trim();

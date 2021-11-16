@@ -53,6 +53,7 @@ public class InstructorMain extends AppCompatActivity implements View.OnClickLis
 
         final TextView UsernameWTextView = (TextView) findViewById(R.id.instructorUsername);
         final TextView TypeWTextView = (TextView) findViewById(R.id.instructorUserType);
+
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -64,7 +65,6 @@ public class InstructorMain extends AppCompatActivity implements View.OnClickLis
                     TypeWTextView.setText("Type: " + type);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(InstructorMain.this, "Database Error", Toast.LENGTH_LONG).show();
@@ -80,13 +80,11 @@ public class InstructorMain extends AppCompatActivity implements View.OnClickLis
                 intentSearch.putExtra("arg", userID);
                 startActivity(intentSearch);
                 break;
-
             case R.id.instructorTeachClassesBtn:
                 Intent intentTeach = new Intent(InstructorMain.this, InstructorTeachClass.class);
                 intentTeach.putExtra("arg", userID);
                 startActivity(intentTeach);
                 break;
-
             case R.id.instructorEditClassesBtn:
                 Intent intentEdit = new Intent(InstructorMain.this, InstructorEditClasses.class);
                 intentEdit.putExtra("arg", userID);
@@ -97,7 +95,6 @@ public class InstructorMain extends AppCompatActivity implements View.OnClickLis
                 intentDelete.putExtra("arg", userID);
                 startActivity(intentDelete);
                 break;
-
             case R.id.instructorBackMain:
                 startActivity(new Intent(InstructorMain.this, HomeScreen.class));
                 break;

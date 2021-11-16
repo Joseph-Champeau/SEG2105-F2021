@@ -23,29 +23,24 @@ import com.google.firebase.database.ValueEventListener;
  */
 public class AdminMain extends AppCompatActivity implements View.OnClickListener{
 
-    private DatabaseReference reference;
     private String userID;
-
-    private Button classes;
-    private Button accounts;
-    private Button backBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_main);
 
-        classes = (Button) findViewById(R.id.classes);
+        Button classes = (Button) findViewById(R.id.classes);
         classes.setOnClickListener(this);
 
-        accounts = (Button) findViewById(R.id.accounts);
+        Button accounts = (Button) findViewById(R.id.accounts);
         accounts.setOnClickListener(this);
 
-        backBtn = (Button) findViewById(R.id.adminBackMain);
+        Button backBtn = (Button) findViewById(R.id.adminBackMain);
         backBtn.setOnClickListener(this);
 
         userID = getIntent().getExtras().getString("arg"); // passed from previous page
-        reference = FirebaseDatabase.getInstance().getReference("Users");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
 
         final TextView UsernameWTextView = (TextView) findViewById(R.id.adminUsername);
         final TextView TypeWTextView = (TextView) findViewById(R.id.adminUserType);
