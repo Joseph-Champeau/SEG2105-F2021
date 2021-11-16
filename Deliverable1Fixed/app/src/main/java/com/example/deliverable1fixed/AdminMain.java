@@ -79,7 +79,9 @@ public class AdminMain extends AppCompatActivity implements View.OnClickListener
                 break;
 
             case R.id.adminBackMain:
-                startActivity(new Intent(AdminMain.this, HomeScreen.class));
+                Intent intentBackMain = new Intent(AdminMain.this, HomeScreen.class);
+                intentBackMain.putExtra("arg", userID);
+                startActivity(intentBackMain);
                 break;
         }
     }

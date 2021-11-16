@@ -96,7 +96,9 @@ public class InstructorMain extends AppCompatActivity implements View.OnClickLis
                 startActivity(intentDelete);
                 break;
             case R.id.instructorBackMain:
-                startActivity(new Intent(InstructorMain.this, HomeScreen.class));
+                Intent intentBackMain = new Intent(InstructorMain.this, HomeScreen.class);
+                intentBackMain.putExtra("arg", userID);
+                startActivity(intentBackMain);
                 break;
         }
     }

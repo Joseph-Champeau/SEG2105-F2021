@@ -32,24 +32,19 @@ import java.util.Hashtable;
  */
 public class AdminAccounts extends AppCompatActivity implements View.OnClickListener{
 
-    private Button homeButton;
-    private Button deleteInstructorsButton;
-    private Button deleteMembersButton;
-    private Hashtable<String, String> users;
-
-    private Spinner instructorsDropdown;
-    private Spinner memberDropdown;
-    private String selectedMemberEmail;
-    private String selectedInstructorEmail;
-
     private DatabaseReference reference;
     private String userID;
 
-    private ArrayList<String> instructorEmails;
-    private ArrayList<String> memberEmails;
+    private Hashtable<String, String> users;
 
+    private Spinner instructorsDropdown;
+    private String selectedInstructorEmail;
 
+    private Spinner memberDropdown;
+    private String selectedMemberEmail;
 
+    private ArrayList<String> instructorEmails; // data showed in the instructor account spinner
+    private ArrayList<String> memberEmails; // data showed in the member account spinner
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +55,13 @@ public class AdminAccounts extends AppCompatActivity implements View.OnClickList
         userID = getIntent().getExtras().getString("arg"); // passed from previous page
         reference = FirebaseDatabase.getInstance().getReference("Users");
 
-        homeButton = (Button) findViewById(R.id.home);
+        Button homeButton = (Button) findViewById(R.id.home);
         homeButton.setOnClickListener(this);
 
-        deleteInstructorsButton = (Button) findViewById(R.id.deleteInstructorBtn);
+        Button deleteInstructorsButton = (Button) findViewById(R.id.deleteInstructorBtn);
         deleteInstructorsButton.setOnClickListener(this);
 
-        deleteMembersButton = (Button) findViewById(R.id.deleteMemberBtn);
+        Button deleteMembersButton = (Button) findViewById(R.id.deleteMemberBtn);
         deleteMembersButton.setOnClickListener(this);
 
         instructorsDropdown = (Spinner) findViewById(R.id.manageInstructorsSpinner);
@@ -84,6 +79,8 @@ public class AdminAccounts extends AppCompatActivity implements View.OnClickList
         initializeInstructorDropdown();
         initializeMemberDropdown();
     }
+
+    /** Pulls user data from realtime database. */
     private void getUserData() {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -93,21 +90,22 @@ public class AdminAccounts extends AppCompatActivity implements View.OnClickList
                     String type = snapshot.child("type").getValue(String.class);
                     String uID = snapshot.getKey();
                     String email = snapshot.child("email").getValue(String.class);
+                    String fullName = snapshot.child("fullName").getValue(String.class);
 
                     if (type != null && uID != null && email!= null) {
-
+                        String uSpinnerInfo = fullName + ": " + email;
                         if (!(instructorEmails.contains(email) || memberEmails.contains(email))) {
 
                             if (type.equals("Instructor")) {
-                                instructorEmails.add(email);
+                                instructorEmails.add(uSpinnerInfo);
                             }
 
                             if (type.equals("Member")) {
-                                memberEmails.add(email);
+                                memberEmails.add(uSpinnerInfo);
                             }
 
                             if ((type.equals("Instructor") || type.equals("Member"))) {
-                                users.put(email, uID);
+                                users.put(uSpinnerInfo, uID);
                             }
                         }
                     }
@@ -121,6 +119,7 @@ public class AdminAccounts extends AppCompatActivity implements View.OnClickList
         });
     }
 
+    /** Initializes the instructor dropdown spinner adapter. And instantiates on click item listener. */
     public void initializeInstructorDropdown() {
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, instructorEmails);
@@ -147,6 +146,7 @@ public class AdminAccounts extends AppCompatActivity implements View.OnClickList
         });
     }
 
+    /** Initializes the member dropdown spinner adapter. And instantiates on click item listener. */
     public void initializeMemberDropdown() {
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, memberEmails);
@@ -190,6 +190,8 @@ public class AdminAccounts extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    /** Deletes instructors from the realtime database.
+     * Refreshes the data pulled, the ArrayLists/HashMaps holding data and re-initializes the Spinners onSuccess*/
     public void deleteInstructor() {
         if (selectedInstructorEmail.equals("")) {
             Toast.makeText(AdminAccounts.this, "Select an instructor to delete", Toast.LENGTH_SHORT).show();
@@ -203,16 +205,16 @@ public class AdminAccounts extends AppCompatActivity implements View.OnClickList
                             @Override
                             public void onSuccess(Void unused) {
                                 Toast.makeText(AdminAccounts.this, "Instructor deleted", Toast.LENGTH_SHORT).show();
+                                instructorEmails.clear();
+                                instructorEmails.add(0, "Select instructor");
+                                memberEmails.clear();
+                                memberEmails.add(0, "Select member");
+                                users.clear();
+                                getUserData();
+                                initializeInstructorDropdown();
+                                initializeMemberDropdown();
                             }
                         });
-                        instructorEmails.clear();
-                        instructorEmails.add(0, "Select instructor");
-                        memberEmails.clear();
-                        memberEmails.add(0, "Select member");
-                        users.clear();
-                        getUserData();
-                        initializeInstructorDropdown();
-                        initializeMemberDropdown();
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
@@ -223,6 +225,8 @@ public class AdminAccounts extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    /** Deletes instructors from the realtime database.
+     * Refreshes the data pulled, the ArrayLists/HashMaps holding data and re-initializes the Spinners onSuccess*/
     public void deleteMember() {
         if (selectedMemberEmail.equals("")) {
             Toast.makeText(AdminAccounts.this, "Select a member to delete", Toast.LENGTH_SHORT).show();
@@ -236,16 +240,16 @@ public class AdminAccounts extends AppCompatActivity implements View.OnClickList
                             @Override
                             public void onSuccess(Void unused) {
                                 Toast.makeText(AdminAccounts.this, "Member deleted", Toast.LENGTH_SHORT).show();
+                                instructorEmails.clear();
+                                instructorEmails.add(0, "Select instructor");
+                                memberEmails.clear();
+                                memberEmails.add(0, "Select member");
+                                users.clear();
+                                getUserData();
+                                initializeInstructorDropdown();
+                                initializeMemberDropdown();
                             }
                         });
-                        instructorEmails.clear();
-                        instructorEmails.add(0, "Select instructor");
-                        memberEmails.clear();
-                        memberEmails.add(0, "Select member");
-                        users.clear();
-                        getUserData();
-                        initializeInstructorDropdown();
-                        initializeMemberDropdown();
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
