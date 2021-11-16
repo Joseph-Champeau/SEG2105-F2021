@@ -214,6 +214,7 @@ public class AdminClass extends AppCompatActivity implements View.OnClickListene
         }
         if(classTypesForDeletion.contains(name)) {
             Toast.makeText(AdminClass.this, "This class already exists", Toast.LENGTH_SHORT).show();
+            return;
         }
 
 
