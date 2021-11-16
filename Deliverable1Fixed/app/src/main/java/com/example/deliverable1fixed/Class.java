@@ -21,7 +21,7 @@ public class Class {
 
     public Class() {}
 
-    public Class(User instructor, ClassType classType) { // should this be the default constructor?
+    public Class(User instructor, ClassType classType) {
         this.instructor = instructor;
         this.classType = classType;
         this.difficultyLevel = "";
