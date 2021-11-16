@@ -152,6 +152,7 @@ public class InstructorEditClasses extends AppCompatActivity implements View.OnC
         }
     }
 
+    /** Pulls ClassType data from realtime database */
     private void pullClassTypeData() {
         referenceClassTypes.addValueEventListener(new ValueEventListener() {
             @Override
@@ -174,6 +175,7 @@ public class InstructorEditClasses extends AppCompatActivity implements View.OnC
         });
     }
 
+    /** Pulls Classes data from realtime database */
     private void pullClassesData() {
         referenceClasses.addValueEventListener(new ValueEventListener() {
             @Override
@@ -202,6 +204,7 @@ public class InstructorEditClasses extends AppCompatActivity implements View.OnC
         });
     }
 
+    /** Initializes all dropdown spinner adapters. And instantiates OnClick item listener for each. */
     private void initializeAllSpinnerDropdowns() {
 
         // classesSpinner
@@ -320,6 +323,12 @@ public class InstructorEditClasses extends AppCompatActivity implements View.OnC
         });
     }
 
+    /** Checks that the selected classType doesn't already exist on the same day.
+     * The return value is used later on during the creation validation process.
+     * @param classType ClassType selected by instructor
+     * @param day Day selected by instructor
+     * @return String "" if there is no instructor with a class of the same ClassType on the selected day.
+     * String instructor fullName if there is an instructor with a class of the same ClassType on the selected day.*/
     private String checkDayAndClassType(ClassType classType, String day) {
         if(classesList != null) {
             for (int i = 0; i < classesList.size(); i++) {
@@ -334,6 +343,10 @@ public class InstructorEditClasses extends AppCompatActivity implements View.OnC
         return "";
     }
 
+    /** Checks that the entered class name doesn't already exist.
+     * @param name String name inputted by the instructor.
+     * @return String "" if there is no class of the same name.
+     * String class existing name if there is a class of the same name.*/
     private String checkExistingName(String name) {
         if(classesList != null) {
             for (int i = 0; i < classesList.size(); i++) {
@@ -346,12 +359,17 @@ public class InstructorEditClasses extends AppCompatActivity implements View.OnC
         return "";
     }
 
+    /** Checks that at least one field has been filled with data.
+    * @return Boolean true if all fields are empty. Boolean false otherwise. */
     private boolean checkIfFieldsAreEmpty() {
         return selectedDifficultyLevel.equals("") && selectedDay.equals("") && selectedTimeSlot.equals("") &&
                 editTextEditName.getText().toString().trim().equals("") && editTextEditCapacity.getText().toString().trim().equals("")
                 && classTypesMap.get(selectedClassType) == null;
     }
 
+    /** Records the data entered and matches it to it's name for mapping purposes.
+     * Used during the editing process later on.
+     * @return Hashtable<String, String> where keys are the data name (labels) and the value held is the actual data entered by the instructor. */
     private Hashtable<String, String> fieldsToBeEdited() {
         Hashtable<String, String> fieldsMap = new Hashtable<String, String>();
         if(!(editTextEditName.getText().toString().trim().equals(""))) {
@@ -375,7 +393,10 @@ public class InstructorEditClasses extends AppCompatActivity implements View.OnC
         return fieldsMap;
     }
 
+    /** Edits the details of an existing class using the new details inputted by the instructor and pushes the updates to the realtime database.
+     * Refreshes the data initially pulled, the ArrayLists/Hashtable holding data and re-initializes the Spinners onSuccess. */
     private void editClass() {
+        // form validation
         String key = classesMap.get(selectedClassDesc);
         if (key != null) {
             if(!(checkIfFieldsAreEmpty())) {
@@ -397,6 +418,7 @@ public class InstructorEditClasses extends AppCompatActivity implements View.OnC
                         return;
                     }
 
+                    // push new class details to realtime database
                     referenceClasses.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -429,7 +451,7 @@ public class InstructorEditClasses extends AppCompatActivity implements View.OnC
                                     });
                                 }
                             }
-                            Toast.makeText(InstructorEditClasses.this, "Class updated", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(InstructorEditClasses.this, "Class: " + name + " updated", Toast.LENGTH_SHORT).show();
                             editTextEditName.setText("");
                             editTextEditCapacity.setText("");
                             classTypesList.clear();

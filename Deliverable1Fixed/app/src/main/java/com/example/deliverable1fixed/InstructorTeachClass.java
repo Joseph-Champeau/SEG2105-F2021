@@ -1,38 +1,38 @@
-        package com.example.deliverable1fixed;
+package com.example.deliverable1fixed;
 
-        import android.content.Intent;
-        import android.content.res.Resources;
-        import android.os.Bundle;
-        import android.text.SpannableStringBuilder;
-        import android.text.method.PasswordTransformationMethod;
-        import android.text.style.ForegroundColorSpan;
-        import android.view.View;
-        import android.widget.AdapterView;
-        import android.widget.ArrayAdapter;
-        import android.widget.Button;
-        import android.widget.EditText;
-        import android.widget.Spinner;
-        import android.widget.Toast;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.text.method.PasswordTransformationMethod;
+import android.text.style.ForegroundColorSpan;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
-        import androidx.annotation.NonNull;
-        import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
-        import com.google.android.gms.tasks.OnSuccessListener;
-        import com.google.firebase.FirebaseApp;
-        import com.google.firebase.database.DataSnapshot;
-        import com.google.firebase.database.DatabaseError;
-        import com.google.firebase.database.DatabaseReference;
-        import com.google.firebase.database.FirebaseDatabase;
-        import com.google.firebase.database.ValueEventListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-        import java.util.ArrayList;
-        import java.util.Hashtable;
-        /**
-         * A class representing the teaching classes
-         *  @author Michias Shiferaw, Simon Brunet, Joseph Champeau, Charlie Haldane
-         *  @version 2.0
-         *  @since 2021-11-17
-         */
+import java.util.ArrayList;
+import java.util.Hashtable;
+/**
+ * A class representing the teaching classes
+ *  @author Michias Shiferaw, Simon Brunet, Joseph Champeau, Charlie Haldane
+ *  @version 2.0
+ *  @since 2021-11-17
+ */
 public class InstructorTeachClass extends AppCompatActivity implements View.OnClickListener{
 
     /** Class for numeric keyboard. */
