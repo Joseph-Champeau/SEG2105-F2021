@@ -7,6 +7,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.view.View;
 
+/**
+ *  A class representing a typical calculator that can perform addition, subtraction, multiplication and division.
+ * @author Michias Shiferaw, Simon Brunet, Joseph Champeau, Charlie Haldane
+ * @version 2.0
+ * @since 2021-11-22
+ */
 public class MainActivity extends AppCompatActivity {
     private Button btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btnPlus, btnMinus, btnDiv,
             btnMul, btnEqual, btnDec, btnClr, btnDel;
@@ -21,6 +27,10 @@ public class MainActivity extends AppCompatActivity {
     private boolean checkEql = true; // check if equal button has been pressed already
     private String operationsSign = "+*-/"; //values of possibly operations
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         btn1.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 if (checkEql) {
@@ -58,6 +72,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         btn2.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 if (checkEql) {
@@ -67,6 +85,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         btn3.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 if (checkEql) {
@@ -76,6 +98,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         btn4.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 if (checkEql) {
@@ -85,6 +111,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         btn5.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 if (checkEql) {
@@ -94,6 +124,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         btn6.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 if (checkEql) {
@@ -103,6 +137,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         btn7.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 if (checkEql) {
@@ -112,6 +150,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         btn8.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 if (checkEql) {
@@ -121,6 +163,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         btn9.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 if (checkEql) {
@@ -131,6 +177,10 @@ public class MainActivity extends AppCompatActivity {
 
         });
         btn0.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 if (checkEql) {
@@ -143,6 +193,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         btnEqual.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 if(op != Operator.none) {
@@ -181,6 +235,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         btnMul.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 if (computationTextView.getText() != "") {
@@ -204,6 +262,10 @@ public class MainActivity extends AppCompatActivity {
 
         });
         btnDiv.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 if (computationTextView.getText() != "") {
@@ -225,6 +287,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         btnPlus.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 if (computationTextView.getText() != "") {
@@ -246,6 +312,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         btnMinus.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 if (computationTextView.getText() != "") {
@@ -269,6 +339,9 @@ public class MainActivity extends AppCompatActivity {
 
         btnDec.setOnClickListener(new View.OnClickListener() {
             @Override
+            /**
+             *
+             */
             public void onClick(View v) {
                 if (checkDec && checkEql && (!(displayScreen.getText().toString().equals("")))) {
                     displayScreen.setText(displayScreen.getText() + ".");
@@ -283,6 +356,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btnClr.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v ) {
                 d1=Double.NaN;
@@ -296,6 +373,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btnDel.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v ) {
                 if (checkEql) {
