@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Deliverable1Fixed">
         <activity
+            android:name=".InstructorViewClassMembers"
+            android:exported="true"/>
+        <activity
             android:name=".InstructorMain"
             android:exported="true"/>
         <activity
