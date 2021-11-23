@@ -5,26 +5,15 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
-import android.view.Menu;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
-
 import androidx.annotation.NonNull;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.deliverable1fixed.databinding.ActivityMemberMainBinding;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,10 +24,15 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class MemberMain extends AppCompatActivity implements View.OnClickListener{
+public class NavClasses extends AppCompatActivity implements View.OnClickListener {
+    private static class NumericKeyBoardTransformationMethod extends PasswordTransformationMethod {
+        @Override
+        public CharSequence getTransformation(CharSequence source, View view) {
+            return source;
+        }
+    }
+
     private String userID;
-    private AppBarConfiguration mAppBarConfiguration;
-    private ActivityMemberMainBinding binding;
     private User user;
     private ListView listView;
     private DatabaseReference referenceClassTypes;
@@ -59,147 +53,61 @@ public class MemberMain extends AppCompatActivity implements View.OnClickListene
     private String filterSel = "all";
     private String currentSearchText = "";
     private SearchView searchView;
-final
-    @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseApp.initializeApp(this);
     userID = getIntent().getExtras().getString("arg"); // passed from previous page
-    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-        binding = ActivityMemberMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-    NavigationView navigationView1 = (NavigationView) findViewById(R.id.nav_view);
-    View headerView = navigationView1.getHeaderView(0);
-    TextView navUsername = (TextView) headerView.findViewById(R.id.usernameProfile);
-    TextView navEmail = (TextView) headerView.findViewById(R.id.emailProfile);
     referenceClassTypes = FirebaseDatabase.getInstance().getReference("ClassTypes");
     referenceClasses = FirebaseDatabase.getInstance().getReference("Classes");
     classesList = new ArrayList<>();
     DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users");
-    referenceUsers.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+        referenceUsers.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             user = snapshot.getValue(User.class);
         }
         @Override
         public void onCancelled(@NonNull DatabaseError error) {
-            Toast.makeText(MemberMain.this, "Database Error", Toast.LENGTH_LONG).show();
+            Toast.makeText(NavClasses.this, "Database Error", Toast.LENGTH_LONG).show();
         }
     });
 
+    Resources res = getResources();
+    Button home = (Button) findViewById(R.id.homeBtn);
+        home.setOnClickListener(this);
+    Button create = (Button) findViewById(R.id.createClassBtn);
+        create.setOnClickListener(this);
 
-    reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
-        @Override
-        public void onDataChange(@NonNull DataSnapshot snapshot) {
-            User userProfile = snapshot.getValue(User.class);
-            if(userProfile != null){
-                String username = userProfile.getUsername();
-                String email = userProfile.getEmail();
-                navUsername.setText(username);
-                navEmail.setText(email);
-            }
-        }
-        @Override
-        public void onCancelled(@NonNull DatabaseError error) {
-            Toast.makeText(MemberMain.this, "Database Error", Toast.LENGTH_LONG).show();
-        }
-    });
-        setSupportActionBar(binding.appBarMemberMain.toolbar);
-        binding.appBarMemberMain.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
-                .setOpenableLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_member_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+    searching();
+    setupLayout();
+    setupData();
+    setUpList();
+    setAdapter(classesList);
 
-    }
+    /*Organize initial layout*/
+        row1.setVisibility(View.GONE);
+        row2.setVisibility(View.GONE);
+        row3.setVisibility(View.GONE);
+        row4.setVisibility(View.VISIBLE);
+        sortView.setVisibility(View.GONE);
 
+}
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.member_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_member_main);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
-
-
-    private static class NumericKeyBoardTransformationMethod extends PasswordTransformationMethod {
-        @Override
-        public CharSequence getTransformation(CharSequence source, View view) {
-            return source;
-        }
-    }
-
-    //@Override
     public void onClick(View v) {
         Intent intentView;
         switch (v.getId()) {
-            case R.id.addMoreClassesbtn:
-                intentView = new Intent(MemberMain.this, HomeScreen.class);
+            case R.id.createClassBtn:
+                intentView = new Intent(NavClasses.this, InstructorTeachClass.class);
                 intentView.putExtra("arg", userID);
                 startActivity(intentView);
                 break;
-            case R.id.homeBtn12:
-                intentView = new Intent(MemberMain.this, FrontScreen.class);
+            case R.id.homeBtn:
+                intentView = new Intent(NavClasses.this, InstructorMain.class);
                 intentView.putExtra("arg", userID);
                 startActivity(intentView);
-                break;
-            case R.id.MemberSearchClassesBtn:
-                Intent intentSearch = new Intent(MemberMain.this, MemberSearchClasses.class);
-                intentSearch.putExtra("arg", userID);
-                startActivity(intentSearch);
                 break;
         }
-        /*switch (v.getId()){
-            case R.id.MemberSearchClassesBtn:
-                Intent intentSearch = new Intent(MemberMain.this, MemberSearchClasses.class);
-                intentSearch.putExtra("arg", userID);
-                startActivity(intentSearch);
-                break;
-            case R.id.instructorViewClassMembersBtn:
-                Intent intentViewMembers = new Intent(MemberMain.this, InstructorViewClassMembers.class);
-                intentViewMembers.putExtra("arg", userID);
-                startActivity(intentViewMembers);
-                break;
-            case R.id.instructorTeachClassesBtn:
-                Intent intentTeach = new Intent(MemberMain.this, InstructorTeachClass.class);
-                intentTeach.putExtra("arg", userID);
-                startActivity(intentTeach);
-                break;
-            case R.id.instructorEditClassesBtn:
-                Intent intentEdit = new Intent(MemberMain.this, InstructorEditClasses.class);
-                intentEdit.putExtra("arg", userID);
-                startActivity(intentEdit);
-                break;
-            case R.id.instructorDeleteClassesBtn:
-                Intent intentDelete = new Intent(MemberMain.this, InstructorDeleteClasses.class);
-                intentDelete.putExtra("arg", userID);
-                startActivity(intentDelete);
-                break;
-            case R.id.instructorBackMain:
-                Intent intentBackMain = new Intent(MemberMain.this, HomeScreen.class);
-                intentBackMain.putExtra("arg", userID);
-                startActivity(intentBackMain);
-                break;
-        }*/
-
     }
 
     private void setupLayout() {
@@ -255,7 +163,7 @@ final
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(MemberMain.this, "Database Error", Toast.LENGTH_LONG).show();
+                Toast.makeText(NavClasses.this, "Database Error", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -387,3 +295,5 @@ final
         } else { strainer(filterSel); }
     }
 }
+
+
