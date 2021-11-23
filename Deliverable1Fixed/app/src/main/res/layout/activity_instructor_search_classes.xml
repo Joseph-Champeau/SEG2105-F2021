@@ -18,23 +18,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:backgroundTint="#0ED6B9"
+            android:backgroundTint="#B6B8B8"
             android:onClick="showSortClick"
             android:text="SORT"
             android:textColor="#ffff"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:cornerRadius="20dp" />
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="sans-serif-black"
             android:text="Easy Fit"
+            android:fontFamily="@font/quicksand_medium"
             android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="30sp" />
+            android:textColor="#4A48FF"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
 
 
         <Button
@@ -44,12 +46,13 @@
             android:layout_gravity="end"
             android:layout_marginRight="5dp"
             android:background="@null"
-            android:backgroundTint="#0ED6B9"
+            android:backgroundTint="#B6B8B8"
             android:onClick="showFilterClicked"
             android:text="FILTER"
             android:textColor="#ffff"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:cornerRadius="30dp"/>
 
 
     </androidx.appcompat.widget.Toolbar>
@@ -68,7 +71,7 @@
     <LinearLayout
         android:id="@+id/filterTabsLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:orientation="horizontal">
 
         <Button
@@ -76,8 +79,12 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginLeft="4dp"
 
-            android:backgroundTint="#0B0B0B"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="4dp"
+            android:backgroundTint="#2B4B73"
             android:onClick="allFilterTapped"
             android:text="All"
             tools:ignore="TextContrastCheck" />
@@ -87,8 +94,12 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginLeft="4dp"
 
-            android:backgroundTint="#2743CF"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="4dp"
+            android:backgroundTint="#55A980"
             android:onClick="yogaFilterTapped"
             android:text="Yoga"
             android:textColor="@color/white"
@@ -98,9 +109,13 @@
             android:id="@+id/cyclingFilter"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_marginLeft="6dp"
 
-            android:backgroundTint="#DC2424"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1"
+            android:backgroundTint="#55A980"
             android:onClick="cyclingFilterTapped"
             android:text="Cycling"
             android:textColor="@color/white"
@@ -111,8 +126,12 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginLeft="6dp"
 
-            android:backgroundTint="#FF1818"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="4dp"
+            android:backgroundTint="#55A980"
             android:onClick="danceFilterTapped"
             android:text="Dance"
             android:textColor="@color/white"
@@ -124,7 +143,7 @@
     <LinearLayout
         android:id="@+id/filterTabsLayout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:orientation="horizontal">
 
 
@@ -133,8 +152,12 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginLeft="6dp"
 
-            android:backgroundTint="#DC2424"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="4dp"
+            android:backgroundTint="#55A980"
             android:onClick="cardioFilterTapped"
             android:text="Cardio"
             android:textColor="@color/white"
@@ -145,7 +168,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-
+            android:layout_marginLeft="6dp"
+            android:backgroundTint="#55A980"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="4dp"
             android:onClick="aquaFilterTapped"
             android:text="Aqua"
             android:textColor="@color/white"
@@ -156,8 +183,12 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginLeft="6dp"
 
-            android:backgroundTint="#2743CF"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="4dp"
+            android:backgroundTint="#55A980"
             android:onClick="pilatesFilterTapped"
             android:text="Pilates"
             android:textColor="@color/white"
@@ -168,7 +199,7 @@
     <LinearLayout
         android:id="@+id/filterTabsLayout3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:orientation="horizontal">
 
 
@@ -177,8 +208,12 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginLeft="6dp"
 
-            android:backgroundTint="#2743CF"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="4dp"
+            android:backgroundTint="#55A980"
             android:onClick="hiitFilterTapped"
             android:text="HIIT N Athletics"
             tools:ignore="TextContrastCheck" />
@@ -188,8 +223,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginLeft="6dp"
 
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="4dp"
             android:onClick="zumbaFilterTapped"
+            android:backgroundTint="#55A980"
             android:text="Zumba"
             android:textColor="@color/white"
             tools:ignore="TextContrastCheck" />
@@ -206,8 +246,12 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginLeft="4dp"
 
-            android:backgroundTint="#15DF29"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="4dp"
+            android:backgroundTint="#8CA4C3"
             android:onClick="capacityTapped"
             android:text="More Room"
             tools:ignore="TextContrastCheck" />
@@ -216,8 +260,12 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginLeft="4dp"
 
-            android:backgroundTint="#15DF29"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="4dp"
+            android:backgroundTint="#8CA4C3"
             android:onClick="capacityDESCTapped"
             android:text="Limited Spots"
             android:textColor="@color/white"
@@ -227,8 +275,12 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginLeft="4dp"
 
-            android:backgroundTint="#15DF29"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="4dp"
+            android:backgroundTint="#8CA4C3"
             android:onClick="InsensityTapped"
             android:text="Level"
             android:textColor="@color/white"
@@ -238,8 +290,12 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginLeft="4dp"
 
-            android:backgroundTint="#15DF29"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="4dp"
+            android:backgroundTint="#8CA4C3"
             android:onClick="activtynameSort"
             android:text="Activity"
             android:textColor="@color/white"
@@ -260,7 +316,7 @@
             android:layout_gravity="end"
             android:layout_marginRight="0dp"
             android:background="@null"
-            android:backgroundTint="#0B0B0B"
+            android:backgroundTint="#4A48FF"
             android:onClick="showFilterClicked"
             android:text="Home"
             android:textColor="#ffff"
@@ -275,7 +331,7 @@
             android:layout_gravity="center"
             android:layout_marginRight="0dp"
             android:background="@null"
-            android:backgroundTint="@color/teal_200"
+            android:backgroundTint="#2B4B73"
             android:onClick="onClick"
             android:text="Create Class"
             android:textColor="#ffff"
