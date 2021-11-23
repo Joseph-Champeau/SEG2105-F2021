@@ -47,12 +47,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:gravity="center"
-            android:textColor="#4A48FF"
-            android:text="Admin Home"
             android:fontFamily="@font/quicksand_medium"
+            android:gravity="center"
+            android:text="Admin Home"
+            android:textColor="#4A48FF"
             android:textSize="50sp"
             android:textStyle="bold" />
+
         <TextView
             android:id="@+id/adminWelcome"
             android:layout_width="wrap_content"

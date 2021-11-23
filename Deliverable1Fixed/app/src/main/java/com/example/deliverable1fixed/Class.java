@@ -34,6 +34,7 @@ public class Class {
         this.capacity = capacity;
     }
 
+
     public String getName(){return name;}
     public User getInstructor() {return instructor;}
     public ClassType getClassType(){return classType;}

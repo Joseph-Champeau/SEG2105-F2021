@@ -48,8 +48,8 @@ final Handler handler = new Handler();
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_front_screen);
-
-        setContentView(R.layout.activity_front_screen);
+        LoadingScreen load=new LoadingScreen();
+        //load.starter("FrontScreen");
         FirebaseApp.initializeApp(this);
 
         reference = FirebaseDatabase.getInstance().getReference("Users");

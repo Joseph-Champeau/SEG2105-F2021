@@ -19,7 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/quicksand_medium"
+            android:textColor="#4A48FF"
             android:gravity="center"
             android:text="Easy Fit"
             android:textSize="60sp"
@@ -30,7 +31,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Manage your fitness"
+            android:fontFamily="@font/source_sans_pro_semibold_italic"
+            android:text="Dare to be great"
+            android:textColor="#4A48FF"
             android:textSize="18sp"
             android:textStyle="italic" />
 
@@ -43,6 +46,8 @@
             android:layout_marginTop="20dp"
             android:ems="10"
             android:hint="Full Name"
+            android:textColor="#2B4B73"
+            android:textColorHint="#2B4B73"
             android:textSize="24sp" />
 
         <EditText
@@ -53,6 +58,8 @@
             android:layout_marginTop="20dp"
             android:ems="10"
             android:hint="Username"
+            android:textColor="#2B4B73"
+            android:textColorHint="#2B4B73"
             android:textSize="24sp" />
 
         <EditText
@@ -63,6 +70,8 @@
             android:layout_marginTop="20dp"
             android:ems="10"
             android:hint="Age"
+            android:textColor="#2B4B73"
+            android:textColorHint="#2B4B73"
             android:textSize="24sp" />
 
         <EditText
@@ -73,6 +82,8 @@
             android:layout_marginTop="20dp"
             android:ems="10"
             android:hint="Email Address"
+            android:textColor="#2B4B73"
+            android:textColorHint="#2B4B73"
             android:inputType="textEmailAddress"
             android:textSize="24sp" />
 
@@ -85,6 +96,8 @@
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword"
+            android:textColor="#2B4B73"
+            android:textColorHint="#2B4B73"
             android:textSize="24sp" />
 
         <RadioGroup
@@ -102,6 +115,8 @@
                 android:layout_height="wrap_content"
                 android:onClick="checkButton"
                 android:text="Instructor"
+                android:textColor="#2B4B73"
+                android:textColorHint="#2B4B73"
                 android:textSize="20dp" />
 
             <RadioButton
@@ -112,6 +127,8 @@
                 android:checked="true"
                 android:onClick="checkButton"
                 android:text="Member"
+                android:textColor="#2B4B73"
+                android:textColorHint="#2B4B73"
                 android:textSize="20dp" />
 
         </RadioGroup>
@@ -122,10 +139,11 @@
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:backgroundTint="#0ED6B9"
+            android:backgroundTint="#1D5FD1"
             android:text="Register"
             android:textColor="#ffffff"
             android:textSize="26sp"
+            app:cornerRadius="50dp"
             android:textStyle="bold" />
 
         <ProgressBar

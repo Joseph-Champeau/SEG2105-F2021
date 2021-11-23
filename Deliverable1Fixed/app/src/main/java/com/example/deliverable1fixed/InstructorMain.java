@@ -31,6 +31,7 @@ public class InstructorMain extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
+        LoadingScreen load= new LoadingScreen();
         setContentView(R.layout.activity_instructor_main);
 
         userID = getIntent().getExtras().getString("arg"); // passed from previous page

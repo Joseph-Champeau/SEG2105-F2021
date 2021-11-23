@@ -12,9 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Deliverable1Fixed">
         <activity
-            android:name=".FrontScreen"
-            android:finishOnTaskLaunch="true"
+            android:name=".MemberMain"
+            android:exported="true"
+            android:label="@string/title_activity_member_main"
+            android:theme="@style/Theme.Deliverable1Fixed.NoActionBar" />
+        <activity
+            android:name=".MemberSearchClasses"
             android:exported="true" />
+        <activity
+            android:name=".FrontScreen"
+            android:exported="true"
+            android:finishOnTaskLaunch="true" />
         <activity
             android:name=".InstructorViewClassMembers"
             android:exported="true" />
