@@ -1,5 +1,6 @@
 package com.example.deliverable1fixed;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -11,8 +12,9 @@ import java.util.List;
  */
 public class Class {
 
-    public String name; // should this be included?
+    public String name;
     public User instructor;
+    public ArrayList<User> members; // members enrolled in a class
     public ClassType classType;
     public String difficultyLevel;
     public String day;
@@ -21,18 +23,10 @@ public class Class {
 
     public Class() {}
 
-    public Class(User instructor, ClassType classType) {
-        this.instructor = instructor;
-        this.classType = classType;
-        this.difficultyLevel = "";
-        this.day = "";
-        this.timeInterval = "";
-        this.capacity = 0;
-    }
-
-    public Class(String name, User instructor, ClassType classType, String difficultyLevel, String day, String timeInterval, int capacity) {
+    public Class(String name, User instructor, ArrayList<User> members, ClassType classType, String difficultyLevel, String day, String timeInterval, int capacity) {
         this.name = name;
         this.instructor = instructor;
+        this.members = members;
         this.classType = classType;
         this.difficultyLevel = difficultyLevel;
         this.day = day;
@@ -47,6 +41,7 @@ public class Class {
     public String getDay(){return day;}
     public String getTimeInterval(){return timeInterval;}
     public int getCapacity(){return capacity;}
+    public ArrayList<User> getMembers(){return members;}
 
     public static Comparator<Class> capacityAscending = new Comparator<Class>() {
         @Override

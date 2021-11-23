@@ -86,7 +86,7 @@ public class FrontScreen extends AppCompatActivity implements View.OnClickListen
      * @param identifier email or username of the user as a String
      * @param password password of the user's account as a String
      * @return Boolean true if all registration fields are successfully validated. Boolean false otherwise.*/
-    private boolean validateLoginFormFields(String identifier, String password) {
+    public boolean validateLoginFormFields(String identifier, String password) {
         if(identifier.isEmpty()){
             String estring = "Email/username is required";
             ForegroundColorSpan fgcspan = new ForegroundColorSpan(getResources().getColor(R.color.white));
@@ -160,7 +160,7 @@ public class FrontScreen extends AppCompatActivity implements View.OnClickListen
      * @param identifier email or username of the user as a String
      * @param password password of the user's account as a String
      * @return Boolean true if all the user's entered credentials are valid. Boolean false otherwise.*/
-    private boolean validateCredentials(boolean type, String identifier, String password) {
+    public boolean validateCredentials(boolean type, String identifier, String password) {
         if (type) {
             if (emailAuthMap == null) {
                 Toast.makeText(FrontScreen.this, "Login failed: service unavailable", Toast.LENGTH_LONG).show();

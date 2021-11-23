@@ -40,8 +40,8 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     private EditText editTextFullName, editTextAge, editTextEmail, editTextPassword, editTextUsername;
     private ProgressBar progressBar;
 
-    private ArrayList<String> emails;
-    private ArrayList<String> usernames;
+    public ArrayList<String> emails;
+    public ArrayList<String> usernames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +90,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     }
 
     /** Pulls user data from realtime database */
-    private void pullUserData() {
+    public void pullUserData() {
         DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -116,7 +116,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
      * @param email email of the user as a String
      * @param password password of the user's account as a String
      * @return Boolean true if all registration fields are successfully validated. Boolean false otherwise.*/
-    private boolean validateRegistrationFormFields(String email, String password, String fullName, String age, String username) {
+    public boolean validateRegistrationFormFields(String email, String password, String fullName, String age, String username) {
         if(fullName.isEmpty()){
             String estring = "Enter a valid name";
             ForegroundColorSpan fgcspan = new ForegroundColorSpan(getResources().getColor(R.color.white));
@@ -196,7 +196,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
      * @param username username of the user as a String
      * @param email email of the user as a String
      * @return Boolean true if email and username do not already exist. Boolean false if either already exists.*/
-    private boolean validateRegistrationEmailAndUsername(String email, String username) {
+    boolean validateRegistrationEmailAndUsername(String email, String username) {
         if (emails != null && usernames != null) { // ensures that there are users in the database
             if (emails.contains(email)) {
                 Toast.makeText(RegisterUser.this, "Registration failed: Email -> " + email + " already in use", Toast.LENGTH_SHORT).show();
@@ -213,7 +213,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     }
 
     /** Registers Instructors and Members. Push to realtime database and starts new activity if successful*/
-    private void registerUser() {
+    public void registerUser() {
         // fetch fields
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();

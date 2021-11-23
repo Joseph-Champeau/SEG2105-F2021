@@ -42,6 +42,9 @@ public class InstructorMain extends AppCompatActivity implements View.OnClickLis
         Button searchClasses = (Button) findViewById(R.id.instructorSearchClassesBtn);
         searchClasses.setOnClickListener(this);
 
+        Button viewClassMembers = (Button) findViewById(R.id.instructorViewClassMembersBtn);
+        viewClassMembers.setOnClickListener(this);
+
         Button teachClass = (Button) findViewById(R.id.instructorTeachClassesBtn);
         teachClass.setOnClickListener(this);
 
@@ -79,6 +82,11 @@ public class InstructorMain extends AppCompatActivity implements View.OnClickLis
                 Intent intentSearch = new Intent(InstructorMain.this, InstructorSearchClasses.class);
                 intentSearch.putExtra("arg", userID);
                 startActivity(intentSearch);
+                break;
+            case R.id.instructorViewClassMembersBtn:
+                Intent intentViewMembers = new Intent(InstructorMain.this, InstructorViewClassMembers.class);
+                intentViewMembers.putExtra("arg", userID);
+                startActivity(intentViewMembers);
                 break;
             case R.id.instructorTeachClassesBtn:
                 Intent intentTeach = new Intent(InstructorMain.this, InstructorTeachClass.class);
