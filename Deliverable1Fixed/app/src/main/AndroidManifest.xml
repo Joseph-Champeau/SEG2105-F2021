@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Deliverable1Fixed">
         <activity
-            android:name=".FrontScreen"
+            android:name=".LoadingScreen"
             android:exported="true" />
         <activity
             android:name=".InstructorViewClassMembers"
@@ -48,7 +48,7 @@
             android:name=".RegisterUser"
             android:exported="true" />
         <activity
-            android:name=".LoadingScreen"
+            android:name=".FrontScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
