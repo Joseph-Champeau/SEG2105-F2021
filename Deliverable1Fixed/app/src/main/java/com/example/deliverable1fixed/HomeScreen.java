@@ -32,6 +32,7 @@ public class HomeScreen extends AppCompatActivity {
 
     private Button admin;
     private Button instructor;
+    private Button member;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class HomeScreen extends AppCompatActivity {
 
         admin = (Button) findViewById(R.id.adminButton); // viewed by admins only
         instructor = (Button) findViewById(R.id.instructorHomeBtn); // viewed by all users at the moment
+        member= (Button) findViewById(R.id.memberHomeBtn);
         Button logout = (Button) findViewById(R.id.signOut);
 
 
@@ -140,6 +142,33 @@ public class HomeScreen extends AppCompatActivity {
                         }
                         if(type != null && type.equals("Admin")) {
                             Intent intentClasses = new Intent(HomeScreen.this, InstructorMain.class);
+                            intentClasses.putExtra("arg", userID);
+                            startActivity(intentClasses);
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(HomeScreen.this, "Database Error", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
+        member.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        User userProfile = snapshot.getValue(User.class);
+                        String type = userProfile.getType();
+
+                        if(type != null && type.equals("Instructor")) {
+                            Intent intentClasses = new Intent(HomeScreen.this, InstructorMain.class);
+                            intentClasses.putExtra("arg", userID);
+                            startActivity(intentClasses);
+                        }
+                        if(type != null && type.equals("Member")) {
+                            Intent intentClasses = new Intent(HomeScreen.this, MemberMain.class);
                             intentClasses.putExtra("arg", userID);
                             startActivity(intentClasses);
                         }

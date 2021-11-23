@@ -13,9 +13,7 @@
         android:theme="@style/Theme.Deliverable1Fixed">
         <activity
             android:name=".MemberMain"
-            android:exported="true"
-            android:label="@string/title_activity_member_main"
-            android:theme="@style/Theme.Deliverable1Fixed.NoActionBar" />
+            android:exported="true" />
         <activity
             android:name=".MemberSearchClasses"
             android:exported="true" />
