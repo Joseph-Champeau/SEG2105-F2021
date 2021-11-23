@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
@@ -37,14 +38,17 @@ public class FrontScreen extends AppCompatActivity implements View.OnClickListen
     private DatabaseReference reference;
     private Hashtable<String, String> emailUidMap;
     private Hashtable<String, String> usernameUidMap;
-
+final Handler handler = new Handler();
     private Hashtable<String, String> emailAuthMap;
     private Hashtable<String, String> usernameAuthMap;
 
+    //private static int TIME_OUT = 4; //Time to launch the another activity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_front_screen);
+
         setContentView(R.layout.activity_front_screen);
         FirebaseApp.initializeApp(this);
 

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
@@ -52,6 +53,14 @@ public class LoadingScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // Set the layout for the content view.
         setContentView(R.layout.activity_loading_screen);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent i = new Intent(LoadingScreen.this, FrontScreen.class);
+                startActivity(i);
+                finish();
+            }
+        },6000);
 
     }
 }

@@ -6,22 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".FrontScreen">
 
+
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#E0E0E0"
         android:theme="@style/AppBarOverlay">
 
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="378dp"
+            android:layout_height="86dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center|top|left|center_vertical"
+            app:srcCompat="@drawable/dumbell_purp" />
+
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/quicksand_medium"
             android:gravity="center"
             android:text="Easy Fit"
-            android:textSize="60sp"
             android:textColor="#4A48FF"
-            android:fontFamily="@font/quicksand_medium"
+            android:textSize="60sp"
             android:textStyle="bold" />
 
         <TextView
@@ -88,8 +100,8 @@
                 android:layout_marginLeft="90dp"
                 android:layout_marginTop="25dp"
                 android:text="Register"
-                android:textSize="16sp"
                 android:textColor="#4A48FF"
+                android:textSize="16sp"
 
                 android:textStyle="bold" />
 
@@ -104,6 +116,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
+
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleLarge"
