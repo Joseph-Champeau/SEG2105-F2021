@@ -92,7 +92,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="12dp"
             android:text="Description"
-            android:textColor="@color/white"
+            android:textColor="#2C82CC"
             android:textSize="20dp"
             app:layout_constraintBottom_toTopOf="@+id/text_create_class_description_field"
             app:layout_constraintEnd_toEndOf="parent"
@@ -136,7 +136,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="@color/teal_200"
+            android:backgroundTint="#8CA4C3"
             android:onClick="onClick"
             android:text="Create Class" />
 
@@ -171,7 +171,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="12dp"
             android:text="Class name"
-            android:textColor="@color/white"
+            android:textColor="#2C82CC"
             android:textSize="20dp"
             app:layout_constraintBottom_toTopOf="@+id/text_create_class_description_field"
             app:layout_constraintEnd_toEndOf="parent"
@@ -215,7 +215,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="12dp"
             android:text="Description"
-            android:textColor="@color/white"
+            android:textColor="#2C82CC"
             android:textSize="20dp"
             app:layout_constraintBottom_toTopOf="@+id/text_create_class_description_field"
             app:layout_constraintEnd_toEndOf="parent"
@@ -258,7 +258,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
-            android:backgroundTint="#5F5AED"
+            android:backgroundTint="#8CA4C3"
             android:onClick="onClick"
             android:text="Edit Class" />
 
@@ -289,7 +289,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="@color/teal_200"
+            android:backgroundTint="#8CA4C3"
             android:onClick="onClick"
             android:text="Delete Class"
             app:layout_constraintBottom_toBottomOf="parent"
