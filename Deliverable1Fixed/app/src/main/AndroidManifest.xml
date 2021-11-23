@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.deliverable1fixed">
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -11,40 +12,43 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Deliverable1Fixed">
         <activity
+            android:name=".FrontScreen"
+            android:exported="true" />
+        <activity
             android:name=".InstructorViewClassMembers"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".InstructorMain"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".InstructorSearchClasses"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".InstructorTeachClass"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".InstructorEditClasses"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".InstructorDeleteClasses"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".AdminClass"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".AdminAccounts"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".AdminMain"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".HomeScreen"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".RegisterUser"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
-            android:name=".FrontScreen"
+            android:name=".LoadingScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,4 +57,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

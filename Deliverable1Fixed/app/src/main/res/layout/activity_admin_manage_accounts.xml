@@ -44,7 +44,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/text_del_instructor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/text_del_instructor"
@@ -135,7 +136,7 @@
         android:layout_marginLeft="290dp"
         android:text="Home"
         android:onClick="onClick"
-        android:backgroundTint="#7466A2"
+        android:backgroundTint="#4A48FF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"

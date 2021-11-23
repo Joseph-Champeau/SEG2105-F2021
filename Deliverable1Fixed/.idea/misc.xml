@@ -3,17 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/font/acme.xml" value="0.44427083333333334" />
         <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_admin_main.xml" value="0.4" />
         <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_admin_manage_accounts.xml" value="0.48541666666666666" />
         <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_admin_manage_classes.xml" value="0.48541666666666666" />
         <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_front_screen.xml" value="0.4314868804664723" />
         <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_home_screen.xml" value="0.3052536231884058" />
         <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_delete_classes.xml" value="0.4432291666666667" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_edit_classes.xml" value="0.19655797101449277" />
+        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_edit_classes.xml" value="0.4" />
         <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_main.xml" value="0.46647230320699706" />
         <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_search_classes.xml" value="0.4" />
         <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_teach_class.xml" value="0.2966485507246377" />
         <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_view_class_members.xml" value="0.234375" />
+        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_loading_screen.xml" value="0.2713541666666667" />
         <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_register_user.xml" value="0.4140625" />
         <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/cell.xml" value="0.1598731884057971" />
         <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/loadingscreen.xml" value="0.21822916666666667" />
