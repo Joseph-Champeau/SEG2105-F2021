@@ -5,7 +5,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D80C0C0C"
+    android:background="#E0E0E0"
     android:orientation="vertical"
     tools:context=".InstructorSearchClasses">
 

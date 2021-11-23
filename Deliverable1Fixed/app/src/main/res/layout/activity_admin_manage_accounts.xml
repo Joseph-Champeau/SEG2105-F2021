@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D8000000"
+    android:background="#E0E0E0"
     tools:context=".AdminAccounts">
 
 
@@ -15,7 +15,7 @@
         android:layout_marginBottom="132dp"
         android:text="Manage Accounts"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="#4A48FF"
         android:textSize="26sp"
         app:layout_constraintBottom_toBottomOf="@+id/text_del_instructor"
         app:layout_constraintEnd_toEndOf="parent"
