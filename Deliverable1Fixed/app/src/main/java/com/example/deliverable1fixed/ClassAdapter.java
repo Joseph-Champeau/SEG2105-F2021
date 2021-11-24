@@ -37,6 +37,8 @@ public class ClassAdapter extends ArrayAdapter<Class> {
                 output.setText(class1.getDifficultyLevel() + "-" + class1.getName() + "\n" + class1.getDay() + "'s at " + class1.getTimeInterval() + "\nTaught by " + class1.getInstructor().getFullName() + "\n (" + class1.getCapacity() + " spots left)");
             }
             //iv.setImageResource(class1.getCapacity());
+        }else{
+            output.setText("ONBOARDING: \nRequired for all members\n:)");
         }
         return convertView;
     }

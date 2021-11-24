@@ -3,6 +3,7 @@ package com.example.deliverable1fixed;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,6 +27,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class NavClasses extends AppCompatActivity implements View.OnClickListener {
+
+
     private static class NumericKeyBoardTransformationMethod extends PasswordTransformationMethod {
         @Override
         public CharSequence getTransformation(CharSequence source, View view) {
@@ -39,7 +42,7 @@ public class NavClasses extends AppCompatActivity implements View.OnClickListene
     private DatabaseReference referenceClassTypes;
     private DatabaseReference referenceClasses;
 
-
+int time=0;
     public static ArrayList<Class> classesList;
     private Button sortButton;
     private Button filterButton;
@@ -78,16 +81,16 @@ public class NavClasses extends AppCompatActivity implements View.OnClickListene
     });
 
     Resources res = getResources();
-    Button home = (Button) findViewById(R.id.homeBtn);
+    Button home = (Button) findViewById(R.id.myhomeBtn);
         home.setOnClickListener(this);
-    enroll = (Button) findViewById(R.id.addMoreClassesbtn);
+    enroll = (Button) findViewById(R.id.myaddMoreClassesbtn);
         enroll.setOnClickListener(this);
 
     //searching();
     setupLayout();
-    setupData();
+    //setupData();
         showmyClasses();
-    setUpList();
+    //setUpList();
         setUpOnclickListener();
     //setAdapter(classesList);
 
@@ -118,17 +121,17 @@ public class NavClasses extends AppCompatActivity implements View.OnClickListene
     }
 
     private void setupLayout() {
-        sortButton = (Button) findViewById(R.id.sortButton);
-        filterButton = (Button) findViewById(R.id.filterButton);
-        row1 = (LinearLayout) findViewById(R.id.filterTabsLayout);
-        row2 = (LinearLayout) findViewById(R.id.filterTabsLayout2);
-        row3= (LinearLayout) findViewById(R.id.filterTabsLayout3);
-        row4 = (LinearLayout) findViewById(R.id.filterTabsLayout4);
-        sortView = (LinearLayout) findViewById(R.id.sortTabsLayout2);
+        sortButton = (Button) findViewById(R.id.mysortButton);
+        filterButton = (Button) findViewById(R.id.myfilterButton);
+        row1 = (LinearLayout) findViewById(R.id.myfilterTabsLayout);
+        row2 = (LinearLayout) findViewById(R.id.myfilterTabsLayout2);
+        row3= (LinearLayout) findViewById(R.id.myfilterTabsLayout3);
+        row4 = (LinearLayout) findViewById(R.id.myfilterTabsLayout4);
+        sortView = (LinearLayout) findViewById(R.id.mysortTabsLayout2);
     }
 
     private void searching() {
-        searchView = (SearchView) findViewById(R.id.ClassListSearchView);
+        searchView = (SearchView) findViewById(R.id.MyclassListSearchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -141,7 +144,7 @@ public class NavClasses extends AppCompatActivity implements View.OnClickListene
                 ArrayList<Class> filteredClass = new ArrayList<Class>();
                 for(Class session: classesList) {
                     //Sort by instructor
-                    if(session.instructor.getFullName().toLowerCase().contains(s.toLowerCase())||session.classType.getName().toLowerCase().contains(s.toLowerCase())){
+                    if(session.instructor.getFullName().toLowerCase().contains(s.toLowerCase())||session.classType.getName().toLowerCase().contains(s.toLowerCase())||session.getDay().toLowerCase().contains(s.toLowerCase())){
                         if(filterSel.equals("all")) { filteredClass.add(session); }
                         else {
                             if(session.instructor.getFullName().toLowerCase().contains(filterSel.toLowerCase())||session.classType.getName().toLowerCase().contains(filterSel)){
@@ -188,13 +191,23 @@ public class NavClasses extends AppCompatActivity implements View.OnClickListene
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
             {
                 Intent intentView=null;
-                Class selectClass = (Class) (listView.getItemAtPosition(position));
+                time++;
+                Handler handy= new Handler();
+                handy.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (time==2){
+                            Intent intentView=null;
+                            Class selectClass = (Class) (listView.getItemAtPosition(position));
 
-                intentView  = new Intent(NavClasses.this, ClassInfo.class);
-                intentView.putExtra("arg", userID);
-                        //intentView.putExtra("arg",selectClass.name);
-                startActivity(intentView);
-
+                            intentView  = new Intent(NavClasses.this, ClassInfo.class);
+                            intentView.putExtra("arg", userID);
+                            //intentView.putExtra("arg",selectClass.name);
+                            startActivity(intentView);
+                        }
+                        time=0;
+                    }
+                },1000);
                 //Intent showDetail = new Intent(getApplicationContext(), ClassInfo.class);
                // showDetail.putExtra("id",selectClass.classType.getName());
                 //startActivity(showDetail);
@@ -258,7 +271,7 @@ public class NavClasses extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    public void showEnrolledCliecked(View view) {
+    public void showEnrolledClicked(View view) {
         if(sortHidden == true) {
             enrollHidden = false;
             showEnrolled();

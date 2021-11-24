@@ -100,11 +100,34 @@ public class ClassInfo extends AppCompatActivity implements View.OnClickListener
                 Toast.makeText(ClassInfo.this, "Database Error", Toast.LENGTH_LONG).show();
             }
         });
-        //user.myClasses=new ArrayList<Class>();
-       String hi = selectedclass.getName();
-        //user.addClass(selectedclass);
         referenceUsers.child("myClasses").child(String.valueOf(user.getMyClasses().size())).setValue(selectedclass);
         user.addClass(selectedclass);
+
+    }
+
+    public void unenrollingClick(View view) {
+        userID = getIntent().getExtras().getString("arg");
+        DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users").child(userID);
+        referenceUsers.child("myClasses").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    Class classObject = snapshot1.getValue(Class.class);
+                    //if(classObject != null) {
+                    screen.add(classObject);
+                    //}
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(ClassInfo.this, "Database Error", Toast.LENGTH_LONG).show();
+            }
+        });
+        int val= user.getMyClasses().indexOf(selectedclass);
+        if (val!=-1){
+            referenceUsers.child("myClasses").child(String.valueOf(val)).removeValue();
+            user.getMyClasses().remove(val);
+        }
 
     }
     @Override
@@ -134,13 +157,7 @@ public class ClassInfo extends AppCompatActivity implements View.OnClickListener
                 startActivity(intentBackMain);
                 break;
         }
-        //switch (view.getId()) {
-        //case R.id.enrollbt:
-        //    user.myClasses.add(selectedclass);
 
-
-        //break;
     }
-//}
 
 }

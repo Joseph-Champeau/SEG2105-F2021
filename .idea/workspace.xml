@@ -9,17 +9,57 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3148161c-4077-4ec8-adc9-d86e4daff472" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/lab5/Calculator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/SEG2105-F2021.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="3148161c-4077-4ec8-adc9-d86e4daff472" name="Default Changelist" comment="More Edits">
+      <change afterPath="$PROJECT_DIR$/Lab5/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/proguard-rules.pro" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/src/androidTest/java/com/example/lab5junit/ExampleInstrumentedTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/src/main/java/com/example/lab5junit/MainActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/src/main/res/drawable/ic_launcher_background.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/src/main/res/mipmap-hdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/src/main/res/mipmap-mdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/src/main/res/mipmap-xhdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/src/main/res/values-night/themes.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/src/main/res/values/themes.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/app/src/test/java/com/example/lab5junit/ExampleUnitTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/gradle.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Deliverable1Fixed/app/src/main/java/com/example/deliverable1fixed/ClassAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Deliverable1Fixed/app/src/main/java/com/example/deliverable1fixed/ClassAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Deliverable1Fixed/app/src/main/java/com/example/deliverable1fixed/ClassInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/Deliverable1Fixed/app/src/main/java/com/example/deliverable1fixed/ClassInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Deliverable1Fixed/app/src/main/java/com/example/deliverable1fixed/NavClasses.java" beforeDir="false" afterPath="$PROJECT_DIR$/Deliverable1Fixed/app/src/main/java/com/example/deliverable1fixed/NavClasses.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Deliverable1Fixed/app/src/main/res/layout/class_details.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Deliverable1Fixed/app/src/main/res/layout/class_details.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Deliverable1Fixed/app/src/main/res/layout/fragment_gallery.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Deliverable1Fixed/app/src/main/res/layout/fragment_gallery.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/lab5/Calculator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/CalculatorTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/com/example/lab5/CalculatorTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +90,17 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="android.template.1721849536">
+      <recent name="" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.example.lab5" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
@@ -120,6 +171,14 @@
       <option name="presentableId" value="Default" />
       <updated>1637762023069</updated>
     </task>
+    <task id="LOCAL-00001" summary="Starting Lab5">
+      <created>1637763239829</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1637763239829</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -132,5 +191,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Starting Lab5" />
+    <MESSAGE value="More Edits" />
+    <option name="LAST_COMMIT_MESSAGE" value="More Edits" />
   </component>
 </project>
