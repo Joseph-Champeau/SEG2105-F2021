@@ -226,10 +226,11 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
             pullUserData();
             progressBar.setVisibility(View.VISIBLE);
             if(validateRegistrationEmailAndUsername(email, username)) {
-                if (type.equals("Member")){
-                    Member newUser = (Member) new User(fullName, age, email, username, type, password);
-                }
+                //if (type.equals("Member")){
+                 //   Member newUser = (Member) new User(fullName, age, email, username, type, password);
+                //}
                 User newUser = new User(fullName, age, email, username, type, password);
+                newUser.addClass(new Class("Onboarding",null , null, null, null, null, null,1));
                 FirebaseDatabase.getInstance().getReference("Users").push().setValue(newUser).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {

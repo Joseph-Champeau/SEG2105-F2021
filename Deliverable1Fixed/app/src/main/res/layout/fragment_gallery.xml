@@ -348,7 +348,7 @@
             android:layout_marginRight="4dp"
             android:background="@null"
             android:backgroundTint="#2B4B73"
-            android:onClick="onClick"
+            android:onClick="showFilterClicked"
             android:text="Add More Classes"
             android:textColor="#ffff"
             android:textSize="20sp"

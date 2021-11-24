@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 public class InstructorMain extends AppCompatActivity implements View.OnClickListener {
 
     private String userID;
+    //Bundle user= getIntent().getExtras();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

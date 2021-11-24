@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -38,6 +39,7 @@ public class NavClasses extends AppCompatActivity implements View.OnClickListene
     private DatabaseReference referenceClassTypes;
     private DatabaseReference referenceClasses;
 
+
     public static ArrayList<Class> classesList;
     private Button sortButton;
     private Button filterButton;
@@ -49,19 +51,21 @@ public class NavClasses extends AppCompatActivity implements View.OnClickListene
 
     boolean sortHidden = true;
     boolean filterHidden = true;
+    boolean enrollHidden= true;
 
     private String filterSel = "all";
     private String currentSearchText = "";
     private SearchView searchView;
-
+    private Button enroll;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
-    userID = getIntent().getExtras().getString("arg"); // passed from previous page
-    referenceClassTypes = FirebaseDatabase.getInstance().getReference("ClassTypes");
-    referenceClasses = FirebaseDatabase.getInstance().getReference("Classes");
-    classesList = new ArrayList<>();
-    DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users");
+        setContentView(R.layout.fragment_gallery);
+        userID = getIntent().getExtras().getString("arg"); // passed from previous page
+        referenceClassTypes = FirebaseDatabase.getInstance().getReference("ClassTypes");
+        referenceClasses = FirebaseDatabase.getInstance().getReference("Classes");
+         classesList = new ArrayList<>();
+        DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users");
         referenceUsers.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -74,15 +78,16 @@ public class NavClasses extends AppCompatActivity implements View.OnClickListene
     });
 
     Resources res = getResources();
-    Button home = (Button) findViewById(R.id.homeBtn);
+    Button home = (Button) findViewById(R.id.homeBtn12);
         home.setOnClickListener(this);
-    Button create = (Button) findViewById(R.id.createClassBtn);
-        create.setOnClickListener(this);
+    enroll = (Button) findViewById(R.id.addMoreClassesbtn);
+        enroll.setOnClickListener(this);
 
     searching();
     setupLayout();
     setupData();
     setUpList();
+        setUpOnclickListener();
     setAdapter(classesList);
 
     /*Organize initial layout*/
@@ -95,7 +100,7 @@ public class NavClasses extends AppCompatActivity implements View.OnClickListene
 }
     @Override
     public void onClick(View v) {
-        Intent intentView;
+        Intent intentView=null;
         switch (v.getId()) {
             case R.id.createClassBtn:
                 intentView = new Intent(NavClasses.this, InstructorTeachClass.class);
@@ -107,6 +112,7 @@ public class NavClasses extends AppCompatActivity implements View.OnClickListene
                 intentView.putExtra("arg", userID);
                 startActivity(intentView);
                 break;
+
         }
     }
 
@@ -173,7 +179,28 @@ public class NavClasses extends AppCompatActivity implements View.OnClickListene
         setAdapter(classesList);
     }
 
+    private void setUpOnclickListener()
+    {
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
+            {
+                Intent intentView=null;
+                Class selectClass = (Class) (listView.getItemAtPosition(position));
+
+                intentView  = new Intent(NavClasses.this, ClassInfo.class);
+                intentView.putExtra("arg", userID);
+                        //intentView.putExtra("arg",selectClass.name);
+                startActivity(intentView);
+
+                //Intent showDetail = new Intent(getApplicationContext(), ClassInfo.class);
+               // showDetail.putExtra("id",selectClass.classType.getName());
+                //startActivity(showDetail);
+            }
+        });
+
+    }
     private void setAdapter(ArrayList<Class> ClassList) {
         ClassAdapter adapter = new ClassAdapter(getApplicationContext(), 0, ClassList);
         listView.setAdapter(adapter);
@@ -228,6 +255,26 @@ public class NavClasses extends AppCompatActivity implements View.OnClickListene
             sortHidden = true;
             closeSort();
         }
+    }
+
+    public void showEnrolled(View view) {
+        if(sortHidden == true) {
+            enrollHidden = false;
+            showEnrolled();
+        }
+        else {
+            enrollHidden = true;
+            //closeSort();
+        }
+    }
+    private void showEnrolled(){
+        enroll.setText("See My Classes");
+        searching();
+
+    }
+
+    private void closeEnrolled(){
+        enroll.setText("Add More Classes");
     }
     /* Filter Button Checked or Unchecked Methods*/
     private void closeFilter() {

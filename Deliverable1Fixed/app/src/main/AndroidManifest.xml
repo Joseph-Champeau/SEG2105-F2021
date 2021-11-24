@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Deliverable1Fixed">
         <activity
+            android:name=".ClassInfo"
+            android:exported="true" />
+        <activity
+        android:name=".NavClasses"
+        android:exported="true" />
+        <activity
             android:name=".MemberMain"
             android:exported="true" />
         <activity
