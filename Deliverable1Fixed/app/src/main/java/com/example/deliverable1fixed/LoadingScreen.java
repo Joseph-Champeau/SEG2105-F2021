@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import pl.droidsonroids.gif.GifImageView;
+// import pl.droidsonroids.gif.GifImageView;
 
 
 public class LoadingScreen extends AppCompatActivity {
