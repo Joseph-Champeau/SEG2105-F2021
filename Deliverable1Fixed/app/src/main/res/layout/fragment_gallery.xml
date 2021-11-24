@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:backgroundTint="#B6B8B8"
-            android:onClick="showSortClick"
+            android:onClick="myshowSortClick"
             android:text="SORT"
             android:textColor="#ffff"
             android:textSize="20sp"
@@ -58,7 +58,7 @@
             android:layout_marginRight="5dp"
             android:background="@null"
             android:backgroundTint="#B6B8B8"
-            android:onClick="showFilterClicked"
+            android:onClick="myshowFilterClicked"
             android:text="FILTER"
             android:textColor="#ffff"
             android:textSize="20sp"
@@ -96,7 +96,7 @@
             android:layout_marginRight="4dp"
             android:layout_marginBottom="4dp"
             android:backgroundTint="#2B4B73"
-            android:onClick="allFilterTapped"
+            android:onClick="myallFilterTapped"
             android:text="All"
             tools:ignore="TextContrastCheck" />
 
@@ -112,7 +112,7 @@
             android:layout_weight="1"
             android:backgroundTint="#55A980"
             android:fontFamily="@font/heebo_medium"
-            android:onClick="yogaFilterTapped"
+            android:onClick="myyogaFilterTapped"
             android:text="Yoga"
             android:textColor="@color/white"
             tools:ignore="TextContrastCheck" />
@@ -128,7 +128,7 @@
             android:layout_marginBottom="4dp"
             android:layout_weight="1"
             android:backgroundTint="#55A980"
-            android:onClick="cyclingFilterTapped"
+            android:onClick="mycyclingFilterTapped"
             android:text="Cycling"
             android:textColor="@color/white"
             tools:ignore="TextContrastCheck" />
@@ -144,7 +144,7 @@
             android:layout_marginRight="4dp"
             android:layout_marginBottom="4dp"
             android:backgroundTint="#55A980"
-            android:onClick="danceFilterTapped"
+            android:onClick="mydanceFilterTapped"
             android:text="Dance"
             android:textColor="@color/white"
             tools:ignore="TextContrastCheck" />
@@ -170,7 +170,7 @@
             android:layout_marginRight="4dp"
             android:layout_marginBottom="4dp"
             android:backgroundTint="#55A980"
-            android:onClick="cardioFilterTapped"
+            android:onClick="mycardioFilterTapped"
             android:text="Cardio"
             android:textColor="@color/white"
             tools:ignore="TextContrastCheck" />
@@ -185,7 +185,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginRight="4dp"
             android:layout_marginBottom="4dp"
-            android:onClick="aquaFilterTapped"
+            android:onClick="myaquaFilterTapped"
             android:text="Aqua"
             android:textColor="@color/white"
             tools:ignore="TextContrastCheck" />
@@ -201,7 +201,7 @@
             android:layout_marginRight="4dp"
             android:layout_marginBottom="4dp"
             android:backgroundTint="#55A980"
-            android:onClick="pilatesFilterTapped"
+            android:onClick="mypilatesFilterTapped"
             android:text="Pilates"
             android:textColor="@color/white"
             tools:ignore="TextContrastCheck" />
@@ -226,7 +226,7 @@
             android:layout_marginRight="4dp"
             android:layout_marginBottom="4dp"
             android:backgroundTint="#55A980"
-            android:onClick="hiitFilterTapped"
+            android:onClick="myhiitFilterTapped"
             android:text="HIIT N Athletics"
             tools:ignore="TextContrastCheck" />
 
@@ -240,7 +240,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginRight="4dp"
             android:layout_marginBottom="4dp"
-            android:onClick="zumbaFilterTapped"
+            android:onClick="myzumbaFilterTapped"
             android:backgroundTint="#55A980"
             android:text="Zumba"
             android:textColor="@color/white"
@@ -264,7 +264,7 @@
             android:layout_marginRight="4dp"
             android:layout_marginBottom="4dp"
             android:backgroundTint="#8CA4C3"
-            android:onClick="capacityTapped"
+            android:onClick="mycapacityTapped"
             android:text="More Room"
             tools:ignore="TextContrastCheck" />
 
@@ -278,7 +278,7 @@
             android:layout_marginBottom="4dp"
             android:layout_weight="1"
             android:backgroundTint="#8CA4C3"
-            android:onClick="capacityDESCTapped"
+            android:onClick="mycapacityDESCTapped"
             android:text="Limited Spots"
             android:textColor="@color/white"
             android:textSize="13sp"
@@ -294,7 +294,7 @@
             android:layout_marginRight="4dp"
             android:layout_marginBottom="4dp"
             android:backgroundTint="#8CA4C3"
-            android:onClick="InsensityTapped"
+            android:onClick="myInsensityTapped"
             android:text="Level"
             android:textColor="@color/white"
             tools:ignore="TextContrastCheck" />
@@ -309,7 +309,7 @@
             android:layout_marginBottom="4dp"
             android:layout_weight="1"
             android:backgroundTint="#8CA4C3"
-            android:onClick="activtynameSort"
+            android:onClick="myactivtynameSort"
             android:text="Activity"
             android:textColor="@color/white"
             android:textSize="12dp"
@@ -347,7 +347,7 @@
             android:layout_marginRight="4dp"
             android:background="@null"
             android:backgroundTint="#2B4B73"
-            android:onClick="showEnrolledClicked"
+            android:onClick="myshowEnrolledClicked"
             android:text="Add More Classes"
             android:textColor="#ffff"
             android:textSize="20sp"

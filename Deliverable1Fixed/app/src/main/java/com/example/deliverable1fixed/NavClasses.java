@@ -44,6 +44,7 @@ public class NavClasses extends AppCompatActivity implements View.OnClickListene
 
 int time=0;
     public static ArrayList<Class> classesList;
+    public static ArrayList<Class> cloner;
     private Button sortButton;
     private Button filterButton;
     private LinearLayout row1;
@@ -68,6 +69,7 @@ int time=0;
         referenceClassTypes = FirebaseDatabase.getInstance().getReference("ClassTypes");
         referenceClasses = FirebaseDatabase.getInstance().getReference("Classes");
          classesList = new ArrayList<>();
+        cloner = new ArrayList<>();
         DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users");
         referenceUsers.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
         @Override
@@ -83,14 +85,15 @@ int time=0;
     Resources res = getResources();
     Button home = (Button) findViewById(R.id.myhomeBtn);
         home.setOnClickListener(this);
-    enroll = (Button) findViewById(R.id.myaddMoreClassesbtn);
-        enroll.setOnClickListener(this);
+    //enroll = (Button) findViewById(R.id.myaddMoreClassesbtn);
+       // enroll.setOnClickListener(this);
 
-    //searching();
+    searching();
     setupLayout();
-    //setupData();
-        showmyClasses();
-    //setUpList();
+    setupData(true);
+    cloneList(classesList);
+        //showmyClasses();
+    setUpList();
         setUpOnclickListener();
     //setAdapter(classesList);
 
@@ -121,6 +124,7 @@ int time=0;
     }
 
     private void setupLayout() {
+        enroll = (Button) findViewById(R.id.myaddMoreClassesbtn);
         sortButton = (Button) findViewById(R.id.mysortButton);
         filterButton = (Button) findViewById(R.id.myfilterButton);
         row1 = (LinearLayout) findViewById(R.id.myfilterTabsLayout);
@@ -160,26 +164,65 @@ int time=0;
             }
         });
     }
-    private void setupData() {
-        referenceClasses.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Class classObject = snapshot.getValue(Class.class);
-                    if(classObject != null) {
+    public static void cloneList(ArrayList<Class> list) {
+        //ArrayList<Class> clone = new ArrayList<Class>(list.size());
+        for (Class item : list){
+            cloner.add(item);
+        }
+
+    }
+
+
+    private void setupData(boolean val) {
+        classesList.clear();
+        ArrayList<Class> newList = new ArrayList<Class>();
+        //setAdapter(classesList);
+        if (val==true){
+            DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users").child(userID);
+            referenceUsers.child("myClasses").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                        Class classObject = snapshot1.getValue(Class.class);
+                        //if(classObject != null) {
                         classesList.add(classObject);
+                        //}
+                    }
+                    //if (classesList.size()==0){
+                    //    classesList=cloner;
+                    //}
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(NavClasses.this, "Database Error", Toast.LENGTH_LONG).show();
+                }
+            });
+        }else {
+            referenceClasses.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Class classObject = snapshot.getValue(Class.class);
+                        if (classObject != null) {
+                            classesList.add(classObject);
+                        }
                     }
                 }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(NavClasses.this, "Database Error", Toast.LENGTH_LONG).show();
-            }
-        });
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(NavClasses.this, "Database Error", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+        //setAdapter();
+       //dd classesList.addAll(newList);
+        //setAdapter(classesList);
     }
 
     private void setUpList() {
-        listView = (ListView) findViewById(R.id.classListView);
+        listView = (ListView) findViewById(R.id.myclassListView);
         setAdapter(classesList);
     }
 
@@ -190,13 +233,17 @@ int time=0;
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
             {
-                Intent intentView=null;
+                //Intent intentView=null;
                 time++;
-                Handler handy= new Handler();
+                /*Handler handy= new Handler();
                 handy.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         if (time==2){
+                                                }
+                        time=0;
+                    }
+                },1000);*/
                             Intent intentView=null;
                             Class selectClass = (Class) (listView.getItemAtPosition(position));
 
@@ -204,10 +251,7 @@ int time=0;
                             intentView.putExtra("arg", userID);
                             //intentView.putExtra("arg",selectClass.name);
                             startActivity(intentView);
-                        }
-                        time=0;
-                    }
-                },1000);
+
                 //Intent showDetail = new Intent(getApplicationContext(), ClassInfo.class);
                // showDetail.putExtra("id",selectClass.classType.getName());
                 //startActivity(showDetail);
@@ -219,7 +263,7 @@ int time=0;
         ClassAdapter adapter = new ClassAdapter(getApplicationContext(), 0, ClassList);
         listView.setAdapter(adapter);
     }
-    public void allFilterTapped(View view) {
+    public void myallFilterTapped(View view) {
         filterSel = "all";
         setAdapter(classesList);
     }
@@ -228,7 +272,7 @@ int time=0;
         filterSel = status;
         ArrayList<Class> filteredsessions = new ArrayList<Class>();
         for(Class session: classesList) {
-            if(session.instructor.getFullName().toLowerCase().contains(status.toLowerCase())|| session.classType.getName().toLowerCase().contains(status.toLowerCase())) {
+            if(session.getDay().toLowerCase().contains(status.toLowerCase())|| session.getName().toLowerCase().contains(status.toLowerCase())) {
                 if(currentSearchText == "") { filteredsessions.add(session);
                 } else {
                     if(session.instructor.getFullName().toLowerCase().contains(currentSearchText.toLowerCase())) { filteredsessions.add(session); }
@@ -239,17 +283,17 @@ int time=0;
         setAdapter(filteredsessions);
     }
     /*-------Set of Classes Available at the Gym ---------*/
-    public void yogaFilterTapped(View view) { strainer("Yoga"); }
-    public void cyclingFilterTapped(View view) { strainer("Cycling"); }
-    public void zumbaFilterTapped(View view) { strainer("Zumba"); }
-    public void aquaFilterTapped(View view) { strainer("Aqua "); }
-    public void hiitFilterTapped(View view) { strainer("HIIT N Athletics"); }
-    public void danceFilterTapped(View view) { strainer("dance"); }
-    public void cardioFilterTapped(View view) { strainer("cardio"); }
-    public void pilatesFilterTapped(View view) {strainer("cardio");}
+    public void myyogaFilterTapped(View view) { strainer("Yoga"); }
+    public void mycyclingFilterTapped(View view) { strainer("Cycling"); }
+    public void myzumbaFilterTapped(View view) { strainer("Zumba"); }
+    public void myaquaFilterTapped(View view) { strainer("Aqua "); }
+    public void myhiitFilterTapped(View view) { strainer("HIIT N Athletics"); }
+    public void mydanceFilterTapped(View view) { strainer("dance"); }
+    public void mycardioFilterTapped(View view) { strainer("cardio"); }
+    public void mypilatesFilterTapped(View view) {strainer("cardio");}
 
 
-    public void showFilterClicked(View view) {
+    public void myshowFilterClicked(View view) {
         if(filterHidden == true) {
             filterHidden = false;
             showFilter();
@@ -260,7 +304,7 @@ int time=0;
         }
     }
 
-    public void showSortClick(View view) {
+    public void myshowSortClick(View view) {
         if(sortHidden == true) {
             sortHidden = false;
             showSort();
@@ -271,46 +315,39 @@ int time=0;
         }
     }
 
-    public void showEnrolledClicked(View view) {
-        if(sortHidden == true) {
+    public void myshowEnrolledClicked(View view) {
+        if(enrollHidden == true) {
             enrollHidden = false;
-            showEnrolled();
+            hideEnrolled();
         }
         else {
             enrollHidden = true;
-            hideEnrolled();
+            showEnrolled();
         }
     }
     private void showEnrolled(){
         enroll.setText("See all available classes");
-        showmyClasses();
+        //showmyClasses();
+        setupData(true);
+        setAdapter(classesList);
+        //setUpList();
+        //showmyClasses();
+       // setUpList();
 
     }
 
     private void hideEnrolled(){
         enroll.setText("See My Classes");
+        setupData(false);
+        setAdapter(classesList);
+        //showmyClasses();
+       // setUpList();
+        //setUpList();
         searching();
     }
 
     public void showmyClasses() {
-        userID = getIntent().getExtras().getString("arg");
-        DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users").child(userID);
-        referenceUsers.child("myClasses").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                    Class classObject = snapshot1.getValue(Class.class);
-                    //if(classObject != null) {
-                    classesList.add(classObject);
-                    //}
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(NavClasses.this, "Database Error", Toast.LENGTH_LONG).show();
-            }
-        });
         setUpList();
     }
 
@@ -347,23 +384,23 @@ int time=0;
     }
 
     /*---------------------------Sorting Methods---------------------*/
-    public void capacityTapped(View view) {
+    public void mycapacityTapped(View view) {
         Collections.sort(classesList, Class.capacityAscending);
         filterChecker();
     }
 
-    public void capacityDESCTapped(View view) {
+    public void mycapacityDESCTapped(View view) {
         Collections.sort(classesList, Class.capacityAscending);
         Collections.reverse(classesList);
         filterChecker();
     }
 
-    public void InsensityTapped(View view) {
+    public void myInsensityTapped(View view) {
         Collections.sort(classesList, Class.levelAscending);
         filterChecker();
     }
 
-    public void activtynameSort(View view) {
+    public void myactivtynameSort(View view) {
         Collections.sort(classesList, Class.activtyAscending);
         //Collections.reverse(classesList);
         filterChecker();

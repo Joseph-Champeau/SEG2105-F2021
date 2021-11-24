@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,9 +21,13 @@ public class ClassAdapter extends ArrayAdapter<Class> {
     public ClassAdapter(Context context, int resource, List<Class> classList) {
         super(context,resource,classList);
     }
+    public void updateData(ArrayList<Class> classes12){
+
+    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        //wesnotifyDataSetChanged();
         Class class1 = getItem(position);
         if(convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.cell, parent, false);
