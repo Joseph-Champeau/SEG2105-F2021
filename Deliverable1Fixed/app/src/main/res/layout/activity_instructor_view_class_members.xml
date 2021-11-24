@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D8000000"
+    android:background="#E0E0E0"
     tools:context=".InstructorViewClassMembers">
 
     <TextView
@@ -16,8 +16,10 @@
         android:layout_marginEnd="8dp"
         android:text="View Class Members"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="#4A48FF"
         android:textSize="30sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/quicksand_medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -46,7 +48,7 @@
             android:layout_marginTop="9dp"
             android:layout_marginBottom="12dp"
             android:text="Class"
-            android:textColor="@color/white"
+            android:textColor="#4A48FF"
             android:textSize="20dp"
             app:layout_constraintBottom_toTopOf="@+id/text_create_class_description_field"
             app:layout_constraintEnd_toEndOf="parent"
@@ -78,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="@color/teal_200"
+            android:backgroundTint="#2B4B73"
             android:onClick="onClick"
             android:text="View members"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -106,7 +108,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_gravity="center"
-            android:background="#F8F5F5" />
+            android:textColor="#4A48FF"
+            android:background="#E0E0E0" />
 
     </LinearLayout>
 
@@ -126,7 +129,7 @@
             android:layout_height="49dp"
             android:layout_gravity="right"
             android:layout_marginBottom="96dp"
-            android:backgroundTint="@color/teal_200"
+            android:backgroundTint="#4A48FF"
             android:onClick="onClick"
             android:text="Home"
             app:layout_constraintBottom_toBottomOf="parent"
