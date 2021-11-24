@@ -30,12 +30,12 @@ public class User {
         this.type=type;
         this.password=password;
         this.myClasses=new ArrayList<Class>();
-
     }
 
     public ArrayList<Class> getMyClasses() {
         return myClasses;
     }
+
     public void addClass(Class classy){
 
         myClasses.add(classy);

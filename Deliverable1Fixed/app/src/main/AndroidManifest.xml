@@ -15,8 +15,8 @@
             android:name=".ClassInfo"
             android:exported="true" />
         <activity
-        android:name=".NavClasses"
-        android:exported="true" />
+            android:name=".NavClasses"
+            android:exported="true" />
         <activity
             android:name=".MemberMain"
             android:exported="true" />

@@ -12,7 +12,7 @@ public class Member extends User {
     private ArrayList myclasses;
 
     public Member () {
-        myclasses= new ArrayList();
+        myclasses= new ArrayList<>();
     }
 
     /*public Member(String fullName, String age, String email, String username, String type, String password){

@@ -41,8 +41,8 @@ public class HomeScreen extends AppCompatActivity {
         setContentView(R.layout.activity_home_screen);
 
         admin = (Button) findViewById(R.id.adminButton); // viewed by admins only
-        instructor = (Button) findViewById(R.id.instructorHomeBtn); // viewed by all users at the moment
-        member= (Button) findViewById(R.id.memberHomeBtn);
+        instructor = (Button) findViewById(R.id.instructorHomeBtn); // viewed by admins and instructors only
+        member= (Button) findViewById(R.id.memberHomeBtn); // viewed by admins and members only
         Button logout = (Button) findViewById(R.id.signOut);
 
 
