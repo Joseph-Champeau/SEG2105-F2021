@@ -39,7 +39,6 @@ public class HomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_home_screen);
-        res = getResources();
 
         admin = (Button) findViewById(R.id.adminButton); // viewed by admins only
         instructor = (Button) findViewById(R.id.instructorHomeBtn); // viewed by all users at the moment
@@ -81,15 +80,13 @@ public class HomeScreen extends AppCompatActivity {
                     NameWTextView.setText("Name: "+ name);
                     AgeWTextView.setText("Age: "+ age);
                     if (userProfile.getType() != null) {
-                        instructor.setText(res.getString(R.string.instructor));
                         if (!(userProfile.getType().equals("Admin"))) { // if user is not Admin type
                             admin.setVisibility(View.GONE); // hide admin button from view
                         }
-                        /*
+
                         if (userProfile.getType().equals("Instructor")) {
-                            // hide the member button from instructor view
+                            member.setVisibility(View.GONE); // hide the member button from instructor view
                         }
-                        */
                         if (userProfile.getType().equals("Member")) {
                             instructor.setVisibility(View.GONE); // hide instructor button from member view
                         }
@@ -134,13 +131,7 @@ public class HomeScreen extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         User userProfile = snapshot.getValue(User.class);
                         String type = userProfile.getType();
-
-                        if(type != null && type.equals("Instructor")) {
-                            Intent intentClasses = new Intent(HomeScreen.this, InstructorMain.class);
-                            intentClasses.putExtra("arg", userID);
-                            startActivity(intentClasses);
-                        }
-                        if(type != null && type.equals("Admin")) {
+                        if(type != null && (type.equals("Instructor") || type.equals("Admin"))) {
                             Intent intentClasses = new Intent(HomeScreen.this, InstructorMain.class);
                             intentClasses.putExtra("arg", userID);
                             startActivity(intentClasses);
@@ -161,13 +152,7 @@ public class HomeScreen extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         User userProfile = snapshot.getValue(User.class);
                         String type = userProfile.getType();
-
-                        if(type != null && type.equals("Instructor")) {
-                            Intent intentClasses = new Intent(HomeScreen.this, InstructorMain.class);
-                            intentClasses.putExtra("arg", userID);
-                            startActivity(intentClasses);
-                        }
-                        if(type != null && type.equals("Member")) {
+                        if(type != null && (type.equals("Member")|| type.equals("Admin"))) {
                             Intent intentClasses = new Intent(HomeScreen.this, MemberMain.class);
                             intentClasses.putExtra("arg", userID);
                             startActivity(intentClasses);
