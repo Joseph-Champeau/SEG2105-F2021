@@ -30,17 +30,13 @@ public class User {
         this.type=type;
         this.password=password;
         this.myClasses=new ArrayList<Class>();
-        //new Class("Onboarding",null , null, null, null, null, null,1);
 
     }
 
     public ArrayList<Class> getMyClasses() {
-        //ddmyClasses.size();
         return myClasses;
     }
     public void addClass(Class classy){
-        //int large= myClasses.size();
-        //myClasses.set(large-1,classy);
 
         myClasses.add(classy);
         myClasses=myClasses;

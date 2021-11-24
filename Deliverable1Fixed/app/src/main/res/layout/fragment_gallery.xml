@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#E0E0E0"
     android:orientation="vertical"
-    tools:context=".MemberSearchClasses">
+    tools:context=".NavClasses">
     <TextView
         android:id="@+id/text_gallery"
         android:layout_width="match_parent"
@@ -324,7 +324,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/homeBtn12"
+            android:id="@+id/homeBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -332,7 +332,6 @@
             android:layout_marginRight="4dp"
             android:background="@null"
             android:backgroundTint="#4A48FF"
-            android:onClick="showFilterClicked"
             android:text="Home"
             android:textColor="#ffff"
             android:textSize="20sp"
@@ -348,7 +347,7 @@
             android:layout_marginRight="4dp"
             android:background="@null"
             android:backgroundTint="#2B4B73"
-            android:onClick="showFilterClicked"
+            android:onClick="showEnrolledClicked"
             android:text="Add More Classes"
             android:textColor="#ffff"
             android:textSize="20sp"

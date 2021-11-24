@@ -78,17 +78,18 @@ public class NavClasses extends AppCompatActivity implements View.OnClickListene
     });
 
     Resources res = getResources();
-    Button home = (Button) findViewById(R.id.homeBtn12);
+    Button home = (Button) findViewById(R.id.homeBtn);
         home.setOnClickListener(this);
     enroll = (Button) findViewById(R.id.addMoreClassesbtn);
         enroll.setOnClickListener(this);
 
-    searching();
+    //searching();
     setupLayout();
     setupData();
+        showmyClasses();
     setUpList();
         setUpOnclickListener();
-    setAdapter(classesList);
+    //setAdapter(classesList);
 
     /*Organize initial layout*/
         row1.setVisibility(View.GONE);
@@ -102,11 +103,11 @@ public class NavClasses extends AppCompatActivity implements View.OnClickListene
     public void onClick(View v) {
         Intent intentView=null;
         switch (v.getId()) {
-            case R.id.createClassBtn:
+            /*case R.id.createClassBtn:
                 intentView = new Intent(NavClasses.this, InstructorTeachClass.class);
                 intentView.putExtra("arg", userID);
                 startActivity(intentView);
-                break;
+                break;*/
             case R.id.homeBtn:
                 intentView = new Intent(NavClasses.this, InstructorMain.class);
                 intentView.putExtra("arg", userID);
@@ -257,20 +258,47 @@ public class NavClasses extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    public void showEnrolled(View view) {
+    public void showEnrolledCliecked(View view) {
         if(sortHidden == true) {
             enrollHidden = false;
             showEnrolled();
         }
         else {
             enrollHidden = true;
-            //closeSort();
+            hideEnrolled();
         }
     }
     private void showEnrolled(){
+        enroll.setText("See all available classes");
+        showmyClasses();
+
+    }
+
+    private void hideEnrolled(){
         enroll.setText("See My Classes");
         searching();
+    }
 
+    public void showmyClasses() {
+        userID = getIntent().getExtras().getString("arg");
+        DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users").child(userID);
+        referenceUsers.child("myClasses").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    Class classObject = snapshot1.getValue(Class.class);
+                    //if(classObject != null) {
+                    classesList.add(classObject);
+                    //}
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(NavClasses.this, "Database Error", Toast.LENGTH_LONG).show();
+            }
+        });
+        setUpList();
     }
 
     private void closeEnrolled(){
