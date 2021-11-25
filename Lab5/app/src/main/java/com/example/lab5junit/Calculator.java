@@ -69,4 +69,66 @@ public class Calculator {
             return Math.ceil(Double.parseDouble(op1));
         }
     }
+
+    /*---------------------------------------------------------------------------------- Test Cases for the methods below-------------------------------------------------------------------------------*/
+    public double ln(String op1){
+        if (op1.equals("null")){
+            return -1;
+        } else {
+            return Math.log(Double.parseDouble(op1));
+        }
+    }
+
+        public double root1(String op1, String op2) {
+            if (op1.equals("null")||op2.equals("null")){
+                return -1;
+            } else {
+                return Math.pow(Double.parseDouble(op1),1.0/Double.parseDouble(op2));
+            }
+        }
+
+        public double areaOfCircle(String op1){
+            if (op1.equals("null")) {
+                return -1;
+            }
+            if (Double.parseDouble(op1)<0){
+                return -1;
+
+            } else {
+                return Math.PI*Math.pow(Double.parseDouble(op1),2);
+            }
+        }
+
+    public double tan(String op1) {
+        if (op1.equals("null")) {
+            return -1;
+        }
+        if (Double.parseDouble(op1) < 0) {
+            return -1;
+
+        } else {
+            return Math.tan(Math.toRadians(Double.parseDouble(op1)));
+        }
+    }
+
+
+    /*-------------------Complete the implementation of the following methods--------------------------*/
+    public double sin(String op1){
+        return -1;
+    }
+
+    public double cos(String op1){
+        return -1;
+    }
+    public double inverse(String op1){
+        return -1;
+    }
+
+    public double hypotenuse(String op1,String op2){
+        return -1;
+    }
+
+
+
+
 }

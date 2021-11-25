@@ -47,6 +47,8 @@ public class CalculatorTest {
         actual = calc.ceilingval(op1);
         assertEquals(expected,actual,0.001);
         grade+=1;
+
+        /*---------------------------------------------Add the new methods' null Junit here----------------------------------------*/
     }
 
     @Test // weight: 3
