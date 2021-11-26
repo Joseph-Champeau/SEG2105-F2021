@@ -17,7 +17,7 @@ public class CalculatorTest {
 
     @AfterClass
     public static void AfterClass() {
-        System.out.println(" Grade for Test (out of a possible 35.0 ): " + grade);
+        System.out.println(" Grade for Test (out of a possible 48.0 ): " + grade);
     }
 
     @Test // weight: 7
@@ -47,8 +47,30 @@ public class CalculatorTest {
         actual = calc.ceilingval(op1);
         assertEquals(expected,actual,0.001);
         grade+=1;
-
-        /*---------------------------------------------Add the new methods' null Junit here----------------------------------------*/
+        actual = calc.ln(op1);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+        actual = calc.root1(op1, op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+        actual = calc.areaOfCircle(op1);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+        actual = calc.tan(op1);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+        actual = calc.sin(op1);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+        actual = calc.cos(op1);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+        actual = calc.inverse(op1);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+        actual = calc.hypotenuse(op1, op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
     }
 
     @Test // weight: 3
@@ -285,8 +307,43 @@ public class CalculatorTest {
         grade+=1;
     }
 
+    @Test // weight: 3
+    public void sinCosTanTest() {
+        Calculator calc=new Calculator();
 
-    /*-----------------------------------Add more test methods for the rest of the Calculator.java Class--------------------------------------*/
+        String op1="1";
+        double expected=0.017452406437284;
+        double actual = calc.sin(op1);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
 
+        op1="1";
+        expected=0.999847695156391;
+        actual = calc.cos(op1);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
 
+        op1="1";
+        expected=0.017455064928218;
+        actual = calc.tan(op1);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+    }
+
+    @Test // weight: 2
+    public void lnTest() {
+        Calculator calc=new Calculator();
+
+        String op1="1";
+        double expected=0;
+        double actual = calc.ln(op1);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+
+        op1="5";
+        expected=1.60943479124341;
+        actual = calc.ln(op1);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+    }
 }
