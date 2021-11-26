@@ -219,10 +219,10 @@ public class MemberSearchClasses extends AppCompatActivity implements View.OnCli
     public void cyclingFilterTapped(View view) { strainer("Cycling"); }
     public void zumbaFilterTapped(View view) { strainer("Zumba"); }
     public void aquaFilterTapped(View view) { strainer("Aqua "); }
-    public void hiitFilterTapped(View view) { strainer("HIIT N Athletics"); }
-    public void danceFilterTapped(View view) { strainer("dance"); }
-    public void cardioFilterTapped(View view) { strainer("cardio"); }
-    public void pilatesFilterTapped(View view) {strainer("cardio");}
+    public void hiitFilterTapped(View view) { strainer("HIIT"); }
+    public void danceFilterTapped(View view) { strainer("Dance"); }
+    public void cardioFilterTapped(View view) { strainer("Cardio"); }
+    public void pilatesFilterTapped(View view) {strainer("Pilates");}
 
 
     public void showFilterClicked(View view) {
@@ -278,12 +278,13 @@ public class MemberSearchClasses extends AppCompatActivity implements View.OnCli
     /*---------------------------Sorting Methods---------------------*/
     public void capacityTapped(View view) {
         Collections.sort(classesList, Class.capacityAscending);
+        Collections.reverse(classesList);
         filterChecker();
     }
 
     public void capacityDESCTapped(View view) {
         Collections.sort(classesList, Class.capacityAscending);
-        Collections.reverse(classesList);
+
         filterChecker();
     }
 
