@@ -11,8 +11,8 @@ public class CalculatorTest {
 
     @BeforeClass
     public static void BeforeClass() {
-        // ???
-        System.out.println("methods tested;\n testRover\n testGetStateFullName()");
+
+        System.out.println("class tested;\n calculator");
     }
 
     @AfterClass

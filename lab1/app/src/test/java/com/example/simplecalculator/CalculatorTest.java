@@ -1,22 +1,292 @@
 package com.example.simplecalculator;
 
-import com.example.simplecalculator.R.id.*;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-import android.widget.TextView;
+import static org.junit.Assert.*;
 
-import junit.framework.TestCase;
+public class CalculatorTest {
+    private static double grade=0;
 
-public class CalculatorTest extends TestCase {
-
-    public void testOnCreate() {
-        boolean displayScreen=;
-        System.out.println(displayScreen);
-        displayScreen.
-        btnPlus
-        btnPlus.setOnClickListener
-        //TextView edit= findViewById(displayScreen);
-        //assertEquals("",displayScreen.getText());
-        //assertEquals("", btn7.getText());
-
+    @BeforeClass
+    public static void BeforeClass() {
+        // ???
+        System.out.println("methods tested;\n testRover\n testGetStateFullName()");
     }
+
+    @AfterClass
+    public static void AfterClass() {
+        System.out.println(" Grade for Test (out of a possible 35.0 ): " + grade);
+    }
+
+    @Test // weight: 7
+    public void nullTest() {
+        MainActivity calc=new MainActivity();
+        String op1="null";
+        String op2 ="null";
+        double expected=-1;
+        double actual = calc.add(op1,op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+        actual = calc.diff(op1,op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+        actual = calc.div(op1,op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+        actual = calc.mul(op1,op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+        actual = calc.expon(op1,op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+        actual = calc.log10(op1);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+        actual = calc.ceilingval(op1);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+
+        /*---------------------------------------------Add the new methods' null Junit here----------------------------------------*/
+    }
+
+    @Test // weight: 3
+    public void addTest() {
+        MainActivity calc=new MainActivity();
+
+        String op1="3";
+        String op2 ="5";
+        double expected=8;
+        double actual = calc.add(op1,op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+
+        op1="-123";
+        op2 ="-531";
+        expected=-654;
+        actual = calc.add(op1,op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+
+        op1="123";
+        op2 ="-531";
+        expected=-408;
+        actual = calc.add(op1,op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+    }
+
+    @Test // weight: 4
+    public void diffTest() {
+        MainActivity calc=new MainActivity();
+
+        String op1="20";
+        String op2 ="14";
+        double expected=6;
+        double actual = calc.diff(op1,op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+
+        op1="-20";
+        op2 ="5";
+        expected=-25;
+        actual = calc.diff(op1,op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+
+        op1="20";
+        op2 ="-5";
+        expected=25;
+        actual = calc.diff(op1,op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+
+        op1="-25";
+        op2 ="-5";
+        expected=-20;
+        actual = calc.diff(op1,op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+    }
+
+    @Test // weight: 4
+    public void divTest() {
+        MainActivity calc=new MainActivity();
+
+        String op1="100";
+        String op2 ="100";
+        double expected=1;
+        double actual = calc.div(op1,op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+
+        op1="100";
+        op2 ="-100";
+        expected=-1;
+        actual = calc.div(op1,op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+
+        op1="0";
+        op2 ="-100";
+        expected=0;
+        actual = calc.div(op1,op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+
+        op1="-100";
+        op2 ="-100";
+        expected=1;
+        actual = calc.div(op1,op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+    }
+
+    @Test // weight: 4
+    public void mulTest() {
+        MainActivity calc=new MainActivity();
+
+        String op1="2";
+        String op2 ="100";
+        double expected=200;
+        double actual = calc.mul(op1,op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+
+        op1="0";
+        op2 ="100";
+        expected=0;
+        actual = calc.mul(op1,op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+
+        op1="-100";
+        op2 ="-1";
+        expected=100;
+        actual = calc.mul(op1,op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+
+        op1="-100";
+        op2 ="1";
+        expected=-100;
+        actual = calc.mul(op1,op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+    }
+
+    @Test // weight: 4
+    public void exponTest() {
+        MainActivity calc=new MainActivity();
+
+        String op1="100";
+        String op2 ="3";
+        double expected=1000000;
+        double actual = calc.expon(op1,op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+
+        op1="100";
+        op2 ="-3";
+        expected=0.000001;
+        actual = calc.expon(op1,op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+
+        op1="-100";
+        op2 ="-2";
+        expected=0.0001;
+        actual = calc.expon(op1,op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+
+        op1="100";
+        op2 ="0";
+        expected=1;
+        actual = calc.expon(op1,op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+    }
+
+    @Test // weight: 2
+    public void log10Test() {
+        MainActivity calc=new MainActivity();
+
+        String op1="100";
+        double expected=2;
+        double actual = calc.log10(op1);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+
+        op1="1";
+        expected=0;
+        actual = calc.log10(op1);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+    }
+
+    @Test // weight: 2
+    public void ceilingvalTest() {
+        MainActivity calc=new MainActivity();
+
+        String op1="0.7";
+        double expected=1;
+        double actual = calc.ceilingval(op1);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+
+        op1="-0.12";
+        expected=0;
+        actual = calc.ceilingval(op1);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+    }
+
+    @Test // weight: 5
+    public void illegalCalculationErrorTest() {
+        MainActivity calc=new MainActivity();
+        // Division by 0
+        String op1="1";
+        String op2="0";
+        double expected=-1.1;
+        double actual = calc.div(op1, op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+
+        // Exponentiation where op1 && op2 == 0
+        op1="0";
+        op2="0";
+        expected=-1.1;
+        actual = calc.expon(op1, op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+
+        // Exponentiation where either op1 == 0 && op2 < 0
+        op1="0";
+        op2="-8";
+        expected=-1.2;
+        actual = calc.expon(op1, op2);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+
+        // Log10 where either op1 < 0
+        op1="-1";
+        expected=-1.1;
+        actual = calc.log10(op1);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+
+        // Log10 where either op1 == 0
+        op1="0";
+        expected=-1.2;
+        actual = calc.log10(op1);
+        assertEquals(expected,actual,0.001);
+        grade+=1;
+    }
+
+
+    /*-----------------------------------Add more test methods for the rest of the MainActivity.java Class--------------------------------------*/
+
+
 }
