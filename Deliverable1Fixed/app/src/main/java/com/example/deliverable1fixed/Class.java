@@ -96,6 +96,14 @@ public class Class {
     };
 
 
+    public boolean equalsClass(Class o) {
+        if (this.getName().equals(o.getName())&&this.getDay().equals(o.getDay())){
+            if(this.getTimeInterval().equals(o.getTimeInterval())&&this.getInstructor().getEmail().equals(o.getInstructor().getEmail())){
+                return true;
+            }
+        }
+        return false;
+    }
     //Could add timeIntervals
     /*public static Comparator<Class> timeAscending = new Comparator<Class>()
     {

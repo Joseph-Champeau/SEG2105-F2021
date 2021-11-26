@@ -42,6 +42,9 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
 
     public ArrayList<String> emails;
     public ArrayList<String> usernames;
+    private Class onboarding;
+    private Class boarding;
+    private String uiDclass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,6 +218,11 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
     /** Registers Instructors and Members. Push to realtime database and starts new activity if successful*/
     public void registerUser() {
         // fetch fields
+        DatabaseReference reference;
+        DatabaseReference referenceClasses;
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        referenceClasses = FirebaseDatabase.getInstance().getReference("Classes");
+
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         String fullName = editTextFullName.getText().toString().trim();
@@ -222,24 +230,83 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         String username = editTextUsername.getText().toString().trim();
         String type = radioButton.getText().toString();
 
-        if(validateRegistrationFormFields(email, password, fullName, age, username)) {
+        if (validateRegistrationFormFields(email, password, fullName, age, username)) {
             pullUserData();
             progressBar.setVisibility(View.VISIBLE);
-            if(validateRegistrationEmailAndUsername(email, username)) {
-                //if (type.equals("Member")){
-                 //   Member newUser = (Member) new User(fullName, age, email, username, type, password);
-                //}
+            if (validateRegistrationEmailAndUsername(email, username)) {
                 User newUser = new User(fullName, age, email, username, type, password);
-                newUser.addClass(new Class("Onboarding",null , null, null, null, null, null,1));
+                //Onboarding routine
+                if (newUser.getType().equals("Member")) {
+                    //DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users").child(userID);
+                    ClassType onboarding = new ClassType("Onboarding", "The initial mandatory classes for all new members at Easy Fit");
+                    ArrayList<User> members = new ArrayList<User>(); // ArrayList to add to Class constructor
+                    members.add(newUser);
+                    //referenceUsers.child("myClasses").child(String.valueOf(user.getMyClasses().size())).setValue(selectedclass);
+                    newUser.addClass(new Class("Onboarding", null, null, onboarding, "EVERYONE", "Friday", null, 1000));
+                    // user.addClass(selectedclass);
+                }
                 FirebaseDatabase.getInstance().getReference("Users").push().setValue(newUser).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+
                     @Override
                     public void onSuccess(Void unused) {
+
+                        //newUser.addClass();
+/*
+                        referenceClasses.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot snapshot3 : dataSnapshot.getChildren()) {
+                                    uiDclass = snapshot3.getKey();
+                                    boarding = snapshot3.getValue(Class.class);
+                                    if (boarding.getName().equals("Onboarding101")) {
+                                        onboarding=boarding;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Toast.makeText(RegisterUser.this, "Added to Onboarding class Error", Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+                        reference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    String email = snapshot.child("email").getValue(String.class);
+                                    if (email.equals(newUser.getEmail())) {
+                                        String uID = snapshot.getKey();
+                                        //referenceUsers.child("myClasses").child(String.valueOf(user.getMyClasses().size())).setValue(selectedclass)
+                                        referenceClasses.child(uiDclass).child("members").child(String.valueOf(onboarding.members.size())).setValue(newUser);
+                                        reference.child((uID)).child("myClasses").child("0").setValue(onboarding);
+                                        //reference.child(snapshot.toString()).child(String.valueOf(newUser.getMyClasses().size())).setValue(onboarding);
+                                        newUser.addClass(onboarding);
+                                        break;
+
+                                    }
+                                }
+
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Toast.makeText(RegisterUser.this, "Added to Onboarding class", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                        Toast.makeText(RegisterUser.this, "User registered successfully", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);*/
                         Toast.makeText(RegisterUser.this, "User registered successfully", Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);
-                        startActivity(new Intent(RegisterUser.this, FrontScreen.class ));
+                        //startActivity(new Intent(RegisterUser.this, FrontScreen.class ));
+                        startActivity(new Intent(RegisterUser.this, FrontScreen.class));
                     }
                 });
             }
         }
     }
+
 }

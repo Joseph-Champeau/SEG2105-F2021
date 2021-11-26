@@ -5,13 +5,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class InstructorViewClassMembers extends AppCompatActivity implements View.OnClickListener{
+public class MemberViewClass extends AppCompatActivity implements View.OnClickListener{
 
     private DatabaseReference referenceClasses;
     private String userID;
@@ -32,14 +33,15 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
     private ArrayList<String> classesList;
     private String selectedClass;
 
-    private ListView listView;
+    //private ListView listView;
+    private TextView details;
 
-    private Hashtable<String, ArrayList<User>> membersMap;
+    private Hashtable<String, Class> classesMap;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
-        setContentView(R.layout.activity_instructor_view_class_members);
+        setContentView(R.layout.activity_member_view_class);
 
         userID = getIntent().getExtras().getString("arg"); // passed from previous page
         referenceClasses = FirebaseDatabase.getInstance().getReference("Classes");
@@ -51,19 +53,15 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(InstructorViewClassMembers.this, "Database Error", Toast.LENGTH_LONG).show();
+                Toast.makeText(MemberViewClass.this, "Database Error", Toast.LENGTH_LONG).show();
             }
         });
 
-        classesSpinner = (Spinner) findViewById(R.id.cmSpinner);
+        classesSpinner = (Spinner) findViewById(R.id.mycmSpinner);
         classesList = new ArrayList<String>();
         classesList.add(0, "Select a class");
-
-        membersMap = new Hashtable<String, ArrayList<User>>();
-
-        listView = (ListView) findViewById(R.id.classMembersListView);
-        listView.setVisibility(View.GONE);
-
+        classesMap = new Hashtable<String, Class>();
+        details = (TextView) findViewById(R.id.classDetails);
         pullClassesData();
         initializeClassesSpinnerDropdown();
     }
@@ -71,13 +69,16 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
     @Override
     public void onClick(@NonNull View v) {
         switch (v.getId()) {
-            case R.id.viewClassMembersBtn:
-                viewClassMembers();
+            case R.id.viewClassDetailBtn:
+                viewClassDetails();
                 break;
             case R.id.homeBtn:
-                Intent intentView = new Intent(InstructorViewClassMembers.this, InstructorMain.class);
+                Intent intentView = new Intent(MemberViewClass.this, MemberMain.class);
                 intentView.putExtra("arg", userID);
                 startActivity(intentView);
+                break;
+            case R.id.myenrollmentbtn :
+                enroll();
                 break;
         }
     }
@@ -85,6 +86,8 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
 
     /** Pulls Classes data from realtime database */
     private void pullClassesData() {
+        DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users").child(userID);
+        //referenceUsers.child("myClasses").addListenerForSingleValueEvent(new ValueEventListener() {
         referenceClasses.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -92,30 +95,30 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
                     Class classObject = snapshot.getValue(Class.class);
                     if(classObject != null) {
                         String testIfCancelled = classObject.day;
-                        User instructor = classObject.instructor;
+                        //User instructor = classObject.instructor;
                         if (testIfCancelled.equals("N/A")) {
-                            if (instructor.getUsername().equals(user.getUsername())) {
+                            //if (instructor.getUsername().equals(user.getUsername())) {
+                            String uID = snapshot.getKey();
                                 String classDescription = classObject.name + " - " + "(cancelled)";
-                                if (!(classesList.contains(classDescription)) && classObject.members != null) { // delete second condition once all classes have been created with Members as a parameter
+                                if (!(classesList.contains(classDescription))) { // delete second condition once all classes have been created with Members as a parameter
                                     classesList.add(classDescription);
-                                    membersMap.put(classDescription, classObject.members);
+                                    classesMap.put(classDescription, classObject);
                                 }
-                            }
                         } else {
-                            if (instructor.getUsername().equals(user.getUsername())) {
+                            String uID = snapshot.getKey();
                                 String classDescription = classObject.name + " - " + classObject.day + "'s : " + classObject.timeInterval;
-                                if (!(classesList.contains(classDescription)) && classObject.members != null) { // delete second condition once all classes have been created with Members as a parameter
+                                if (!(classesList.contains(classDescription))) { // delete second condition once all classes have been created with Members as a parameter
                                     classesList.add(classDescription);
-                                    membersMap.put(classDescription, classObject.members);
+                                    classesMap.put(classDescription, classObject);
                                 }
-                            }
+                            //}
                         }
                     }
                 }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(InstructorViewClassMembers.this, "Database Error", Toast.LENGTH_LONG).show();
+                Toast.makeText(MemberViewClass.this, "Database Error", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -132,7 +135,7 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
                 if (!(parent.getItemAtPosition(position).equals("Select a class"))) {
                     String item = parent.getItemAtPosition(position).toString();
                     Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_SHORT).show();
-
+                    details.setVisibility(View.GONE);
                     selectedClass = item;
                 } else {
                     selectedClass = "";
@@ -140,7 +143,7 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(InstructorViewClassMembers.this, "Select a class to view its members", Toast.LENGTH_LONG).show();
+                Toast.makeText(MemberViewClass.this, "Select a class to view its members", Toast.LENGTH_LONG).show();
                 selectedClass = "";
             }
         });
@@ -149,39 +152,56 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
     /** Initializes the members list of the selected last for the ListView ArrayAdapter.
      * @param classSelected the class selected in the Spinner dropdown
      * @return ArrayList<String</> of member descriptions for the ListView. */
-    private ArrayList<String> pullMembersData(String classSelected) {
+    private void pullClassData(String classSelected) {
         ArrayList<String> membersDesc = new ArrayList<String>();
-        ArrayList<User> members = membersMap.get(classSelected);
-        if (members != null) {
-            for (User member : members) {
-                if (member.getType().equals("Member"))
-                membersDesc.add(member.getFullName() + " - " + member.getEmail());
+        String output;
+        Class  key = classesMap.get(classSelected);
+        if (key != null) {
+            if (key.getInstructor()==(null)){
+                details.setText(key.getDifficultyLevel() + "-" + key.getName() + "\n" + key.getDay() + "'s at " + key.getTimeInterval() + "\n (" + key.getCapacity() + " spots left)");
+            }else {
+                details.setText(key.getDifficultyLevel() + "-" + key.getName() + "\n" + key.getDay() + "'s at " + key.getTimeInterval() + "\nTaught by " + key.getInstructor().getFullName() + "\n (" + key.getCapacity() + " spots left)");
+                details.setVisibility(View.VISIBLE);
             }
-        }
-        return membersDesc;
-    }
-
-    /** Instantiates the ListView holding the list of members of the selected class. */
-    private void setUpList(ArrayList<String> classMembers) {
-        if (!(classMembers.isEmpty())) {
-            ArrayAdapter<String> listViewAdapter =
-                    new ArrayAdapter<String>(InstructorViewClassMembers.this, android.R.layout.simple_list_item_1, classMembers);
-            listView.setAdapter(listViewAdapter);
-            listView.setVisibility(View.VISIBLE);
         } else {
-            Toast.makeText(InstructorViewClassMembers.this, "This class currently has no enrolled members", Toast.LENGTH_LONG).show();
-            listView.setVisibility(View.GONE);
+            Toast.makeText(MemberViewClass.this, "This class currently has no published details", Toast.LENGTH_LONG).show();
+            details.setVisibility(View.GONE);
+
+        }
+       // return membersDesc;
+    }
+    /** Displays ListView of members enrolled in the selected class. */
+    private void viewClassDetails() {
+        if (!(selectedClass.equals(""))) {
+            pullClassData(selectedClass);
+            //setUpList(pullMembersData(selectedClass));
+        } else {
+            Toast.makeText(MemberViewClass.this, "Please select a class to view its description", Toast.LENGTH_LONG).show();
+            details.setVisibility(View.GONE);
         }
     }
 
     /** Displays ListView of members enrolled in the selected class. */
-    private void viewClassMembers() {
+    private void enroll() {
         if (!(selectedClass.equals(""))) {
-            setUpList(pullMembersData(selectedClass));
+            enrolling(selectedClass);
+            //setUpList(pullMembersData(selectedClass));
         } else {
-            Toast.makeText(InstructorViewClassMembers.this, "Please select a class to view its members", Toast.LENGTH_LONG).show();
-            listView.setVisibility(View.GONE);
+            Toast.makeText(MemberViewClass.this, "Please select a class to view its description", Toast.LENGTH_LONG).show();
+            details.setVisibility(View.GONE);
         }
     }
 
+    private void enrolling(String selectedClass1) {
+        if (!(selectedClass1.equals(""))) {
+            Class key = classesMap.get(selectedClass1);
+            user.addClass(key);
+            Toast.makeText(MemberViewClass.this, "New Class Added", Toast.LENGTH_LONG).show();
+            DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users").child(userID);
+            referenceUsers.child("myClasses").child(String.valueOf(user.getMyClasses().size())).setValue(key);
+        } else {
+            Toast.makeText(MemberViewClass.this, "The attempt to enroll in a class was denied", Toast.LENGTH_LONG).show();
+            details.setVisibility(View.GONE);
+        }
+    }
 }

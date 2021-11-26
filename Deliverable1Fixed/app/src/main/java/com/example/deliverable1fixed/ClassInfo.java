@@ -67,11 +67,11 @@ public class ClassInfo extends AppCompatActivity implements View.OnClickListener
     }
 
     private Class getParsedclass1(String parsedID) {
-        for (Class class1 : NavClasses.classesList)
-        {
+        //No longer need
+//        {
             //if(class1.instructor.getFullName().equals(parsedID))
-                return class1;
-        }
+       //         return class1;
+       // }
         return null;
     }
 
@@ -152,9 +152,9 @@ public class ClassInfo extends AppCompatActivity implements View.OnClickListener
                         Toast.makeText(ClassInfo.this, "Database Error", Toast.LENGTH_LONG).show();
                     }
                 });
-                Intent intentBackMain = new Intent(ClassInfo.this, NavClasses.class);
-                intentBackMain.putExtra("arg", userID);
-                startActivity(intentBackMain);
+                //Intent intentBackMain = new Intent(ClassInfo.this, NavClasses.class);
+               // intentBackMain.putExtra("arg", userID);
+               // startActivity(intentBackMain);
                 break;
         }
 

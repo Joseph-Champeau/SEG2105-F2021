@@ -43,6 +43,23 @@ public class User {
         myClasses.size();
     }
 
+    public int removeClass(Class classy){
+        int val= this.getMyClasses().indexOf(classy);
+        for (int i=0; i<myClasses.size();i++){
+            Class var1 = myClasses.get(i);
+            if (var1==null) continue;
+            if (var1.equalsClass(classy)){
+                this.getMyClasses().remove(i);
+                return i;
+            }
+        }
+        //if (val!=-1){
+        //    this.getMyClasses().remove(val);
+        ///    return true;
+        //}
+        return -1;
+    }
+
     public String getPassword(){return password;}
 
     public String getFullName(){return fullName;}
@@ -54,4 +71,6 @@ public class User {
     public String getType(){return type;}
 
     public String getEmail(){return email;}
+
+
 }

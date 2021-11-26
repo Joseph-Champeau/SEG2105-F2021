@@ -1,4 +1,5 @@
 package com.example.deliverable1fixed;
+/*
 
 import android.content.Intent;
 import android.content.res.Resources;
@@ -42,7 +43,7 @@ public class NavClasses extends AppCompatActivity implements View.OnClickListene
     private DatabaseReference referenceClassTypes;
     private DatabaseReference referenceClasses;
 
-int time=0;
+    int time=0;
     public static ArrayList<Class> classesList;
     public static ArrayList<Class> cloner;
     private Button sortButton;
@@ -97,7 +98,9 @@ int time=0;
         setUpOnclickListener();
     //setAdapter(classesList);
 
-    /*Organize initial layout*/
+    */
+/*Organize initial layout*//*
+
         row1.setVisibility(View.GONE);
         row2.setVisibility(View.GONE);
         row3.setVisibility(View.GONE);
@@ -109,11 +112,13 @@ int time=0;
     public void onClick(View v) {
         Intent intentView=null;
         switch (v.getId()) {
-            /*case R.id.createClassBtn:
+            */
+/*case R.id.createClassBtn:
                 intentView = new Intent(NavClasses.this, InstructorTeachClass.class);
                 intentView.putExtra("arg", userID);
                 startActivity(intentView);
-                break;*/
+                break;*//*
+
             case R.id.homeBtn:
                 intentView = new Intent(NavClasses.this, InstructorMain.class);
                 intentView.putExtra("arg", userID);
@@ -174,8 +179,8 @@ int time=0;
 
 
     private void setupData(boolean val) {
-        classesList.clear();
-        ArrayList<Class> newList = new ArrayList<Class>();
+        //lassesList.clear();
+        //ArrayList<Class> newList = new ArrayList<Class>();
         //setAdapter(classesList);
         if (val==true){
             DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users").child(userID);
@@ -186,11 +191,7 @@ int time=0;
                         Class classObject = snapshot1.getValue(Class.class);
                         //if(classObject != null) {
                         classesList.add(classObject);
-                        //}
                     }
-                    //if (classesList.size()==0){
-                    //    classesList=cloner;
-                    //}
                 }
 
                 @Override
@@ -235,7 +236,8 @@ int time=0;
             {
                 //Intent intentView=null;
                 time++;
-                /*Handler handy= new Handler();
+                */
+/*Handler handy= new Handler();
                 handy.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -243,7 +245,8 @@ int time=0;
                                                 }
                         time=0;
                     }
-                },1000);*/
+                },1000);*//*
+
                             Intent intentView=null;
                             Class selectClass = (Class) (listView.getItemAtPosition(position));
 
@@ -282,7 +285,9 @@ int time=0;
 
         setAdapter(filteredsessions);
     }
-    /*-------Set of Classes Available at the Gym ---------*/
+    */
+/*-------Set of Classes Available at the Gym ---------*//*
+
     public void myyogaFilterTapped(View view) { strainer("Yoga"); }
     public void mycyclingFilterTapped(View view) { strainer("Cycling"); }
     public void myzumbaFilterTapped(View view) { strainer("Zumba"); }
@@ -354,7 +359,9 @@ int time=0;
     private void closeEnrolled(){
         enroll.setText("Add More Classes");
     }
-    /* Filter Button Checked or Unchecked Methods*/
+    */
+/* Filter Button Checked or Unchecked Methods*//*
+
     private void closeFilter() {
         searchView.setVisibility(View.GONE);
         row1.setVisibility(View.GONE);
@@ -372,7 +379,9 @@ int time=0;
         row4.setVisibility(View.GONE);
         filterButton.setText("HIDE");
     }
-    /* Sort Button Checked or Unchecked Mehtods*/
+    */
+/* Sort Button Checked or Unchecked Mehtods*//*
+
     private void closeSort() {
         sortView.setVisibility(View.GONE);
         sortButton.setText("SORT");
@@ -383,7 +392,9 @@ int time=0;
         sortButton.setText("HIDE");
     }
 
-    /*---------------------------Sorting Methods---------------------*/
+    */
+/*---------------------------Sorting Methods---------------------*//*
+
     public void mycapacityTapped(View view) {
         Collections.sort(classesList, Class.capacityAscending);
         filterChecker();
@@ -405,7 +416,9 @@ int time=0;
         //Collections.reverse(classesList);
         filterChecker();
     }
-    /*----------------Checker for any Filter Changes----------*/
+    */
+/*----------------Checker for any Filter Changes----------*//*
+
     private void filterChecker() {
         if(filterSel.equals("all")) {
             if(currentSearchText.equals("")) {
@@ -420,5 +433,6 @@ int time=0;
         } else { strainer(filterSel); }
     }
 }
+*/
 
 

@@ -12,10 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Deliverable1Fixed">
         <activity
-            android:name=".ClassInfo"
+            android:name=".MemberUnenrollClasses"
             android:exported="true" />
         <activity
-            android:name=".NavClasses"
+            android:name=".MemberViewClass"
+            android:exported="true" />
+        <activity
+            android:name=".ClassInfo"
             android:exported="true" />
         <activity
             android:name=".MemberMain"

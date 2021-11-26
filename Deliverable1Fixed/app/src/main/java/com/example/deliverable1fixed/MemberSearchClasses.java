@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,7 +24,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class MemberSearchClasses extends AppCompatActivity implements View.OnClickListener{
+/**
+ * A class representing the searching classes
+ *  @author Michias Shiferaw, Simon Brunet, Joseph Champeau, Charlie Haldane
+ *  @version 2.0
+ *  @since 2021-11-17
+ */
+public class MemberSearchClasses extends AppCompatActivity implements View.OnClickListener {
     private static class NumericKeyBoardTransformationMethod extends PasswordTransformationMethod {
         @Override
         public CharSequence getTransformation(CharSequence source, View view) {
@@ -52,6 +59,8 @@ public class MemberSearchClasses extends AppCompatActivity implements View.OnCli
     private String filterSel = "all";
     private String currentSearchText = "";
     private SearchView searchView;
+    private Button enroll;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,10 +83,12 @@ public class MemberSearchClasses extends AppCompatActivity implements View.OnCli
         });
 
         Resources res = getResources();
-        Button home = (Button) findViewById(R.id.homeBtn);
+        Button home = (Button) findViewById(R.id.myhomeBtn);
         home.setOnClickListener(this);
-        Button create = (Button) findViewById(R.id.viewEnrolled);
-        create.setOnClickListener(this);
+        Button enroll = (Button) findViewById(R.id.myviewEnrolledbtn);
+        enroll.setOnClickListener(this);
+        Button unenroll = (Button) findViewById(R.id.myUnenrolledbtn);
+        unenroll.setOnClickListener(this);
 
         searching();
         setupLayout();
@@ -93,17 +104,22 @@ public class MemberSearchClasses extends AppCompatActivity implements View.OnCli
         sortView.setVisibility(View.GONE);
 
     }
-    //@Override
+    @Override
     public void onClick(View v) {
         Intent intentView;
         switch (v.getId()) {
-            case R.id.viewEnrolled:
-                intentView = new Intent(MemberSearchClasses.this, HomeScreen.class);
+            case R.id.myUnenrolledbtn:
+                intentView = new Intent(MemberSearchClasses.this, MemberUnenrollClasses.class);
                 intentView.putExtra("arg", userID);
                 startActivity(intentView);
                 break;
-            case R.id.homeBtn:
-                intentView = new Intent(MemberSearchClasses.this, FrontScreen.class);
+            case R.id.myviewEnrolledbtn:
+                intentView = new Intent(MemberSearchClasses.this, MemberViewClass.class);
+                intentView.putExtra("arg", userID);
+                startActivity(intentView);
+                break;
+            case R.id.myhomeBtn:
+                intentView = new Intent(MemberSearchClasses.this, MemberMain.class);
                 intentView.putExtra("arg", userID);
                 startActivity(intentView);
                 break;
@@ -111,17 +127,18 @@ public class MemberSearchClasses extends AppCompatActivity implements View.OnCli
     }
 
     private void setupLayout() {
-        sortButton = (Button) findViewById(R.id.sortButton);
-        filterButton = (Button) findViewById(R.id.filterButton);
-        row1 = (LinearLayout) findViewById(R.id.filterTabsLayout);
-        row2 = (LinearLayout) findViewById(R.id.filterTabsLayout2);
-        row3= (LinearLayout) findViewById(R.id.filterTabsLayout3);
-        row4 = (LinearLayout) findViewById(R.id.filterTabsLayout4);
-        sortView = (LinearLayout) findViewById(R.id.sortTabsLayout2);
+        //enroll = (Button) findViewById(R.id.myaddMoreClassesbtn);
+        sortButton = (Button) findViewById(R.id.mysortButton);
+        filterButton = (Button) findViewById(R.id.myfilterButton);
+        row1 = (LinearLayout) findViewById(R.id.myfilterTabsLayout);
+        row2 = (LinearLayout) findViewById(R.id.myfilterTabsLayout2);
+        row3= (LinearLayout) findViewById(R.id.myfilterTabsLayout3);
+        row4 = (LinearLayout) findViewById(R.id.myfilterTabsLayout4);
+        sortView = (LinearLayout) findViewById(R.id.mysortTabsLayout2);
     }
 
     private void searching() {
-        searchView = (SearchView) findViewById(R.id.ClassListSearchView);
+        searchView = (SearchView) findViewById(R.id.myClassListSearchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -134,11 +151,11 @@ public class MemberSearchClasses extends AppCompatActivity implements View.OnCli
                 ArrayList<Class> filteredClass = new ArrayList<Class>();
                 for(Class session: classesList) {
                     //Sort by instructor
-                    if(session.instructor.getFullName().toLowerCase().contains(s.toLowerCase())||session.classType.getName().toLowerCase().contains(s.toLowerCase())){
+                    if(session.getDay().toLowerCase().contains(s.toLowerCase())||session.getName().toLowerCase().contains(s.toLowerCase())||session.classType.getName().toLowerCase().contains(filterSel)){
                         if(filterSel.equals("all")) { filteredClass.add(session); }
                         else {
-                            if(session.instructor.getFullName().toLowerCase().contains(filterSel.toLowerCase())||session.classType.getName().toLowerCase().contains(filterSel)){
-                                //||session.classType.name.toLowerCase().contains(filterSel)
+                            if(session.getDay().toLowerCase().contains(filterSel.toLowerCase())||session.getName().toLowerCase().contains(filterSel)||session.classType.getName().toLowerCase().contains(filterSel)){
+                            //||session.classType.name.toLowerCase().contains(filterSel)
                                 filteredClass.add(session);
                             }
                         }
@@ -157,7 +174,7 @@ public class MemberSearchClasses extends AppCompatActivity implements View.OnCli
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Class classObject = snapshot.getValue(Class.class);
                     if(classObject != null) {
-                        classesList.add(classObject);
+                       classesList.add(classObject);
                     }
                 }
             }
@@ -169,7 +186,7 @@ public class MemberSearchClasses extends AppCompatActivity implements View.OnCli
     }
 
     private void setUpList() {
-        listView = (ListView) findViewById(R.id.classListView);
+        listView = (ListView) findViewById(R.id.myclassListView);
         setAdapter(classesList);
     }
 
@@ -182,12 +199,12 @@ public class MemberSearchClasses extends AppCompatActivity implements View.OnCli
         filterSel = "all";
         setAdapter(classesList);
     }
-
+    
     private void strainer(String status) {
         filterSel = status;
         ArrayList<Class> filteredsessions = new ArrayList<Class>();
         for(Class session: classesList) {
-            if(session.instructor.getFullName().toLowerCase().contains(status.toLowerCase())|| session.classType.getName().toLowerCase().contains(status.toLowerCase())) {
+            if(session.getDay().toLowerCase().contains(status.toLowerCase())|| session.getName().toLowerCase().contains(status.toLowerCase())) {
                 if(currentSearchText == "") { filteredsessions.add(session);
                 } else {
                     if(session.instructor.getFullName().toLowerCase().contains(currentSearchText.toLowerCase())) { filteredsessions.add(session); }

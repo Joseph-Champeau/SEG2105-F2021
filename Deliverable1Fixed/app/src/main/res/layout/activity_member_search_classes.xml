@@ -13,7 +13,7 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/sortButton"
+            android:id="@+id/mysortButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -39,7 +39,7 @@
 
 
         <Button
-            android:id="@+id/filterButton"
+            android:id="@+id/myfilterButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -57,7 +57,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <SearchView
-        android:id="@+id/ClassListSearchView"
+        android:id="@+id/myClassListSearchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="#FFFFFF"
@@ -68,13 +68,13 @@
     </SearchView>
 
     <LinearLayout
-        android:id="@+id/filterTabsLayout"
+        android:id="@+id/myfilterTabsLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/allFilter"
+            android:id="@+id/myallFilter"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -89,7 +89,7 @@
             tools:ignore="TextContrastCheck" />
 
         <Button
-            android:id="@+id/yogaFilter"
+            android:id="@+id/myyogaFilter"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="4dp"
@@ -106,7 +106,7 @@
             tools:ignore="TextContrastCheck" />
 
         <Button
-            android:id="@+id/cyclingFilter"
+            android:id="@+id/mycyclingFilter"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="4dp"
@@ -122,7 +122,7 @@
             tools:ignore="TextContrastCheck" />
 
         <Button
-            android:id="@+id/danceFilter"
+            android:id="@+id/mydanceFilter"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -141,14 +141,14 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/filterTabsLayout2"
+        android:id="@+id/myfilterTabsLayout2"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal">
 
 
         <Button
-            android:id="@+id/cardioFilter"
+            android:id="@+id/mycardioFilter"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -164,7 +164,7 @@
             tools:ignore="TextContrastCheck" />
 
         <Button
-            android:id="@+id/aquaFilter"
+            android:id="@+id/myaquaFilter"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -179,7 +179,7 @@
             tools:ignore="TextContrastCheck" />
 
         <Button
-            android:id="@+id/platesFilter"
+            android:id="@+id/myplatesFilter"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -197,14 +197,14 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/filterTabsLayout3"
+        android:id="@+id/myfilterTabsLayout3"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal">
 
 
         <Button
-            android:id="@+id/HIITFilter"
+            android:id="@+id/myHIITFilter"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -219,7 +219,7 @@
             tools:ignore="TextContrastCheck" />
 
         <Button
-            android:id="@+id/zumbaFilter"
+            android:id="@+id/myzumbaFilter"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -237,7 +237,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/sortTabsLayout2"
+        android:id="@+id/mysortTabsLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -275,12 +275,12 @@
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_marginLeft="4dp"
-
             android:layout_marginTop="4dp"
+
             android:layout_marginRight="4dp"
             android:layout_marginBottom="4dp"
+            android:layout_weight="1"
             android:backgroundTint="#8CA4C3"
             android:onClick="InsensityTapped"
             android:text="Level"
@@ -306,19 +306,21 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/filterTabsLayout4"
+        android:id="@+id/myfilterTabsLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+
         <Button
-            android:id="@+id/homeBtn"
+            android:id="@+id/myhomeBtn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="end"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
             android:background="@null"
+
             android:backgroundTint="#4A48FF"
             android:onClick="showFilterClicked"
             android:text="Home"
@@ -326,25 +328,48 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-
         <Button
-            android:id="@+id/viewEnrolled"
-            android:layout_width="match_parent"
+            android:id="@+id/myviewEnrolledbtn"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
             android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+
             android:layout_marginRight="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
             android:background="@null"
             android:backgroundTint="#2B4B73"
             android:onClick="onClick"
-            android:text="Enrolled"
+            android:text="Enroll a Class"
             android:textColor="#ffff"
-            android:textSize="20sp"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/myUnenrolledbtn"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="4dp"
+
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1"
+
+            android:background="@null"
+            android:backgroundTint="#2B4B73"
+            android:onClick="onClick"
+            android:text="Unenroll A Class"
+            android:textColor="#ffff"
+            android:textSize="16sp"
             android:textStyle="bold" />
     </LinearLayout>
 
     <ListView
-        android:id="@+id/classListView"
+        android:id="@+id/myclassListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
