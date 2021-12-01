@@ -284,7 +284,6 @@ public class MemberSearchClasses extends AppCompatActivity implements View.OnCli
 
     public void capacityDESCTapped(View view) {
         Collections.sort(classesList, Class.capacityAscending);
-
         filterChecker();
     }
 

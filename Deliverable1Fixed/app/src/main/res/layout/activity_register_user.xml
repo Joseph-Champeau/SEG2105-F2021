@@ -14,11 +14,19 @@
         android:theme="@style/AppBarOverlay"
         app:errorTextAppearance="@color/white">
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="380dp"
+            android:layout_height="83dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            app:srcCompat="@drawable/dumbell_purp" />
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="00dp"
             android:fontFamily="@font/quicksand_medium"
             android:textColor="#4A48FF"
             android:gravity="center"

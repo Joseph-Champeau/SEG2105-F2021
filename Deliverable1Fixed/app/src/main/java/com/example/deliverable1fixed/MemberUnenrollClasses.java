@@ -199,25 +199,14 @@ public class MemberUnenrollClasses extends AppCompatActivity implements View.OnC
 
                 builder.setTitle("Confirm unenrollment");
                 builder.setMessage("Are you sure?");
-
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-
                     public void onClick(DialogInterface dialog, int which) {
                         // Do nothing but close the dialog
                         unenrollClass();
-                        dialog.dismiss();
-                    }
-                });
-
+                        dialog.dismiss(); }});
                 builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        // Do nothing
-                        dialog.dismiss();
-                    }
-                });
+                    public void onClick(DialogInterface dialog, int which) { dialog.dismiss(); }});
 
                 AlertDialog alert = builder.create();
                 alert.show();

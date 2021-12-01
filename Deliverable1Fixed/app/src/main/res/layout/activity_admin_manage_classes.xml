@@ -15,6 +15,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="Manage Classes"
+        android:fontFamily="@font/quicksand_medium"
         android:textAlignment="center"
         android:textColor="#4A48FF"
         android:textSize="30sp"
