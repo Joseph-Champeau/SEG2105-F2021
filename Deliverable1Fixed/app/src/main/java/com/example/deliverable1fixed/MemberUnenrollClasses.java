@@ -2,7 +2,6 @@ package com.example.deliverable1fixed;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -37,8 +36,6 @@ public class MemberUnenrollClasses extends AppCompatActivity implements View.OnC
     private String userID;
     private User user;
 
-    private DatabaseReference referenceClasses;
-
     private Spinner classesunenrollSpinner;
     private String selectedClassunenroll;
     private String selectedViewClass;
@@ -56,7 +53,6 @@ public class MemberUnenrollClasses extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_member_unenroll_classes);
 
         userID = getIntent().getExtras().getString("arg"); // passed from previous page
-        referenceClasses = FirebaseDatabase.getInstance().getReference("Classes");
 
         DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users");
         referenceUsers.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -72,7 +68,7 @@ public class MemberUnenrollClasses extends AppCompatActivity implements View.OnC
 
         classesunenrollSpinner = (Spinner) findViewById(R.id.myunenrollClassToTeachSpinner);
         classesunenrollList = new ArrayList<>();
-        classesunenrollList.add(0, "Select a class to unenroll");
+        classesunenrollList.add(0, "Select a class to Unenroll");
 
         viewmyClasses = (Spinner) findViewById(R.id.myClassesSpinner);
         viewmyClassesList = new ArrayList<>();
@@ -83,7 +79,7 @@ public class MemberUnenrollClasses extends AppCompatActivity implements View.OnC
         classesMap1 = new Hashtable<String, Class>();
 
         pullClassesData();
-        initializeunenrollSpinnerDropdown();
+        initializeUnenrollSpinnerDropdown();
         initializeViewSpinnerDropdown();
     }
 
@@ -100,29 +96,24 @@ public class MemberUnenrollClasses extends AppCompatActivity implements View.OnC
                     Class classObject = snapshot.getValue(Class.class);
                     if(classObject != null) {
                         String testIfCancelled = classObject.day;
-                        //User instructor = classObject.instructor;
                         if (testIfCancelled.equals("N/A")) {
-                            //if (instructor.getUsername().equals(user.getUsername())) {
-                                String uID = snapshot.getKey();
-                                String classDescription = classObject.name + "-" + "(cancelled)";
-                                if (!(classesunenrollList.contains(classDescription))) {
-                                    classesunenrollList.add(classDescription);
-                                    viewmyClassesList.add(classDescription);
-                                    classesMap.put(classDescription, uID);
-                                    classesMap1.put(classDescription, classObject);
-                                }
-                            //}
+                            String uID = snapshot.getKey();
+                            String classDescription = classObject.name + "-" + "(cancelled)";
+                            if (!(classesunenrollList.contains(classDescription))) {
+                                classesunenrollList.add(classDescription);
+                                viewmyClassesList.add(classDescription);
+                                classesMap.put(classDescription, uID);
+                                classesMap1.put(classDescription, classObject);
+                            }
                         } else {
-                            //if (instructor.getUsername().equals(user.getUsername())) {
-                                String uID = snapshot.getKey();
-                                String classDescription = classObject.name + "-" + classObject.day + "'s : " + classObject.timeInterval;
-                                if (!(classesunenrollList.contains(classDescription))) {
-                                    classesunenrollList.add(classDescription);
-                                    viewmyClassesList.add(classDescription);
-                                    classesMap.put(classDescription, uID);
-                                    classesMap1.put(classDescription, classObject);
-                                }
-                            //}
+                            String uID = snapshot.getKey();
+                            String classDescription = classObject.name + "-" + classObject.day + "'s : " + classObject.timeInterval;
+                            if (!(classesunenrollList.contains(classDescription))) {
+                                classesunenrollList.add(classDescription);
+                                viewmyClassesList.add(classDescription);
+                                classesMap.put(classDescription, uID);
+                                classesMap1.put(classDescription, classObject);
+                            }
                         }
                     }
                 }
@@ -135,7 +126,7 @@ public class MemberUnenrollClasses extends AppCompatActivity implements View.OnC
     }
 
     /** Initializes unenrollClass spinner dropdown adapter. And instantiates OnClick item listener. */
-    private void initializeunenrollSpinnerDropdown() {
+    private void initializeUnenrollSpinnerDropdown() {
         ArrayAdapter<String> classesAdapter =
                 new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, classesunenrollList);
         classesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -168,7 +159,7 @@ public class MemberUnenrollClasses extends AppCompatActivity implements View.OnC
         viewmyClasses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (!(parent.getItemAtPosition(position).equals("Select a class to view"))) {
+                if (!(parent.getItemAtPosition(position).equals("Select a class to View More Details"))) {
                     String item = parent.getItemAtPosition(position).toString();
                     Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_SHORT).show();
                     selectedViewClass = item;
@@ -238,6 +229,7 @@ public class MemberUnenrollClasses extends AppCompatActivity implements View.OnC
         }
         // return membersDesc;
     }
+
     /** Displays ListView of members enrolled in the selected class. */
     private void viewClassDetails() {
         if (!(selectedViewClass.equals(""))) {
@@ -248,6 +240,7 @@ public class MemberUnenrollClasses extends AppCompatActivity implements View.OnC
             details.setVisibility(View.GONE);
         }
     }
+
     /** unenrolls the selected existing class permanently from the realtime database.
      * Refreshes the data initially pulled, the ArrayLists/Hashtable holding data and re-initializes the Spinners onSuccess. */
     private void unenrollClass() {
@@ -256,20 +249,39 @@ public class MemberUnenrollClasses extends AppCompatActivity implements View.OnC
         } else {
             Class key = classesMap1.get(selectedClassunenroll);
             DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users").child(userID);
-             //user.getMyClasses().indexOf(key);
-            int val=user.removeClass(key);
-            if (val!=-1) referenceUsers.child("myClasses").child(String.valueOf(val)).removeValue();
-                //user.getMyClasses().remove(val);
-            Toast.makeText(MemberUnenrollClasses.this, "Class unenrolled", Toast.LENGTH_LONG).show();
-            viewmyClassesList.clear();
-            viewmyClassesList.add(0, "Select a class to view more Detail");
-            classesunenrollList.clear();
-            classesunenrollList.add(0, "Select a class to unenroll");
-            classesMap.clear();
-            classesMap1.clear();
-            pullClassesData();
-            initializeunenrollSpinnerDropdown();
-            initializeViewSpinnerDropdown();
+            if (key != null) {
+                referenceUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String className = key.getName();
+                        int val=user.removeClass(key);
+                        if (val!=-1) {
+                            referenceUsers.child("myClasses").child(String.valueOf(val)).removeValue()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Toast.makeText(MemberUnenrollClasses.this,
+                                                    "Class unenrolled", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                        }
+                        //user.getMyClasses().remove(val);
+                        viewmyClassesList.clear();
+                        viewmyClassesList.add(0, "Select a class to View More Details");
+                        classesunenrollList.clear();
+                        classesunenrollList.add(0, "Select a class to Unenroll");
+                        classesMap.clear();
+                        classesMap1.clear();
+                        pullClassesData();
+                        initializeUnenrollSpinnerDropdown();
+                        initializeViewSpinnerDropdown();
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(MemberUnenrollClasses.this, "Database Error", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
         }
 
     }
