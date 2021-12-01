@@ -96,6 +96,9 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
                     if(classObject != null) {
                         String testIfCancelled = classObject.day;
                         //User instructor = classObject.instructor;
+
+                        // NEED TO ADD A CONDITION WHICH PREVENTS ALREADY ENROLLED CLASSES FROM APPEARING
+
                         if (!(testIfCancelled.equals("N/A"))) {
                             //if (instructor.getUsername().equals(user.getUsername())) {
                             String uID = snapshot.getKey();
