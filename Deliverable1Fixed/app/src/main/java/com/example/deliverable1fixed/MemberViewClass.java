@@ -86,28 +86,23 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
 
     /** Pulls Classes data from realtime database */
     private void pullClassesData() {
-        DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users").child(userID);
-        //referenceUsers.child("myClasses").addListenerForSingleValueEvent(new ValueEventListener() {
         referenceClasses.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Class classObject = snapshot.getValue(Class.class);
-                    if(classObject != null) {
+                    ArrayList<Class> myClasses = user.getMyClasses();
+                    if(classObject != null && myClasses != null) {
                         String testIfCancelled = classObject.day;
-                        //User instructor = classObject.instructor;
-
-                        // NEED TO ADD A CONDITION WHICH PREVENTS ALREADY ENROLLED CLASSES FROM APPEARING
-
                         if (!(testIfCancelled.equals("N/A"))) {
-                            //if (instructor.getUsername().equals(user.getUsername())) {
-                            String uID = snapshot.getKey();
-                            String classDescription = classObject.name + " - " + classObject.day + "'s : " + classObject.timeInterval;
-                            if (!(classesList.contains(classDescription))) { // delete second condition once all classes have been created with Members as a parameter
-                                classesList.add(classDescription);
-                                classesMap.put(classDescription, classObject);
+                            if (!(filterOutAlreadyEnrolledClasses(myClasses, classObject))) {
+                                String uID = snapshot.getKey();
+                                String classDescription = classObject.name + " - " + classObject.day + "'s : " + classObject.timeInterval;
+                                if (!(classesList.contains(classDescription))) {
+                                    classesList.add(classDescription);
+                                    classesMap.put(classDescription, classObject);
+                                }
                             }
-                            //}
                         }
                     }
                 }
@@ -117,6 +112,21 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
                 Toast.makeText(MemberViewClass.this, "Database Error", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    /** Filters out classes that the user is already enrolled in. Prevents enrolling duplication
+     * @param enrolledClasses List of classes the user is already enrolled in.
+     * @param c Class selected from database to check.
+     * @return Boolean true if user is already enrolled in selected Class c. False otherwise. */
+    public boolean filterOutAlreadyEnrolledClasses(ArrayList<Class> enrolledClasses, Class c) {
+        for (Class v : enrolledClasses) {
+            if (v != null) {
+                if (v.name.equals(c.name)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /** Initializes classes spinner dropdown adapter. And instantiates OnClick item listener. */
