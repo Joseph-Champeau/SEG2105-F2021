@@ -137,7 +137,7 @@
             android:ems="10"
             android:gravity="start|top"
             android:textColor="#4A48FF"
-            android:textSize="30dp"
+            android:textSize="20dp"
             android:textStyle="bold" />
     </LinearLayout>
 

@@ -155,7 +155,7 @@
         <TextView
             android:id="@+id/classDetails"
             android:layout_width="372dp"
-            android:layout_height="336dp"
+            android:layout_height="280dp"
             android:layout_gravity="center"
             android:layout_marginTop="00dp"
             android:layout_marginBottom="00dp"
@@ -170,12 +170,12 @@
     <LinearLayout
         android:layout_width="408dp"
         android:layout_height="50dp"
-        android:layout_marginTop="658dp"
+        android:layout_marginTop="600dp"
         android:orientation="vertical"
         android:weightSum="1"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="2dp">
+        tools:layout_editor_absoluteX="1dp">
 
         <Button
             android:id="@+id/homeBtn"
@@ -183,9 +183,9 @@
             android:layout_height="49dp"
             android:layout_gravity="right"
             android:layout_marginBottom="96dp"
+            android:backgroundTint="#4A48FF"
             android:onClick="onClick"
             android:text="Home"
-            android:backgroundTint="#4A48FF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.888"
