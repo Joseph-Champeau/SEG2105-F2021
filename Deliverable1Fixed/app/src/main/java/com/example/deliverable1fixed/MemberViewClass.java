@@ -96,21 +96,14 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
                     if(classObject != null) {
                         String testIfCancelled = classObject.day;
                         //User instructor = classObject.instructor;
-                        if (testIfCancelled.equals("N/A")) {
+                        if (!(testIfCancelled.equals("N/A"))) {
                             //if (instructor.getUsername().equals(user.getUsername())) {
                             String uID = snapshot.getKey();
-                                String classDescription = classObject.name + " - " + "(cancelled)";
-                                if (!(classesList.contains(classDescription))) { // delete second condition once all classes have been created with Members as a parameter
-                                    classesList.add(classDescription);
-                                    classesMap.put(classDescription, classObject);
-                                }
-                        } else {
-                            String uID = snapshot.getKey();
-                                String classDescription = classObject.name + " - " + classObject.day + "'s : " + classObject.timeInterval;
-                                if (!(classesList.contains(classDescription))) { // delete second condition once all classes have been created with Members as a parameter
-                                    classesList.add(classDescription);
-                                    classesMap.put(classDescription, classObject);
-                                }
+                            String classDescription = classObject.name + " - " + classObject.day + "'s : " + classObject.timeInterval;
+                            if (!(classesList.contains(classDescription))) { // delete second condition once all classes have been created with Members as a parameter
+                                classesList.add(classDescription);
+                                classesMap.put(classDescription, classObject);
+                            }
                             //}
                         }
                     }
@@ -159,7 +152,7 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
         if (key != null) {
             if (key.getInstructor()==(null)){
                 details.setText(key.getDifficultyLevel() + "-" + key.getName() + "\n" + key.getDay() + "'s at " + key.getTimeInterval() + "\n (" + key.getCapacity() + " spots left)");
-            }else {
+            } else {
                 details.setText(key.getDifficultyLevel() + "-" + key.getName() + "\n" + key.getDay() + "'s at " + key.getTimeInterval() + "\nTaught by " + key.getInstructor().getFullName() + "\n (" + key.getCapacity() + " spots left)");
                 details.setVisibility(View.VISIBLE);
             }
@@ -199,6 +192,14 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
             Toast.makeText(MemberViewClass.this, "New Class Added", Toast.LENGTH_LONG).show();
             DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users").child(userID);
             referenceUsers.child("myClasses").child(String.valueOf(user.getMyClasses().size())).setValue(key);
+
+            // resets key page elements and hides previously shown info
+            classesList.clear();
+            classesList.add(0, "Select a class");
+            classesMap.clear();
+            details.setVisibility(View.GONE);
+            pullClassesData();
+            initializeClassesSpinnerDropdown();
         } else {
             Toast.makeText(MemberViewClass.this, "The attempt to enroll in a class was denied", Toast.LENGTH_LONG).show();
             details.setVisibility(View.GONE);
