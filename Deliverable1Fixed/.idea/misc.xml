@@ -3,34 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_admin_main.xml" value="0.2674772036474164" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_admin_manage_accounts.xml" value="0.2674772036474164" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_admin_manage_classes.xml" value="0.234375" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_front_screen.xml" value="0.234375" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_home_screen.xml" value="0.234375" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_delete_classes.xml" value="0.2674772036474164" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_edit_classes.xml" value="0.234375" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_main.xml" value="0.2674772036474164" />
         <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_search_classes.xml" value="0.3052536231884058" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_teach_class.xml" value="0.234375" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_instructor_view_class_members.xml" value="0.234375" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_loading_screen.xml" value="0.234375" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_member_main.xml" value="0.4772344013490725" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_member_search_classes.xml" value="0.2674772036474164" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_member_unenroll_classes.xml" value="0.5070175438596491" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_member_view_class.xml" value="0.1" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_register_user.xml" value="0.2674772036474164" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/app_bar_member_main.xml" value="0.2674772036474164" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/cell.xml" value="0.2674772036474164" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/class_details.xml" value="0.2674772036474164" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/content_member_main.xml" value="0.2674772036474164" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/fragment_gallery.xml" value="0.2674772036474164" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/fragment_home.xml" value="0.2674772036474164" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/fragment_slideshow.xml" value="0.2674772036474164" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/nav_header_member_main.xml" value="0.2674772036474164" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/menu/activity_main_drawer.xml" value="0.5415384615384615" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/menu/member_main.xml" value="0.55" />
-        <entry key="..\:/Users/michi/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.5574358974358974" />
         <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/drawable/border_shape.xml" value="0.3828125" />
         <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3828125" />
         <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_admin_main.xml" value="0.36666666666666664" />
@@ -48,7 +21,7 @@
         <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_loading_screen.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_member_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_member_search_classes.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_register_user.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/activity_register_user.xml" value="0.4" />
         <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/app_bar_member_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/cell.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/simon/Desktop/SEG2105-F2021/Deliverable1Fixed/app/src/main/res/layout/class_details.xml" value="0.36666666666666664" />
