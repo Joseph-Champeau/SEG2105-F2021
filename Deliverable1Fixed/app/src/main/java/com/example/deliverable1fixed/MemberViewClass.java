@@ -200,6 +200,13 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
 
     private void enrolling(String selectedClass1) {
         if (!(selectedClass1.equals(""))) {
+
+
+
+            // ADD CLASS ENROLLMENT VERIFICATION HERE (CAPACITY AND TIME INTERVAL CONDITIONS)
+
+
+
             Class key = classesMap.get(selectedClass1);
             user.addClass(key);
             Toast.makeText(MemberViewClass.this, "New Class Added", Toast.LENGTH_LONG).show();
