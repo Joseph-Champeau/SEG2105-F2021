@@ -135,22 +135,24 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
                         if (userClasses != null) {
                             String classDescription;
                             for (Class c : userClasses) {
-                                if (c.instructor != null && c.instructor.getUsername().equals(user.getUsername())) {
-                                    String testIfCancelled = c.day;
-                                    if (testIfCancelled.equals("N/A")) {
-                                        classDescription = c.name + " - " + "(cancelled)";
-                                    } else {
-                                        classDescription = c.name + " - " + c.day + "'s : " + c.timeInterval;
-                                    }
-                                    if (membersMap != null && membersMap.containsKey(classDescription)) {
-                                        ArrayList<User> u = membersMap.get(classDescription);
-                                        if (u != null) {
-                                            u.add(tempUser);
+                                if (c.getInstructor() != null) {
+                                    if (c.getInstructor().getUsername().equals(user.getUsername())) {
+                                        String testIfCancelled = c.day;
+                                        if (testIfCancelled.equals("N/A")) {
+                                            classDescription = c.name + " - " + "(cancelled)";
+                                        } else {
+                                            classDescription = c.name + " - " + c.day + "'s : " + c.timeInterval;
                                         }
-                                    } else {
-                                        ArrayList<User> u = new ArrayList<User>();
-                                        u.add(tempUser);
-                                        membersMap.put(classDescription, u);
+                                        if (membersMap != null && membersMap.containsKey(classDescription)) {
+                                            ArrayList<User> u = membersMap.get(classDescription);
+                                            if (u != null) {
+                                                u.add(tempUser);
+                                            }
+                                        } else {
+                                            ArrayList<User> u = new ArrayList<User>();
+                                            u.add(tempUser);
+                                            membersMap.put(classDescription, u);
+                                        }
                                     }
                                 }
                             }
