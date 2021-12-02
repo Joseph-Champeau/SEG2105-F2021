@@ -211,7 +211,7 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
             user.addClass(key);
             Toast.makeText(MemberViewClass.this, "New Class Added", Toast.LENGTH_LONG).show();
             DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users").child(userID);
-            referenceUsers.child("myClasses").child(String.valueOf(user.getMyClasses().size())).setValue(key);
+            referenceUsers.child("myClasses").child(String.valueOf(user.getMyClasses().size() - 1)).setValue(key);
 
             // resets key page elements and hides previously shown info
             classesList.clear();

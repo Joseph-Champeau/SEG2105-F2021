@@ -157,21 +157,25 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User tempUser = snapshot.getValue(User.class);
                     if (tempUser != null) {
-                        if (!(tempUser.getType().equals("Member"))) {
-                            ArrayList<Class> userClasses = tempUser.getMyClasses(); // ALWAYS RETURNS NULL
+                        if (tempUser.getType().equals("Member")) {
+                            ArrayList<Class> userClasses = tempUser.getMyClasses();
                             if (userClasses != null) {
                                 for (Class c : userClasses) {
-                                    User classInstructor = c.getInstructor();
-                                    String testIfCancelled = c.getDay();
-                                    if (classInstructor.getFullName().equals(user.getFullName())) {
-                                        String classDescription;
-                                        if (testIfCancelled.equals("N/A")) {
-                                            classDescription = c.name + " - " + "(cancelled)";
-                                        } else {
-                                            classDescription = c.name + " - " + c.day + "'s : " + c.timeInterval;
-                                        }
-                                        if (classDescription.equals(classSelected)) {
-                                            membersDesc.add(tempUser.getFullName() + " - " + tempUser.getEmail());
+                                    if (c != null) {
+                                        if (!(c.getName().equals("Onboarding"))) {
+                                            User classInstructor = c.getInstructor();
+                                            String testIfCancelled = c.getDay();
+                                            if (classInstructor.getFullName().equals(user.getFullName())) {
+                                                String classDescription;
+                                                if (testIfCancelled.equals("N/A")) {
+                                                    classDescription = c.name + " - " + "(cancelled)";
+                                                } else {
+                                                    classDescription = c.name + " - " + c.day + "'s : " + c.timeInterval;
+                                                }
+                                                if (classDescription.equals(classSelected)) {
+                                                    membersDesc.add(tempUser.getFullName() + " - " + tempUser.getEmail());
+                                                }
+                                            }
                                         }
                                     }
                                 }

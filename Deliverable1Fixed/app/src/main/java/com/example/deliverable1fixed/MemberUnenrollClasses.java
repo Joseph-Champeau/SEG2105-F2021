@@ -96,23 +96,26 @@ public class MemberUnenrollClasses extends AppCompatActivity implements View.OnC
                     Class classObject = snapshot.getValue(Class.class);
                     if(classObject != null) {
                         String testIfCancelled = classObject.day;
-                        if (testIfCancelled.equals("N/A")) {
-                            String uID = snapshot.getKey();
-                            String classDescription = classObject.name + "-" + "(cancelled)";
-                            if (!(classesunenrollList.contains(classDescription))) {
-                                classesunenrollList.add(classDescription);
-                                viewmyClassesList.add(classDescription);
-                                classesMap.put(classDescription, uID);
-                                classesMap1.put(classDescription, classObject);
-                            }
-                        } else {
-                            String uID = snapshot.getKey();
-                            String classDescription = classObject.name + "-" + classObject.day + "'s : " + classObject.timeInterval;
-                            if (!(classesunenrollList.contains(classDescription))) {
-                                classesunenrollList.add(classDescription);
-                                viewmyClassesList.add(classDescription);
-                                classesMap.put(classDescription, uID);
-                                classesMap1.put(classDescription, classObject);
+                        String n = classObject.name;
+                        if (!(n.equals("Onboarding"))) {
+                            if (testIfCancelled.equals("N/A")) {
+                                String uID = snapshot.getKey();
+                                String classDescription = classObject.name + "-" + "(cancelled)";
+                                if (!(classesunenrollList.contains(classDescription))) {
+                                    classesunenrollList.add(classDescription);
+                                    viewmyClassesList.add(classDescription);
+                                    classesMap.put(classDescription, uID);
+                                    classesMap1.put(classDescription, classObject);
+                                }
+                            } else {
+                                String uID = snapshot.getKey();
+                                String classDescription = classObject.name + "-" + classObject.day + "'s : " + classObject.timeInterval;
+                                if (!(classesunenrollList.contains(classDescription))) {
+                                    classesunenrollList.add(classDescription);
+                                    viewmyClassesList.add(classDescription);
+                                    classesMap.put(classDescription, uID);
+                                    classesMap1.put(classDescription, classObject);
+                                }
                             }
                         }
                     }
