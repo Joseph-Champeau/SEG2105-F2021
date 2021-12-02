@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 
 public class InstructorViewClassMembers extends AppCompatActivity implements View.OnClickListener{
 
@@ -33,8 +34,6 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
     private String selectedClass;
 
     private ListView listView;
-
-    private Hashtable<String, ArrayList<User>> membersMap;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +57,6 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
         classesSpinner = (Spinner) findViewById(R.id.cmSpinner);
         classesList = new ArrayList<String>();
         classesList.add(0, "Select a class");
-
-        membersMap = new Hashtable<String, ArrayList<User>>();
 
         listView = (ListView) findViewById(R.id.classMembersListView);
         listView.setVisibility(View.GONE);
@@ -151,41 +148,38 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
      * @return ArrayList<String</> of member descriptions for the ListView. */
     private ArrayList<String> pullMembersData(String classSelected) {
         ArrayList<String> membersDesc = new ArrayList<String>();
+
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User tempUser = snapshot.getValue(User.class);
                     if (tempUser != null) {
-                        ArrayList<Class> userClasses = tempUser.getMyClasses();
-                        if (userClasses != null) {
-                            for (Class c : userClasses) {
-                                if (c != null) {
+                        if (!(tempUser.getType().equals("Member"))) {
+                            ArrayList<Class> userClasses = tempUser.getMyClasses(); // ALWAYS RETURNS NULL
+                            if (userClasses != null) {
+                                for (Class c : userClasses) {
                                     User classInstructor = c.getInstructor();
                                     String testIfCancelled = c.getDay();
-                                    if (classInstructor != null && testIfCancelled != null) {
-                                        if(classInstructor.getFullName().equals(user.getFullName())) {
-                                            String classDescription;
-                                            if (testIfCancelled.equals("N/A")) {
-                                                classDescription = c.name + " - " + "(cancelled)";
-                                            } else {
-                                                classDescription = c.name + " - " + c.day + "'s : " + c.timeInterval;
-                                            }
-                                            if (classDescription.equals(classSelected)) {
-                                                membersDesc.add(tempUser.getFullName() + " - " + tempUser.getEmail());
-                                            }
+                                    if (classInstructor.getFullName().equals(user.getFullName())) {
+                                        String classDescription;
+                                        if (testIfCancelled.equals("N/A")) {
+                                            classDescription = c.name + " - " + "(cancelled)";
+                                        } else {
+                                            classDescription = c.name + " - " + c.day + "'s : " + c.timeInterval;
+                                        }
+                                        if (classDescription.equals(classSelected)) {
+                                            membersDesc.add(tempUser.getFullName() + " - " + tempUser.getEmail());
                                         }
                                     }
                                 }
-
                             }
                         }
-
                     }
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(InstructorViewClassMembers.this, "Database Error", Toast.LENGTH_LONG).show();
