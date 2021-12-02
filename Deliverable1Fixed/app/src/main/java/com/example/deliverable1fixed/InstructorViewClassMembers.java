@@ -2,7 +2,6 @@ package com.example.deliverable1fixed;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -66,7 +65,6 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
         listView.setVisibility(View.GONE);
 
         pullClassesData();
-        pullMembersData();
         initializeClassesSpinnerDropdown();
     }
 
@@ -95,65 +93,20 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
                     if(classObject != null) {
                         String testIfCancelled = classObject.day;
                         User instructor = classObject.instructor;
-                        if (instructor != null) {
-                            if (testIfCancelled.equals("N/A")) {
-                                if (instructor.getUsername().equals(user.getUsername())) {
-                                    String classDescription = classObject.name + " - " + "(cancelled)";
-                                    if (!(classesList.contains(classDescription))) {
-                                        classesList.add(classDescription);
-                                    }
-                                }
-                            } else {
-                                if (instructor.getUsername().equals(user.getUsername())) {
-                                    String classDescription = classObject.name + " - " + classObject.day + "'s : " + classObject.timeInterval;
-                                    if (!(classesList.contains(classDescription))) {
-                                        classesList.add(classDescription);
-                                    }
+                        if (testIfCancelled.equals("N/A")) {
+                            if (instructor.getUsername().equals(user.getUsername())) {
+                                String classDescription = classObject.name + " - " + "(cancelled)";
+                                if (!(classesList.contains(classDescription)) && classObject.members != null) { // delete second condition once all classes have been created with Members as a parameter
+                                    classesList.add(classDescription);
+                                    membersMap.put(classDescription, classObject.members);
                                 }
                             }
-                        }
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(InstructorViewClassMembers.this, "Database Error", Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    /** BONUS DELIVERABLE 3 - Pulls Members Associated with all instructor classed from realtime database */
-    private void pullMembersData() {
-        DatabaseReference r = FirebaseDatabase.getInstance().getReference("Users");
-        r.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    User tempUser = snapshot.getValue(User.class);
-                    if (tempUser != null && (tempUser.getType().equals("Member") || tempUser.getType().equals("Admin"))) {
-                        ArrayList<Class> userClasses = tempUser.getMyClasses();
-                        if (userClasses != null) {
-                            String classDescription;
-                            for (Class c : userClasses) {
-                                if (c.getInstructor() != null) {
-                                    if (c.getInstructor().getUsername().equals(user.getUsername())) {
-                                        String testIfCancelled = c.day;
-                                        if (testIfCancelled.equals("N/A")) {
-                                            classDescription = c.name + " - " + "(cancelled)";
-                                        } else {
-                                            classDescription = c.name + " - " + c.day + "'s : " + c.timeInterval;
-                                        }
-                                        if (membersMap != null && membersMap.containsKey(classDescription)) {
-                                            ArrayList<User> u = membersMap.get(classDescription);
-                                            if (u != null) {
-                                                u.add(tempUser);
-                                            }
-                                        } else {
-                                            ArrayList<User> u = new ArrayList<User>();
-                                            u.add(tempUser);
-                                            membersMap.put(classDescription, u);
-                                        }
-                                    }
+                        } else {
+                            if (instructor.getUsername().equals(user.getUsername())) {
+                                String classDescription = classObject.name + " - " + classObject.day + "'s : " + classObject.timeInterval;
+                                if (!(classesList.contains(classDescription)) && classObject.members != null) { // delete second condition once all classes have been created with Members as a parameter
+                                    classesList.add(classDescription);
+                                    membersMap.put(classDescription, classObject.members);
                                 }
                             }
                         }
