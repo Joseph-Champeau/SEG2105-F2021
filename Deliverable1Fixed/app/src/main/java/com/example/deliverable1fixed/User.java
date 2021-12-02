@@ -37,10 +37,7 @@ public class User {
     }
 
     public void addClass(Class classy){
-
         myClasses.add(classy);
-        myClasses=myClasses;
-        myClasses.size();
     }
 
     public int removeClass(Class classy){

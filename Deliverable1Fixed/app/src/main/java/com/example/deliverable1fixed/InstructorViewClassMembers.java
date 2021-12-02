@@ -96,17 +96,17 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
                         if (testIfCancelled.equals("N/A")) {
                             if (instructor.getUsername().equals(user.getUsername())) {
                                 String classDescription = classObject.name + " - " + "(cancelled)";
-                                if (!(classesList.contains(classDescription)) && classObject.members != null) { // delete second condition once all classes have been created with Members as a parameter
+                                if (!(classesList.contains(classDescription))) { // delete second condition once all classes have been created with Members as a parameter
                                     classesList.add(classDescription);
-                                    membersMap.put(classDescription, classObject.members);
+                                    // membersMap.put(classDescription, classObject.members);
                                 }
                             }
                         } else {
                             if (instructor.getUsername().equals(user.getUsername())) {
                                 String classDescription = classObject.name + " - " + classObject.day + "'s : " + classObject.timeInterval;
-                                if (!(classesList.contains(classDescription)) && classObject.members != null) { // delete second condition once all classes have been created with Members as a parameter
+                                if (!(classesList.contains(classDescription))) { // delete second condition once all classes have been created with Members as a parameter
                                     classesList.add(classDescription);
-                                    membersMap.put(classDescription, classObject.members);
+                                    // membersMap.put(classDescription, classObject.members);
                                 }
                             }
                         }
@@ -151,13 +151,46 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
      * @return ArrayList<String</> of member descriptions for the ListView. */
     private ArrayList<String> pullMembersData(String classSelected) {
         ArrayList<String> membersDesc = new ArrayList<String>();
-        ArrayList<User> members = membersMap.get(classSelected);
-        if (members != null) {
-            for (User member : members) {
-                if (member.getType().equals("Member"))
-                membersDesc.add(member.getFullName() + " - " + member.getEmail());
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User tempUser = snapshot.getValue(User.class);
+                    if (tempUser != null) {
+                        ArrayList<Class> userClasses = tempUser.getMyClasses();
+                        if (userClasses != null) {
+                            for (Class c : userClasses) {
+                                if (c != null) {
+                                    User classInstructor = c.getInstructor();
+                                    String testIfCancelled = c.getDay();
+                                    if (classInstructor != null && testIfCancelled != null) {
+                                        if(classInstructor.getFullName().equals(user.getFullName())) {
+                                            String classDescription;
+                                            if (testIfCancelled.equals("N/A")) {
+                                                classDescription = c.name + " - " + "(cancelled)";
+                                            } else {
+                                                classDescription = c.name + " - " + c.day + "'s : " + c.timeInterval;
+                                            }
+                                            if (classDescription.equals(classSelected)) {
+                                                membersDesc.add(tempUser.getFullName() + " - " + tempUser.getEmail());
+                                            }
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+
+                    }
+                }
             }
-        }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(InstructorViewClassMembers.this, "Database Error", Toast.LENGTH_LONG).show();
+            }
+        });
         return membersDesc;
     }
 

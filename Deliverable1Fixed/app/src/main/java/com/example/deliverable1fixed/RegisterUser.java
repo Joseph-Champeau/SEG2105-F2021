@@ -235,14 +235,13 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
             progressBar.setVisibility(View.VISIBLE);
             if (validateRegistrationEmailAndUsername(email, username)) {
                 User newUser = new User(fullName, age, email, username, type, password);
-                //Onboarding routine
+
+                //Onboarding routine for members
                 if (newUser.getType().equals("Member")) {
                     //DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users").child(userID);
                     ClassType onboarding = new ClassType("Onboarding", "The initial mandatory classes for all new members at Easy Fit");
-                    ArrayList<User> members = new ArrayList<User>(); // ArrayList to add to Class constructor
-                    members.add(newUser);
                     //referenceUsers.child("myClasses").child(String.valueOf(user.getMyClasses().size())).setValue(selectedclass);
-                    newUser.addClass(new Class("Onboarding", null, null, onboarding, "EVERYONE", "Friday", null, 1000));
+                    newUser.addClass(new Class("Onboarding", null, onboarding, "EVERYONE", "Friday", null, 1000));
                     // user.addClass(selectedclass);
                 }
                 FirebaseDatabase.getInstance().getReference("Users").push().setValue(newUser).addOnSuccessListener(new OnSuccessListener<Void>() {

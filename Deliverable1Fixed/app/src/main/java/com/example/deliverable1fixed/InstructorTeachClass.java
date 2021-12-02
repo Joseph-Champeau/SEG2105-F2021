@@ -372,14 +372,9 @@ public class InstructorTeachClass extends AppCompatActivity implements View.OnCl
                 return;
             }
 
-            // Bonus +5 (Deliverable 3)
-            User tempMember = new User("-", "-", "temp@gmail.com", "temp", "Temporary", "temp123"); // temporary user
-            ArrayList<User> members = new ArrayList<User>(); // ArrayList to add to Class constructor
-            members.add(tempMember); // add temporary user to ArrayList
-
             // push new class to realtime database
             int capacity = Integer.parseInt(capacity1);
-            Class newClass = new Class(name, user, members, classType, selectedDifficultyLevel, selectedDay, selectedTimeSlot, capacity);
+            Class newClass = new Class(name, user, classType, selectedDifficultyLevel, selectedDay, selectedTimeSlot, capacity);
             referenceClasses.push().setValue(newClass).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
