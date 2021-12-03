@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -61,13 +62,11 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
         classesList.add(0, "Select a class");
 
         listView = (ListView) findViewById(R.id.classMembersListView);
-        // listView.setVisibility(View.GONE);
 
         membersDesc = new ArrayList<String>();
         selectedClass = "initialize";
         pullClassesData();
         initializeClassesSpinnerDropdown();
-        viewClassMembers();
     }
 
     @Override
@@ -83,7 +82,6 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
                 break;
         }
     }
-
 
     /** Pulls Classes data from realtime database */
     private void pullClassesData() {
@@ -148,35 +146,38 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
 
     /** Initializes the members list of the selected last for the ListView ArrayAdapter. */
     private void  pullMembersData() {
+
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User classInstructor;
+                String testIfCancelled;
+                String classDescription;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User tempUser = snapshot.getValue(User.class);
-                    if (tempUser != null) {
-                        if (tempUser.getType().equals("Member")) {
-                            ArrayList<Class> userClasses = tempUser.getMyClasses();
-                            for (Class c : userClasses) {
-                                if (!(c.name.equals("Onboarding"))) {
-                                    User classInstructor = c.getInstructor();
-                                    String testIfCancelled = c.getDay();
-                                    if (classInstructor.getFullName().equals(user.getFullName())) {
-                                        String classDescription;
-                                        if (testIfCancelled.equals("N/A")) {
-                                            classDescription = c.name + " - " + "(cancelled)";
-                                        } else {
-                                            classDescription = c.name + " - " + c.day + "'s : " + c.timeInterval;
-                                        }
-                                        if (classDescription.equals(selectedClass)) {
-                                            membersDesc.add(tempUser.getFullName() + " - " + tempUser.getEmail());
-                                        }
+                    if (tempUser != null&& tempUser.getType().equals("Member")) {
+                        ArrayList<Class> userClasses = tempUser.getMyClasses();
+                        for (Class c : userClasses) {
+                            if (!(c.name.equals("Onboarding"))) {
+                                classInstructor = c.getInstructor();
+                                testIfCancelled = c.getDay();
+                                if (classInstructor.getFullName().equals(user.getFullName())) {
+                                    if (testIfCancelled.equals("N/A")) {
+                                        classDescription = c.name + " - " + "(cancelled)";
+                                    } else {
+                                        classDescription = c.name + " - " + c.day + "'s : " + c.timeInterval;
+                                    }
+                                    if (classDescription.equals(selectedClass)) {
+                                        membersDesc.add(tempUser.getFullName() + " - " + tempUser.getEmail());
                                     }
                                 }
                             }
                         }
                     }
                 }
+                setAdapter(membersDesc);
+                setUpList();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -185,6 +186,10 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
         });
     }
 
+    private void setAdapter(ArrayList<String> membersDesc1) {
+        MemberAdapter adapter = new MemberAdapter(getApplicationContext(), 0, membersDesc1);
+        listView.setAdapter(adapter);
+    }
     /** Instantiates the ListView holding the list of members of the selected class. */
     private void setUpList() {
         if (!(membersDesc.isEmpty())) {
@@ -197,14 +202,14 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
             Toast.makeText(InstructorViewClassMembers.this, "This class currently has no enrolled members", Toast.LENGTH_LONG).show();
             listView.setVisibility(View.GONE);
         }
-        membersDesc.clear();
+
     }
 
     /** Displays ListView of members enrolled in the selected class. */
     private void viewClassMembers() {
         if (!(selectedClass.equals(""))) {
             pullMembersData();
-            setUpList();
+            membersDesc.clear();
         } else {
             Toast.makeText(InstructorViewClassMembers.this, "Please select a class to view its members", Toast.LENGTH_LONG).show();
             listView.setVisibility(View.GONE);
