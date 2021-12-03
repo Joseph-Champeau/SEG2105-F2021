@@ -33,6 +33,8 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
     private ArrayList<String> classesList;
     private String selectedClass;
 
+    private ArrayList<String> membersDesc;
+
     private ListView listView;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +61,13 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
         classesList.add(0, "Select a class");
 
         listView = (ListView) findViewById(R.id.classMembersListView);
-        listView.setVisibility(View.GONE);
+        // listView.setVisibility(View.GONE);
 
+        membersDesc = new ArrayList<String>();
+        selectedClass = "initialize";
         pullClassesData();
         initializeClassesSpinnerDropdown();
+        viewClassMembers();
     }
 
     @Override
@@ -93,17 +98,15 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
                         if (testIfCancelled.equals("N/A")) {
                             if (instructor.getUsername().equals(user.getUsername())) {
                                 String classDescription = classObject.name + " - " + "(cancelled)";
-                                if (!(classesList.contains(classDescription))) { // delete second condition once all classes have been created with Members as a parameter
+                                if (!(classesList.contains(classDescription))) {
                                     classesList.add(classDescription);
-                                    // membersMap.put(classDescription, classObject.members);
                                 }
                             }
                         } else {
                             if (instructor.getUsername().equals(user.getUsername())) {
                                 String classDescription = classObject.name + " - " + classObject.day + "'s : " + classObject.timeInterval;
-                                if (!(classesList.contains(classDescription))) { // delete second condition once all classes have been created with Members as a parameter
+                                if (!(classesList.contains(classDescription))) {
                                     classesList.add(classDescription);
-                                    // membersMap.put(classDescription, classObject.members);
                                 }
                             }
                         }
@@ -143,14 +146,9 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
         });
     }
 
-    /** Initializes the members list of the selected last for the ListView ArrayAdapter.
-     * @param classSelected the class selected in the Spinner dropdown
-     * @return ArrayList<String</> of member descriptions for the ListView. */
-    private ArrayList<String> pullMembersData(String classSelected) {
-        ArrayList<String> membersDesc = new ArrayList<String>();
-
+    /** Initializes the members list of the selected last for the ListView ArrayAdapter. */
+    private void  pullMembersData() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -159,23 +157,19 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
                     if (tempUser != null) {
                         if (tempUser.getType().equals("Member")) {
                             ArrayList<Class> userClasses = tempUser.getMyClasses();
-                            if (userClasses != null) {
-                                for (Class c : userClasses) {
-                                    if (c != null) {
-                                        if (!(c.getName().equals("Onboarding"))) {
-                                            User classInstructor = c.getInstructor();
-                                            String testIfCancelled = c.getDay();
-                                            if (classInstructor.getFullName().equals(user.getFullName())) {
-                                                String classDescription;
-                                                if (testIfCancelled.equals("N/A")) {
-                                                    classDescription = c.name + " - " + "(cancelled)";
-                                                } else {
-                                                    classDescription = c.name + " - " + c.day + "'s : " + c.timeInterval;
-                                                }
-                                                if (classDescription.equals(classSelected)) {
-                                                    membersDesc.add(tempUser.getFullName() + " - " + tempUser.getEmail());
-                                                }
-                                            }
+                            for (Class c : userClasses) {
+                                if (!(c.name.equals("Onboarding"))) {
+                                    User classInstructor = c.getInstructor();
+                                    String testIfCancelled = c.getDay();
+                                    if (classInstructor.getFullName().equals(user.getFullName())) {
+                                        String classDescription;
+                                        if (testIfCancelled.equals("N/A")) {
+                                            classDescription = c.name + " - " + "(cancelled)";
+                                        } else {
+                                            classDescription = c.name + " - " + c.day + "'s : " + c.timeInterval;
+                                        }
+                                        if (classDescription.equals(selectedClass)) {
+                                            membersDesc.add(tempUser.getFullName() + " - " + tempUser.getEmail());
                                         }
                                     }
                                 }
@@ -189,30 +183,32 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
                 Toast.makeText(InstructorViewClassMembers.this, "Database Error", Toast.LENGTH_LONG).show();
             }
         });
-        return membersDesc;
     }
 
     /** Instantiates the ListView holding the list of members of the selected class. */
-    private void setUpList(ArrayList<String> classMembers) {
-        if (!(classMembers.isEmpty())) {
+    private void setUpList() {
+        if (!(membersDesc.isEmpty())) {
+            ArrayList<String> temp = new ArrayList<>(membersDesc);
             ArrayAdapter<String> listViewAdapter =
-                    new ArrayAdapter<String>(InstructorViewClassMembers.this, android.R.layout.simple_list_item_1, classMembers);
+                    new ArrayAdapter<String>(InstructorViewClassMembers.this, android.R.layout.simple_list_item_1, temp);
             listView.setAdapter(listViewAdapter);
             listView.setVisibility(View.VISIBLE);
         } else {
             Toast.makeText(InstructorViewClassMembers.this, "This class currently has no enrolled members", Toast.LENGTH_LONG).show();
             listView.setVisibility(View.GONE);
         }
+        membersDesc.clear();
     }
 
     /** Displays ListView of members enrolled in the selected class. */
     private void viewClassMembers() {
         if (!(selectedClass.equals(""))) {
-            setUpList(pullMembersData(selectedClass));
+            pullMembersData();
+            setUpList();
         } else {
             Toast.makeText(InstructorViewClassMembers.this, "Please select a class to view its members", Toast.LENGTH_LONG).show();
             listView.setVisibility(View.GONE);
+            membersDesc.clear();
         }
     }
-
 }
