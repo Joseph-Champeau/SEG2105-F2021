@@ -23,11 +23,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class MemberViewClass extends AppCompatActivity implements View.OnClickListener{
+public class MemberViewClass extends AppCompatActivity implements View.OnClickListener {
 
     private DatabaseReference referenceClasses;
     private String userID;
     private User user;
+
+    private int currentNumberOfMembers;
 
     private Spinner classesSpinner;
     private ArrayList<String> classesList;
@@ -43,6 +45,8 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_member_view_class);
 
+        currentNumberOfMembers = 0;
+
         userID = getIntent().getExtras().getString("arg"); // passed from previous page
         referenceClasses = FirebaseDatabase.getInstance().getReference("Classes");
         DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users");
@@ -51,6 +55,7 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 user = snapshot.getValue(User.class);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(MemberViewClass.this, "Database Error", Toast.LENGTH_LONG).show();
@@ -77,14 +82,16 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
                 intentView.putExtra("arg", userID);
                 startActivity(intentView);
                 break;
-            case R.id.myenrollmentbtn :
+            case R.id.myenrollmentbtn:
                 enroll();
                 break;
         }
     }
 
 
-    /** Pulls Classes data from realtime database */
+    /**
+     * Pulls Classes data from realtime database
+     */
     private void pullClassesData() {
         referenceClasses.addValueEventListener(new ValueEventListener() {
             @Override
@@ -92,7 +99,7 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Class classObject = snapshot.getValue(Class.class);
                     ArrayList<Class> myClasses = user.getMyClasses();
-                    if(classObject != null && myClasses != null) {
+                    if (classObject != null && myClasses != null) {
                         String testIfCancelled = classObject.day;
                         if (!(testIfCancelled.equals("N/A"))) {
                             if (!(filterOutAlreadyEnrolledClasses(myClasses, classObject))) {
@@ -107,6 +114,7 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(MemberViewClass.this, "Database Error", Toast.LENGTH_LONG).show();
@@ -114,10 +122,13 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
         });
     }
 
-    /** Filters out classes that the user is already enrolled in. Prevents enrolling duplication
+    /**
+     * Filters out classes that the user is already enrolled in. Prevents enrolling duplication
+     *
      * @param enrolledClasses List of classes the user is already enrolled in.
-     * @param c Class selected from database to check.
-     * @return Boolean true if user is already enrolled in selected Class c. False otherwise. */
+     * @param c               Class selected from database to check.
+     * @return Boolean true if user is already enrolled in selected Class c. False otherwise.
+     */
     public boolean filterOutAlreadyEnrolledClasses(ArrayList<Class> enrolledClasses, Class c) {
         for (Class v : enrolledClasses) {
             if (v != null) {
@@ -129,7 +140,9 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
         return false;
     }
 
-    /** Initializes classes spinner dropdown adapter. And instantiates OnClick item listener. */
+    /**
+     * Initializes classes spinner dropdown adapter. And instantiates OnClick item listener.
+     */
     private void initializeClassesSpinnerDropdown() {
         ArrayAdapter<String> classesAdapter =
                 new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, classesList);
@@ -147,6 +160,7 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
                     selectedClass = "";
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 Toast.makeText(MemberViewClass.this, "Select a class to view its members", Toast.LENGTH_LONG).show();
@@ -155,15 +169,18 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
         });
     }
 
-    /** Initializes the members list of the selected last for the ListView ArrayAdapter.
+    /**
+     * Initializes the members list of the selected last for the ListView ArrayAdapter.
+     *
      * @param classSelected the class selected in the Spinner dropdown
-     * @return ArrayList<String</> of member descriptions for the ListView. */
+     * @return ArrayList<String < /> of member descriptions for the ListView.
+     */
     private void pullClassData(String classSelected) {
         ArrayList<String> membersDesc = new ArrayList<String>();
         String output;
-        Class  key = classesMap.get(classSelected);
+        Class key = classesMap.get(classSelected);
         if (key != null) {
-            if (key.getInstructor()==(null)){
+            if (key.getInstructor() == (null)) {
                 details.setText(key.getDifficultyLevel() + "-" + key.getName() + "\n" + key.getDay() + "'s at " + key.getTimeInterval() + "\n (" + key.getCapacity() + " spots left)");
             } else {
                 details.setText(key.getDifficultyLevel() + "-" + key.getName() + "\n" + key.getDay() + "'s at " + key.getTimeInterval() + "\nTaught by " + key.getInstructor().getFullName() + "\n (" + key.getCapacity() + " spots left)");
@@ -174,9 +191,12 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
             details.setVisibility(View.GONE);
 
         }
-       // return membersDesc;
+        // return membersDesc;
     }
-    /** Displays ListView of members enrolled in the selected class. */
+
+    /**
+     * Displays ListView of members enrolled in the selected class.
+     */
     private void viewClassDetails() {
         if (!(selectedClass.equals(""))) {
             pullClassData(selectedClass);
@@ -187,7 +207,9 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    /** Displays ListView of members enrolled in the selected class. */
+    /**
+     * Displays ListView of members enrolled in the selected class.
+     */
     private void enroll() {
         if (!(selectedClass.equals(""))) {
             enrolling(selectedClass);
@@ -203,8 +225,9 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
             Class key = classesMap.get(selectedClass1);
 
             //checks whether the class is full or the time conflicts with another class registered
-            if ((key.getCapacity() <= key.capacity)){
-                if(!checkTime(key.timeInterval)){
+            pullCapacityFromCurrentMembers();
+            if ((currentNumberOfMembers <= key.capacity)) {
+                if (!checkTime(key.timeInterval)) {
                     user.addClass(key);
                     Toast.makeText(MemberViewClass.this, "New Class Added", Toast.LENGTH_LONG).show();
                     DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users").child(userID);
@@ -225,6 +248,7 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
             } else {
                 Toast.makeText(MemberViewClass.this, "Class is full", Toast.LENGTH_LONG).show();
                 details.setVisibility(View.GONE);
+                currentNumberOfMembers = 0;
             }
         } else {
             Toast.makeText(MemberViewClass.this, "The attempt to enroll in a class was denied", Toast.LENGTH_LONG).show();
@@ -236,9 +260,9 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
      * @param time1 the time interval of the selected class
      * @return boolean stating if there is a conflict or not
      */
-    private boolean checkTime(String time1){
+    private boolean checkTime(String time1) {
         //check if there are no classes
-        if (user.getMyClasses().size() == 0){
+        if (user.getMyClasses().size() == 0) {
             return false;
         }
 
@@ -246,8 +270,8 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
         double[] newClassTime = timeComparable(time1);
 
         //compares with all of the users current class times
-        for(int i = 0; i < user.getMyClasses().size(); i++) {
-            if(user.getMyClasses().get(i) != null) {
+        for (int i = 0; i < user.getMyClasses().size(); i++) {
+            if (user.getMyClasses().get(i) != null) {
                 if (user.getMyClasses().get(i).getTimeInterval() != null) {
                     double[] currentClassTimes = timeComparable(user.getMyClasses().get(i).getTimeInterval());
                     if (newClassTime[1] >= currentClassTimes[0] && currentClassTimes[0] >= newClassTime[0]) {
@@ -265,23 +289,65 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
 
     /**
      * Converts the string format of the time to a double array to make it easier to compare times
+     *
      * @param times
      * @return
      */
-    private double[] timeComparable(String times){
+    private double[] timeComparable(String times) {
         String[] timeIntervals = times.trim().split("-");
         double[] timesComparables = new double[2];
 
-        for(int i = 0; i < timeIntervals.length; i++){
-            if (timeIntervals[i].contains("pm") && timeIntervals[i].substring(0, timeIntervals[i].indexOf(':')) != "12"){
+        for (int i = 0; i < timeIntervals.length; i++) {
+            if (timeIntervals[i].contains("pm") && timeIntervals[i].substring(0, timeIntervals[i].indexOf(':')) != "12") {
                 timesComparables[i] = Double.parseDouble(timeIntervals[i].substring(0, timeIntervals[i].indexOf(':'))) + 12;
             } else {
                 timesComparables[i] = Double.parseDouble(timeIntervals[i].substring(0, timeIntervals[i].indexOf(':')));
             }
-            timesComparables[i] += Double.parseDouble(timeIntervals[i].substring(timeIntervals[i].indexOf(':') + 1, timeIntervals[i].length()-3))*0.01;
+            timesComparables[i] += Double.parseDouble(timeIntervals[i].substring(timeIntervals[i].indexOf(':') + 1, timeIntervals[i].length() - 3)) * 0.01;
         }
 
         return timesComparables;
+    }
+
+
+    /**
+     * Initializes the members list of the selected last for the ListView ArrayAdapter.
+     */
+    private void pullCapacityFromCurrentMembers() {
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User classInstructor;
+                String testIfCancelled;
+                String classDescription;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User tempUser = snapshot.getValue(User.class);
+                    if (tempUser != null && tempUser.getType().equals("Member")) {
+                        ArrayList<Class> userClasses = tempUser.getMyClasses();
+                        for (Class c : userClasses) {
+                            if (!(c.name.equals("Onboarding"))) {
+                                testIfCancelled = c.day;
+                                if (!(testIfCancelled.equals("N/A"))) {
+                                    if (!(filterOutAlreadyEnrolledClasses(userClasses, c))) {
+                                        classDescription = c.name + " - " + c.day + "'s : " + c.timeInterval;
+                                        if (classDescription == selectedClass) {
+                                            currentNumberOfMembers++;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(MemberViewClass.this, "Database Error", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
 
