@@ -92,7 +92,7 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
     /**
      * Pulls Classes data from realtime database
      */
-    private void pullClassesData() {
+    public void pullClassesData() {
         referenceClasses.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
