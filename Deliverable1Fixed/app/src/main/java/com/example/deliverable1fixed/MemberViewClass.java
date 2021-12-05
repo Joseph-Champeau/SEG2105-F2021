@@ -103,7 +103,6 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
                         String testIfCancelled = classObject.day;
                         if (!(testIfCancelled.equals("N/A"))) {
                             if (!(filterOutAlreadyEnrolledClasses(myClasses, classObject))) {
-                                String uID = snapshot.getKey();
                                 String classDescription = classObject.name + " - " + classObject.day + "'s : " + classObject.timeInterval;
                                 if (!(classesList.contains(classDescription))) {
                                     classesList.add(classDescription);
@@ -223,31 +222,31 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
     private void enrolling(String selectedClass1) {
         if (!(selectedClass1.equals(""))) {
             Class key = classesMap.get(selectedClass1);
-
-            //checks whether the class is full or the time conflicts with another class registered
+            // checks whether the class is full or the time conflicts with another class registered
             pullCapacityFromCurrentMembers();
-            if ((currentNumberOfMembers <= key.capacity)) {
-                if (!checkTime(key.timeInterval)) {
-                    user.addClass(key);
-                    Toast.makeText(MemberViewClass.this, "New Class Added", Toast.LENGTH_LONG).show();
-                    DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users").child(userID);
-                    referenceUsers.child("myClasses").child(String.valueOf(user.getMyClasses().size() - 1)).setValue(key);
+            if (key != null) {
+                if ((currentNumberOfMembers < key.capacity)) {
+                    if (!checkTime(key.timeInterval)) {
+                        user.addClass(key);
+                        Toast.makeText(MemberViewClass.this, "New Class Added", Toast.LENGTH_LONG).show();
+                        DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users").child(userID);
+                        referenceUsers.child("myClasses").child(String.valueOf(user.getMyClasses().size() - 1)).setValue(key);
 
-                    // resets key page elements and hides previously shown info
-                    classesList.clear();
-                    classesList.add(0, "Select a class");
-                    classesMap.clear();
-                    details.setVisibility(View.GONE);
-                    pullClassesData();
-                    initializeClassesSpinnerDropdown();
+                        // resets key page elements and hides previously shown info
+                        classesList.clear();
+                        classesList.add(0, "Select a class");
+                        classesMap.clear();
+                        details.setVisibility(View.GONE);
+                        pullClassesData();
+                        initializeClassesSpinnerDropdown();
+                    } else {
+                        Toast.makeText(MemberViewClass.this, "Time conflicts with a class you are currently enrolled in", Toast.LENGTH_LONG).show();
+                        details.setVisibility(View.GONE);
+                    }
                 } else {
-                    Toast.makeText(MemberViewClass.this, "Time conflicts with a class you are currently enrolled in", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MemberViewClass.this, "Class is full", Toast.LENGTH_LONG).show();
                     details.setVisibility(View.GONE);
                 }
-
-            } else {
-                Toast.makeText(MemberViewClass.this, "Class is full", Toast.LENGTH_LONG).show();
-                details.setVisibility(View.GONE);
                 currentNumberOfMembers = 0;
             }
         } else {
@@ -319,20 +318,19 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User classInstructor;
                 String testIfCancelled;
                 String classDescription;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User tempUser = snapshot.getValue(User.class);
-                    if (tempUser != null && tempUser.getType().equals("Member")) {
+                    if (tempUser != null && (!(tempUser.getType().equals("Instructor")))) {
                         ArrayList<Class> userClasses = tempUser.getMyClasses();
                         for (Class c : userClasses) {
-                            if (!(c.name.equals("Onboarding"))) {
-                                testIfCancelled = c.day;
-                                if (!(testIfCancelled.equals("N/A"))) {
-                                    if (!(filterOutAlreadyEnrolledClasses(userClasses, c))) {
+                            if (c != null) {
+                                if (!(c.name.equals("Onboarding"))) {
+                                    testIfCancelled = c.day;
+                                    if (!(testIfCancelled.equals("N/A"))) {
                                         classDescription = c.name + " - " + c.day + "'s : " + c.timeInterval;
-                                        if (classDescription == selectedClass) {
+                                        if (classDescription.equals(selectedClass)) {
                                             currentNumberOfMembers++;
                                         }
                                     }
