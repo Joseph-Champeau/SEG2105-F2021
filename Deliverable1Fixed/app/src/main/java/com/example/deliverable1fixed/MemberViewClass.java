@@ -211,8 +211,7 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
      */
     private void enroll() {
         if (!(selectedClass.equals(""))) {
-            enrolling(selectedClass);
-            //setUpList(pullMembersData(selectedClass));
+            pullCapacityFromCurrentMembers();
         } else {
             Toast.makeText(MemberViewClass.this, "Please select a class to view its description", Toast.LENGTH_LONG).show();
             details.setVisibility(View.GONE);
@@ -222,8 +221,6 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
     private void enrolling(String selectedClass1) {
         if (!(selectedClass1.equals(""))) {
             Class key = classesMap.get(selectedClass1);
-            // checks whether the class is full or the time conflicts with another class registered
-            pullCapacityFromCurrentMembers();
             if (key != null) {
                 if ((currentNumberOfMembers < key.capacity)) {
                     if (!checkTime(key.timeInterval)) {
@@ -339,6 +336,7 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
                         }
                     }
                 }
+                enrolling(selectedClass);
             }
 
             @Override
