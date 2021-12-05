@@ -200,29 +200,88 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
 
     private void enrolling(String selectedClass1) {
         if (!(selectedClass1.equals(""))) {
-
-
-
-            // ADD CLASS ENROLLMENT VERIFICATION HERE (CAPACITY AND TIME INTERVAL CONDITIONS)
-
-
-
             Class key = classesMap.get(selectedClass1);
-            user.addClass(key);
-            Toast.makeText(MemberViewClass.this, "New Class Added", Toast.LENGTH_LONG).show();
-            DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users").child(userID);
-            referenceUsers.child("myClasses").child(String.valueOf(user.getMyClasses().size() - 1)).setValue(key);
 
-            // resets key page elements and hides previously shown info
-            classesList.clear();
-            classesList.add(0, "Select a class");
-            classesMap.clear();
-            details.setVisibility(View.GONE);
-            pullClassesData();
-            initializeClassesSpinnerDropdown();
+            //checks whether the class is full or the time conflicts with another class registered
+            if ((key.getCapacity() <= key.capacity)){
+                if(!checkTime(key.timeInterval)){
+                    user.addClass(key);
+                    Toast.makeText(MemberViewClass.this, "New Class Added", Toast.LENGTH_LONG).show();
+                    DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users").child(userID);
+                    referenceUsers.child("myClasses").child(String.valueOf(user.getMyClasses().size() - 1)).setValue(key);
+
+                    // resets key page elements and hides previously shown info
+                    classesList.clear();
+                    classesList.add(0, "Select a class");
+                    classesMap.clear();
+                    details.setVisibility(View.GONE);
+                    pullClassesData();
+                    initializeClassesSpinnerDropdown();
+                } else {
+                    Toast.makeText(MemberViewClass.this, "Time conflicts with a class you are currently enrolled in", Toast.LENGTH_LONG).show();
+                    details.setVisibility(View.GONE);
+                }
+
+            } else {
+                Toast.makeText(MemberViewClass.this, "Class is full", Toast.LENGTH_LONG).show();
+                details.setVisibility(View.GONE);
+            }
         } else {
             Toast.makeText(MemberViewClass.this, "The attempt to enroll in a class was denied", Toast.LENGTH_LONG).show();
             details.setVisibility(View.GONE);
         }
     }
+
+    /**
+     * @param time1 the time interval of the selected class
+     * @return boolean stating if there is a conflict or not
+     */
+    private boolean checkTime(String time1){
+        //check if there are no classes
+        if (user.getMyClasses().size() == 0){
+            return false;
+        }
+
+        //create comparable times
+        double[] newClassTime = timeComparable(time1);
+
+        //compares with all of the users current class times
+        for(int i = 0; i < user.getMyClasses().size(); i++) {
+            if (user.getMyClasses().get(i).getTimeInterval() != null) {
+                double[] currentClassTimes = timeComparable(user.getMyClasses().get(i).getTimeInterval());
+                if (newClassTime[1] >= currentClassTimes[0] && currentClassTimes[0] >= newClassTime[0]) {
+                    return true;
+                }
+
+                if (currentClassTimes[1] >= newClassTime[0] && currentClassTimes[1] <= newClassTime[1]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Converts the string format of the time to a double array to make it easier to compare times
+     * @param times
+     * @return
+     */
+    private double[] timeComparable(String times){
+        String[] timeIntervals = times.trim().split("-");
+        double[] timesComparables = new double[2];
+
+        for(int i = 0; i < timeIntervals.length; i++){
+            if (timeIntervals[i].contains("pm") && timeIntervals[i].substring(0, timeIntervals[i].indexOf(':')) != "12"){
+                timesComparables[i] = Double.parseDouble(timeIntervals[i].substring(0, timeIntervals[i].indexOf(':'))) + 12;
+            } else {
+                timesComparables[i] = Double.parseDouble(timeIntervals[i].substring(0, timeIntervals[i].indexOf(':')));
+            }
+            timesComparables[i] += Double.parseDouble(timeIntervals[i].substring(timeIntervals[i].indexOf(':') + 1, timeIntervals[i].length()-3))*0.01;
+        }
+
+        return timesComparables;
+    }
 }
+
+
+
