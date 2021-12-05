@@ -247,14 +247,16 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
 
         //compares with all of the users current class times
         for(int i = 0; i < user.getMyClasses().size(); i++) {
-            if (user.getMyClasses().get(i).getTimeInterval() != null) {
-                double[] currentClassTimes = timeComparable(user.getMyClasses().get(i).getTimeInterval());
-                if (newClassTime[1] >= currentClassTimes[0] && currentClassTimes[0] >= newClassTime[0]) {
-                    return true;
-                }
+            if(user.getMyClasses().get(i) != null) {
+                if (user.getMyClasses().get(i).getTimeInterval() != null) {
+                    double[] currentClassTimes = timeComparable(user.getMyClasses().get(i).getTimeInterval());
+                    if (newClassTime[1] >= currentClassTimes[0] && currentClassTimes[0] >= newClassTime[0]) {
+                        return true;
+                    }
 
-                if (currentClassTimes[1] >= newClassTime[0] && currentClassTimes[1] <= newClassTime[1]) {
-                    return true;
+                    if (currentClassTimes[1] >= newClassTime[0] && currentClassTimes[1] <= newClassTime[1]) {
+                        return true;
+                    }
                 }
             }
         }
