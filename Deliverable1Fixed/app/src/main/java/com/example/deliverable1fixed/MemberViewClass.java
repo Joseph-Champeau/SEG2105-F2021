@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Locale;
 
 public class MemberViewClass extends AppCompatActivity implements View.OnClickListener {
 
@@ -223,7 +224,7 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
             Class key = classesMap.get(selectedClass1);
             if (key != null) {
                 if ((currentNumberOfMembers < key.capacity)) {
-                    if (!checkTime(key.timeInterval)) {
+                    if (!checkTime(key.timeInterval, key.day)) {
                         user.addClass(key);
                         Toast.makeText(MemberViewClass.this, "New Class Added", Toast.LENGTH_LONG).show();
                         DatabaseReference referenceUsers = FirebaseDatabase.getInstance().getReference("Users").child(userID);
@@ -245,10 +246,10 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
                     details.setVisibility(View.GONE);
                 }
                 currentNumberOfMembers = 0;
-            }
-        } else {
-            Toast.makeText(MemberViewClass.this, "The attempt to enroll in a class was denied", Toast.LENGTH_LONG).show();
-            details.setVisibility(View.GONE);
+            }else {
+                Toast.makeText(MemberViewClass.this, "The attempt to enroll in a class was denied", Toast.LENGTH_LONG).show();
+                details.setVisibility(View.GONE);
+        }
         }
     }
 
@@ -256,8 +257,9 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
      * @param time1 the time interval of the selected class
      * @return boolean stating if there is a conflict or not
      */
-    private boolean checkTime(String time1) {
+    private boolean checkTime(String time1, String day) {
         //check if there are no classes
+
         if (user.getMyClasses().size() == 0) {
             return false;
         }
@@ -269,13 +271,17 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
         for (int i = 0; i < user.getMyClasses().size(); i++) {
             if (user.getMyClasses().get(i) != null) {
                 if (user.getMyClasses().get(i).getTimeInterval() != null) {
-                    double[] currentClassTimes = timeComparable(user.getMyClasses().get(i).getTimeInterval());
-                    if (newClassTime[1] >= currentClassTimes[0] && currentClassTimes[0] >= newClassTime[0]) {
-                        return true;
-                    }
+                    String compareClassDay = user.getMyClasses().get(i).getDay().trim().toLowerCase(Locale.ROOT);
+                    String compareDay = day.trim().toLowerCase(Locale.ROOT);
+                    if(compareClassDay.equals(compareDay)) {
+                        double[] currentClassTimes = timeComparable(user.getMyClasses().get(i).getTimeInterval());
+                        if (newClassTime[1] >= currentClassTimes[0] && currentClassTimes[0] >= newClassTime[0]) {
+                            return true;
+                        }
 
-                    if (currentClassTimes[1] >= newClassTime[0] && currentClassTimes[1] <= newClassTime[1]) {
-                        return true;
+                        if (currentClassTimes[1] >= newClassTime[0] && currentClassTimes[1] <= newClassTime[1]) {
+                            return true;
+                        }
                     }
                 }
             }
