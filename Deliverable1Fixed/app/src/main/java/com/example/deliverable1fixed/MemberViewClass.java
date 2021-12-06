@@ -224,6 +224,7 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
             Class key = classesMap.get(selectedClass1);
             if (key != null) {
                 if ((currentNumberOfMembers < key.capacity)) {
+                    currentNumberOfMembers = 0;
                     if (!checkTime(key.timeInterval, key.day)) {
                         user.addClass(key);
                         Toast.makeText(MemberViewClass.this, "New Class Added", Toast.LENGTH_LONG).show();
@@ -237,19 +238,18 @@ public class MemberViewClass extends AppCompatActivity implements View.OnClickLi
                         details.setVisibility(View.GONE);
                         pullClassesData();
                         initializeClassesSpinnerDropdown();
+                        return;
                     } else {
                         Toast.makeText(MemberViewClass.this, "Time conflicts with a class you are currently enrolled in", Toast.LENGTH_LONG).show();
                         details.setVisibility(View.GONE);
+                        return;
                     }
                 } else {
                     Toast.makeText(MemberViewClass.this, "Class is full", Toast.LENGTH_LONG).show();
                     details.setVisibility(View.GONE);
+                    return;
                 }
-                currentNumberOfMembers = 0;
-            }else {
-                Toast.makeText(MemberViewClass.this, "The attempt to enroll in a class was denied", Toast.LENGTH_LONG).show();
-                details.setVisibility(View.GONE);
-        }
+            }
         }
     }
 
