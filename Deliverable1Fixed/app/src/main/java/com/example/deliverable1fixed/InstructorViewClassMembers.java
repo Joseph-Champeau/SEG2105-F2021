@@ -159,17 +159,19 @@ public class InstructorViewClassMembers extends AppCompatActivity implements Vie
                     if (tempUser != null&& tempUser.getType().equals("Member")) {
                         ArrayList<Class> userClasses = tempUser.getMyClasses();
                         for (Class c : userClasses) {
-                            if (!(c.name.equals("Onboarding"))) {
-                                classInstructor = c.getInstructor();
-                                testIfCancelled = c.getDay();
-                                if (classInstructor.getFullName().equals(user.getFullName())) {
-                                    if (testIfCancelled.equals("N/A")) {
-                                        classDescription = c.name + " - " + "(cancelled)";
-                                    } else {
-                                        classDescription = c.name + " - " + c.day + "'s : " + c.timeInterval;
-                                    }
-                                    if (classDescription.equals(selectedClass)) {
-                                        membersDesc.add(tempUser.getFullName() + " - " + tempUser.getEmail());
+                            if (c != null) {
+                                if (!(c.name.equals("Onboarding"))) {
+                                    classInstructor = c.getInstructor();
+                                    testIfCancelled = c.getDay();
+                                    if (classInstructor.getFullName().equals(user.getFullName())) {
+                                        if (testIfCancelled.equals("N/A")) {
+                                            classDescription = c.name + " - " + "(cancelled)";
+                                        } else {
+                                            classDescription = c.name + " - " + c.day + "'s : " + c.timeInterval;
+                                        }
+                                        if (classDescription.equals(selectedClass)) {
+                                            membersDesc.add(tempUser.getFullName() + " - " + tempUser.getEmail());
+                                        }
                                     }
                                 }
                             }
